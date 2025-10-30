@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="e8ace0635f344a5ab250e1a848f8eea1" Name="Diagram1" ZoomLevel="44">
+        <EntityTypeShape EntityType="StudentAffairsModel.City" Width="1.5" PointX="0.75" PointY="10.5" />
+        <EntityTypeShape EntityType="StudentAffairsModel.Class" Width="1.5" PointX="3.75" PointY="31.625" />
+        <EntityTypeShape EntityType="StudentAffairsModel.Employee" Width="1.5" PointX="11" PointY="1.125" />
+        <EntityTypeShape EntityType="StudentAffairsModel.EndYearResult" Width="1.5" PointX="3.75" PointY="43.25" />
+        <EntityTypeShape EntityType="StudentAffairsModel.ExemptionReason" Width="1.5" PointX="3.75" PointY="47.125" />
+        <EntityTypeShape EntityType="StudentAffairsModel.ExpenseType" Width="1.5" PointX="3.75" PointY="39.375" />
+        <EntityTypeShape EntityType="StudentAffairsModel.Job" Width="1.5" PointX="8.75" PointY="2.625" />
+        <EntityTypeShape EntityType="StudentAffairsModel.Level" Width="1.5" PointX="3.75" PointY="20" />
+        <EntityTypeShape EntityType="StudentAffairsModel.Nationality" Width="1.5" PointX="3.75" PointY="51" />
+        <EntityTypeShape EntityType="StudentAffairsModel.RegistrationStatu" Width="1.5" PointX="3.75" PointY="27.75" />
+        <EntityTypeShape EntityType="StudentAffairsModel.Religion" Width="1.5" PointX="3.75" PointY="58.75" />
+        <EntityTypeShape EntityType="StudentAffairsModel.SchoolInfo" Width="1.5" PointX="3" PointY="10" />
+        <EntityTypeShape EntityType="StudentAffairsModel.ScienceDivision" Width="1.5" PointX="3.75" PointY="16.125" />
+        <EntityTypeShape EntityType="StudentAffairsModel.SecondLanguage" Width="1.5" PointX="3.75" PointY="23.875" />
+        <EntityTypeShape EntityType="StudentAffairsModel.SecondRoundResult" Width="1.5" PointX="3.75" PointY="35.5" />
+        <EntityTypeShape EntityType="StudentAffairsModel.SocialStatu" Width="1.5" PointX="3.75" PointY="54.875" />
+        <EntityTypeShape EntityType="StudentAffairsModel.Student" Width="1.5" PointX="6" PointY="4.375" />
+        <EntityTypeShape EntityType="StudentAffairsModel.User" Width="1.5" PointX="13.25" PointY="2.25" />
+        <AssociationConnector Association="StudentAffairsModel.FK_SchoolInfo_Cities" />
+        <AssociationConnector Association="StudentAffairsModel.FK_Students_Cities" />
+        <AssociationConnector Association="StudentAffairsModel.FK_Students_Classes" />
+        <AssociationConnector Association="StudentAffairsModel.FK_Employees_Jobs" />
+        <AssociationConnector Association="StudentAffairsModel.FK_Users_Employees" />
+        <AssociationConnector Association="StudentAffairsModel.FK_Students_EndYearResults" />
+        <AssociationConnector Association="StudentAffairsModel.FK_Students_ExemptionReasons" />
+        <AssociationConnector Association="StudentAffairsModel.FK_Students_ExpenseTypes" />
+        <AssociationConnector Association="StudentAffairsModel.FK_Students_Levels" />
+        <AssociationConnector Association="StudentAffairsModel.FK_Students_Nationalities" />
+        <AssociationConnector Association="StudentAffairsModel.FK_Students_RegistrationStatus" />
+        <AssociationConnector Association="StudentAffairsModel.FK_Students_Religion" />
+        <AssociationConnector Association="StudentAffairsModel.FK_Students_ScienceDivision" />
+        <AssociationConnector Association="StudentAffairsModel.FK_Students_SecondLanguage" />
+        <AssociationConnector Association="StudentAffairsModel.FK_Students_SecondRoundResults" />
+        <AssociationConnector Association="StudentAffairsModel.FK_Students_SocialStatus" />
+        <AssociationConnector Association="StudentAffairsModel.FK_Students_Students" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

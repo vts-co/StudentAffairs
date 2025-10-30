@@ -1,0 +1,695 @@
+﻿
+@{
+    var lang = "ar-EG";
+    var userInfo = TempData["UserInfo"];
+
+}
+<!doctype html>
+<html lang="en" @(lang != "en" ? "dir=rtl" : "")>
+
+<head>
+
+    <meta charset="utf-8" />
+    <title> لوحة التحكم | @ViewBag.Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
+    <meta content="Themesbrand" name="author" />
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="@TempData["SettingLogo"]">
+    <link href="~/assets/libs/choices.js/public/assets/styles/choices.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="http://static.jstree.com/3.0.0-beta5/assets/bootstrap/css/bootstrap.css" />
+    <link href="~/assets/css/docs.css" rel="stylesheet" />
+    <link href="~/assets/css/default/style.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
+
+    <link rel="stylesheet" href="~/assets/trumbowygEditor/ui/trumbowyg.min.css">
+    <link rel="stylesheet" href="~/assets/trumbowygEditor/plugins/mathml/ui/trumbowyg.mathml.min.css">
+    <link rel="stylesheet" href="~/assets/trumbowygEditor/plugins/specialchars/ui/trumbowyg.specialchars.min.css">
+    <style>
+        @@font-face {
+            font-family: 'thesansbold';
+            src: url('../../../../assets/fonts/thesans bold.otf') format('opentype');
+        }
+
+        html, body {
+            font-family: thesansbold !important
+        }
+
+        [dir=rtl] input {
+            text-align: start !important;
+        }
+
+        #sidebar-menu ul li ul.sub-menu li a {
+            font-size: 0.78rem !important;
+        }
+
+        #sidebar-menu ul li a i {
+            font-size: 1rem !important;
+            min-width: 1rem !important;
+        }
+    </style>
+
+    <link href="~/assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css">
+
+    <link href="~/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css">
+
+    <!-- preloader css -->
+    <link rel="stylesheet" href="~/assets/css/@(lang == "en" ? "preloader.min.css" : "preloader-rtl.min.css")" type="text/css" />
+
+    <!-- Bootstrap Css -->
+    <link href="~/assets/css/@(lang == "en" ? "bootstrap.min.css" : "bootstrap-rtl.min.css")" id="bootstrap-style" rel="stylesheet" type="text/css" />
+    <!-- Icons Css -->
+    <link href="~/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <!-- App Css-->
+    <link href="~/assets/css/@(lang == "en" ? "app.min.css" : "app-rtl.min.css")" id="app-style" rel="stylesheet" type="text/css" />
+
+    <script>
+        var loadFile = function (event) {
+            var output = document.getElementById('output');
+            output.src = URL.createObjectURL(event.target.files[0]);
+            output.onload = function () {
+                $("#output").show();
+                URL.revokeObjectURL(output.src) // free memory
+            }
+        };
+    </script>
+
+    @RenderSection("Styles", false)
+</head>
+
+<body data-layout="horizontal" class="din-med">
+    <!-- <body data-layout="horizontal"> -->
+    <!-- Begin page -->
+    <div id="layout-wrapper">
+        <header id="page-topbar">
+            <div class="navbar-header row align-items-center ">
+                <div class="d-flex col-xl-3 col-md-2 col-lg-3 col-1">
+                    <!-- LOGO -->
+                    <div class="navbar-brand-box">
+                        <a href="@Url.Action("Index","Home")" class="logo logo-dark">
+                            <span class="logo-sm">
+                                <img src="@TempData["SettingLogo"]" height="24" />
+                            </span>
+                            <span class="logo-lg">
+                                <img src="@TempData["SettingLogo"]" height="50" />
+                            </span>
+                        </a>
+                        <a href="@Url.Action("Index","Home")" class="logo logo-light">
+                            <span class="logo-sm">
+                                <img src="@TempData["SettingLogo"]" height="24" />
+                            </span>
+                            <span class="logo-lg">
+                                <img src="@TempData["SettingLogo"]" height="50" />
+                            </span>
+                        </a>
+                    </div>
+
+
+                </div>
+               
+                <div class="d-flex col-xl-3 col-md-4 col-5 col-lg-6 justify-content-end mb-2">
+
+
+                    
+                    <div class="dropdown d-none d-sm-inline-block">
+                        <button type="button" class="btn header-item" id="mode-setting-btn" onclick="shiftMode();">
+                            <i data-feather="moon" class="icon-lg layout-mode-dark fa fa-moon"></i>
+                            <i data-feather="sun" class="icon-lg layout-mode-light fa fa-sun"></i>
+                        </button>
+                    </div>
+
+                    
+                    <div class="dropdown d-inline-block">
+                        <button type="button" class="btn header-item right-bar-toggle me-2 ">
+                            <i data-feather="settings" class="icon-lg d-none"></i>
+                        </button>
+                    </div>
+
+                    <div class="dropdown d-inline-block din-bold">
+                        <button type="button" class="btn header-item bg-soft-light border-start border-end" id="page-header-user-dropdown"
+                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                   
+                            <span class="d-none d-xl-inline-block ms-1 fw-medium ">Welcome @TempData["UserName"]</span>
+                            <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-end">
+                            <!-- item-->
+                            <a href="@Url.Action("SignOut","Account")" class="btn btn-soft-primary font-weight-bold din-bold">تسجيل خروج</a>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </header>
+        <!-- ========== Left Sidebar Start ========== -->
+        <div class="topnav" style="margin-top: 70px !important;">
+            <div class="container-fluid">
+                <nav class="navbar navbar-light navbar-expand-lg topnav-menu">
+
+                    <div class="collapse navbar-collapse row" id="topnav-menu-content">
+                        <ul class="navbar-nav din-bold justify-content-center">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle arrow-none" href="/Home" id="topnav-dashboard" role="button">
+                                    <i data-feather="home"></i><span data-key="t-dashboards">الصفحة الرئيسية </span>
+                                </a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle arrow-none" href="/SchoolInfo/Edit" id="topnav-dashboard" role="button">
+                                    <i class="fa fa-building p-1"></i><span data-key="t-dashboards">بيانات المدرسة </span>
+                                </a>
+                            </li>
+
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle arrow-none" href="/Students" id="topnav-dashboard" role="button">
+                                    <i class="fa fa-user p-1"></i><span data-key="t-dashboards">بيانات الطالب / ادارة السجلات </span>
+                                </a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle arrow-none" href="/Students/Graduates" id="topnav-dashboard" role="button">
+                                    <i class="fa fa-graduation-cap p-1"></i><span data-key="t-dashboards">عرض الخريجين </span>
+                                </a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle arrow-none" href="/Students/Graduates" id="topnav-dashboard" role="button">
+                                    <i class="fa fa-user-alt-slash p-1"></i><span data-key="t-dashboards">المحولين من المدرسة </span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </div>
+        <!-- Left Sidebar End -->
+        <!-- ============================================================== -->
+        <!-- Start right Content here -->
+        <!-- ============================================================== -->
+        <div class="main-content" style="min-width:60%;">
+
+            <div class="page-content pt-5" id="kt_content">
+                <div class="container-fluid mt-5">
+
+                    <div class="row din-med">
+                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                            @RenderBody()
+
+                        </div>
+
+                    </div>
+
+
+                    <input type="hidden" id="printTotalVal" />
+                    @*========= نهاية هيدر وفوتر التقرير ============*@
+
+                </div>
+            </div>
+        </div>
+        <footer class="footer" style="margin-right:50px">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-6">
+                        @*<script>document.write(new Date().getFullYear())</script>*@
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="text-sm-end d-none d-sm-block">
+                            Design & Develop by
+                            <a href="https://www.vts-co.com" class="text-decoration-underline">VTS</a>
+                            <span>v.1</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- end main content-->
+    <!-- END layout-wrapper -->
+    <div class="right-bar d-none">
+        @*لاخفاء رسالة الخطأ فى الكونسول app.js*@
+        <div data-simplebar class="h-100">
+            <div class="rightbar-title d-flex align-items-center p-3">
+
+                <h5 class="m-0 me-2">Theme Customizer</h5>
+
+                <a href="javascript:void(0);" class="right-bar-toggle ms-auto">
+                    <i class="mdi mdi-close noti-icon"></i>
+                </a>
+            </div>
+
+            <!-- Settings -->
+            <hr class="m-0" />
+
+            <div class="p-4">
+                <h6 class="mb-3">Layout</h6>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="layout"
+                           id="layout-vertical" value="vertical">
+                    <label class="form-check-label" for="layout-vertical">Vertical</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="layout"
+                           id="layout-horizontal" value="horizontal">
+                    <label class="form-check-label" for="layout-horizontal">Horizontal</label>
+                </div>
+
+                <h6 class="mt-4 mb-3 pt-2">Layout Mode</h6>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="layout-mode"
+                           id="layout-mode-light" value="light">
+                    <label class="form-check-label" for="layout-mode-light">Light</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="layout-mode"
+                           id="layout-mode-dark" value="dark">
+                    <label class="form-check-label" for="layout-mode-dark">Dark</label>
+                </div>
+
+                <h6 class="mt-4 mb-3 pt-2">Layout Width</h6>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="layout-width"
+                           id="layout-width-fuild" value="fuild" onchange="document.body.setAttribute('data-layout-size', 'fluid')">
+                    <label class="form-check-label" for="layout-width-fuild">Fluid</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="layout-width"
+                           id="layout-width-boxed" value="boxed" onchange="document.body.setAttribute('data-layout-size', 'boxed')">
+                    <label class="form-check-label" for="layout-width-boxed">Boxed</label>
+                </div>
+
+                <h6 class="mt-4 mb-3 pt-2">Layout Position</h6>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="layout-position"
+                           id="layout-position-fixed" value="fixed" onchange="document.body.setAttribute('data-layout-scrollable', 'false')">
+                    <label class="form-check-label" for="layout-position-fixed">Fixed</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="layout-position"
+                           id="layout-position-scrollable" value="scrollable" onchange="document.body.setAttribute('data-layout-scrollable', 'true')">
+                    <label class="form-check-label" for="layout-position-scrollable">Scrollable</label>
+                </div>
+
+                <h6 class="mt-4 mb-3 pt-2">Topbar Color</h6>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="topbar-color"
+                           id="topbar-color-light" value="light" onchange="document.body.setAttribute('data-topbar', 'light')">
+                    <label class="form-check-label" for="topbar-color-light">Light</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="topbar-color"
+                           id="topbar-color-dark" value="dark" onchange="document.body.setAttribute('data-topbar', 'dark')">
+                    <label class="form-check-label" for="topbar-color-dark">Dark</label>
+                </div>
+
+                <h6 class="mt-4 mb-3 pt-2 sidebar-setting">Sidebar Size</h6>
+
+                <div class="form-check sidebar-setting">
+                    <input class="form-check-input" type="radio" name="sidebar-size"
+                           id="sidebar-size-default" value="default" onchange="document.body.setAttribute('data-sidebar-size', 'lg')">
+                    <label class="form-check-label" for="sidebar-size-default">Default</label>
+                </div>
+                <div class="form-check sidebar-setting">
+                    <input class="form-check-input" type="radio" name="sidebar-size"
+                           id="sidebar-size-compact" value="compact" onchange="document.body.setAttribute('data-sidebar-size', 'md')">
+                    <label class="form-check-label" for="sidebar-size-compact">Compact</label>
+                </div>
+                <div class="form-check sidebar-setting">
+                    <input class="form-check-input" type="radio" name="sidebar-size"
+                           id="sidebar-size-small" value="small" onchange="document.body.setAttribute('data-sidebar-size', 'sm')">
+                    <label class="form-check-label" for="sidebar-size-small">Small (Icon View)</label>
+                </div>
+
+                <h6 class="mt-4 mb-3 pt-2 sidebar-setting">Sidebar Color</h6>
+
+                <div class="form-check sidebar-setting">
+                    <input class="form-check-input" type="radio" name="sidebar-color"
+                           id="sidebar-color-light" value="light" onchange="document.body.setAttribute('data-sidebar', 'light')">
+                    <label class="form-check-label" for="sidebar-color-light">Light</label>
+                </div>
+                <div class="form-check sidebar-setting">
+                    <input class="form-check-input" type="radio" name="sidebar-color"
+                           id="sidebar-color-dark" value="dark" onchange="document.body.setAttribute('data-sidebar', 'dark')">
+                    <label class="form-check-label" for="sidebar-color-dark">Dark</label>
+                </div>
+                <div class="form-check sidebar-setting">
+                    <input class="form-check-input" type="radio" name="sidebar-color"
+                           id="sidebar-color-brand" value="brand" onchange="document.body.setAttribute('data-sidebar', 'brand')">
+                    <label class="form-check-label" for="sidebar-color-brand">Brand</label>
+                </div>
+
+                <h6 class="mt-4 mb-3 pt-2">Direction</h6>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="layout-direction"
+                           id="layout-direction-ltr" value="ltr">
+                    <label class="form-check-label" for="layout-direction-ltr">LTR</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="layout-direction"
+                           id="layout-direction-rtl" value="rtl">
+                    <label class="form-check-label" for="layout-direction-rtl">RTL</label>
+                </div>
+
+            </div>
+
+        </div> <!-- end slimscroll-menu-->
+    </div>
+    <!-- /Right-bar -->
+    <!-- END layout-wrapper -->
+    <!-- JAVASCRIPT -->
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+
+    <script src="~/assets/libs/jquery/jquery.min.js"></script>
+    <script src="~/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/assets/libs/metismenu/metisMenu.min.js"></script>
+    <script src="~/assets/libs/simplebar/simplebar.min.js"></script>
+    <script src="~/assets/libs/node-waves/waves.min.js"></script>
+    <script src="~/assets/libs/feather-icons/feather.min.js"></script>
+    <!-- pace js -->
+    <script src="~/assets/libs/pace-js/pace.min.js"></script>
+    <script src="~/assets/libs/sweetalert2/sweetalert2.min.js"></script>
+    <script src="~/assets/js/app.js"></script>
+    <script src="~/assets/libs/choices.js/public/assets/scripts/choices.min.js"></script>
+    <script>
+        var elements = document.getElementsByClassName("searchable");
+        for (var i = 0; i < elements.length; i++) {
+            const choices = new Choices(elements[i], { shouldSort: false });
+        }
+    </script>
+    <script src="~/assets/libs/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="~/assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <!-- Responsive examples -->
+    <script src="~/assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="~/assets/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+
+
+    <script src="~/assets/js/jstree.js"></script>
+
+    <script src="~/assets/js/jstree.min.js"></script>
+
+
+    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script>
+    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.print.min.js"></script>
+
+
+    <script>
+        $('#datatable').DataTable({
+            "lengthChange": true,
+            "lengthMenu": [10, 25, 50, 75, 100],
+
+            language: {
+                search: "بحث:",
+                lengthMenu: "عرض _MENU_ عنصر لكل صفحة",
+
+                info: "العناصر من _START_ الي _END_ من اصل _TOTAL_ عنصر",
+                processing: "جارى التحميل",
+                zeroRecords: "لا يوجد سجلات لعرضها",
+                infoFiltered: "",
+                infoEmpty: 'لا يوجد سجلات متاحه',
+                paginate: {
+                    first: "الاول",
+                    last: "الاخير",
+                    next: 'التالي',
+                    previous: 'السابق'
+                }
+
+            }, order: [[0, 'desc']],
+            dom: 'Blfrtip',
+            buttons: [
+                {
+                    extend: 'copy',
+                    text: '<i class="fa fa-file p-1"></i>نسخ',
+                    className: 'btn btn-default'
+                },
+                {
+                    extend: 'excel',
+                    text: '<i class="fa fa-list-alt p-1"></i>نسخة اكسيل',
+                    className: 'btn btn-default',
+
+                },
+                {
+                    extend: 'print',
+                    text: '<i class="fa fa-print p-1"></i>طباعة',
+                    title: '@TempData["SettingTitle"]',
+                    className: 'btn btn-default',
+                    autoPrint: true,
+
+                    customize: function (win) {
+                        $(win.document.body).find('th').addClass('display').css('text-align', 'center');
+                        $(win.document.body).find('table').addClass('display').css('font-size', '16px');
+                        $(win.document.body).find('table').addClass('display').css('text-align', 'center');
+                        $(win.document.body).find('tr:nth-child(odd) td').each(function (index) {
+                            $(this).css('background-color', '#D0D0D0');
+                        });
+                        $(win.document.body).find('h1').css('text-align', 'center');
+                        $(win.document.body).css('direction', 'rtl');
+
+                    }
+                }
+            ]
+
+        });
+        //var datatable_length = document.getElementsByName("datatable_length").value;
+        //console.log(datatable_length);
+
+        $("#datatable_length").addClass("col-lg-5 mt-2");
+        $("#datatable_filter").addClass("mt-2 col-lg-3");
+        $("#datatable_paginate").addClass("col-lg-4");
+        //$("#datatable_info").addClass("col-lg-8");
+
+        var element = document.getElementById('datatable_paginate');
+        var element2 = document.getElementById('datatable_filter');
+        var element3 = document.getElementById('datatable_info');
+
+        element2.after(element);
+
+        //$("#datatable_paginate").clone().insertAfter($("#datatable_info"));
+
+
+    </script>
+
+
+    <script>
+
+        function setDefaultSort() {
+            var dataTables = document.getElementById("datatable");
+            console.log("jkk");
+            for (var i = 0; i < (dataTables.length); i++) {
+                var columns = dataTables[i].getElementsByTagName("th");
+                for (var x = 0; x < (columns.length); x++) {
+                    if (jQuery(columns[x]).hasClass("dataTable-defaultSort")) {
+                        $.fn.dataTableExt.iApiIndex = i;
+                        oTable.fnSort([x, 'desc']);
+                    }
+                }
+            }
+            $.fn.dataTableExt.iApiIndex = 0;
+        }
+    </script>
+
+
+
+    <script>
+        function myFunction() {
+            // Declare variables
+            var input, filter, ul, ul2, li, li2, a, a2, i, j, count;
+            input = document.getElementById("mySearch");
+            filter = input.value.toUpperCase();
+
+            ul = document.getElementById("side-menu");
+            li = ul.getElementsByClassName("Stund");
+
+            // Loop through all list items, and hide those who don't match the search query
+            for (i = 0; i < li.length; i++) {
+                count = 0;
+                a = li[i].getElementsByTagName("a")[0];
+
+                ul2 = li[i].getElementsByTagName("ul")[0];
+
+                li2 = ul2.getElementsByClassName("Stund2");
+
+                if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
+
+                    li[i].style.display = "";
+                }
+                else {
+                    li[i].style.display = "none";
+
+                }
+
+                for (j = 0; j < li2.length; j++) {
+                    {
+                        a2 = li2[j].getElementsByTagName("a")[0];
+
+                        if (a2.innerHTML.toUpperCase().indexOf(filter) > -1) {
+
+                            li2[j].style.display = "";
+                            count += 1;
+                        }
+                        else {
+                            li2[j].style.display = "none";
+
+                        }
+                    }
+                    if (count > 0) {
+                        li[i].style.display = "";
+                        ul2.style.display = "block";
+                    }
+                }
+
+                if (input.value == "") {
+                    ul2.style.display = "";
+                }
+            }
+
+        }
+    </script>
+
+
+    <script>
+        function setCookie(name, value, days) {
+            var expires = "";
+            if (days) {
+                var date = new Date();
+                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                expires = "; expires=" + date.toUTCString();
+            }
+            document.cookie = name + "=" + (value || "") + expires + "; path=/";
+        }
+        function getCookie(name) {
+            var nameEQ = name + "=";
+            var ca = document.cookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+            }
+            return null;
+        }
+        function eraseCookie(name) {
+            document.cookie = name + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+        }
+        var darkmode = getCookie('darkmode');
+        if (darkmode == 'on') {
+            $('body').attr('data-layout-mode', 'dark');
+            $('body').attr('data-sidebar', 'dark');
+            $('body').attr('data-topbar', 'dark');
+
+        }
+        function setdarkmode() {
+
+            if (darkmode == 'on') {
+                setCookie('darkmode', 'off', 120);
+            }
+            else {
+                setCookie('darkmode', 'on', 120);
+            }
+        }
+    </script>
+    <script src="~/assets/Custome/popupfunctions.js"></script>
+    <script src="~/assets/js/pages/fontawesome.init.js"></script>
+
+
+    <script src="/assets/trumbowygEditor/jquery-3.3.1.min.js"></script>
+    <script>window.jQuery || document.write('<script src="/assets/trumbowygEditor/jquery-3.3.1.min.js"><\/script>')</script>
+    <script src="/assets/trumbowygEditor/trumbowyg.min.js"></script>
+
+    <script src="/assets/trumbowygEditor/plugins/base64/trumbowyg.base64.min.js"></script>
+    <script src="/assets/trumbowygEditor/plugins/cleanpaste/trumbowyg.cleanpaste.min.js"></script>
+    <script src="/assets/trumbowygEditor/plugins/colors/trumbowyg.colors.min.js"></script>
+    <script src="/assets/trumbowygEditor/plugins/emoji/trumbowyg.emoji.min.js"></script>
+    <script src="/assets/trumbowygEditor/plugins/fontfamily/trumbowyg.fontfamily.min.js"></script>
+    <script src="/assets/trumbowygEditor/plugins/fontsize/trumbowyg.fontsize.min.js"></script>
+    <script src="/assets/trumbowygEditor/plugins/history/trumbowyg.history.min.js"></script>
+    <script src="/assets/trumbowygEditor/plugins/indent/trumbowyg.indent.min.js"></script>
+    <script src="/assets/trumbowygEditor/plugins/insertaudio/trumbowyg.insertaudio.min.js"></script>
+    <script src="/assets/trumbowygEditor/plugins/lineheight/trumbowyg.lineheight.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    <script src="/assets/trumbowygEditor/plugins/mathml/trumbowyg.mathml.min.js"></script>
+
+    <script src="/assets/trumbowygEditor/plugins/noembed/trumbowyg.noembed.min.js"></script>
+    <script src="/assets/trumbowygEditor/plugins/pasteembed/trumbowyg.pasteembed.min.js"></script>
+    <script src="/assets/trumbowygEditor/plugins/pasteimage/trumbowyg.pasteimage.min.js"></script>
+
+    <script src="https://rawcdn.githack.com/RickStrahl/jquery-resizable/0.35/dist/jquery-resizable.min.js"></script>
+
+
+    <script src="/assets/trumbowygEditor/plugins/resizimg/trumbowyg.resizimg.min.js"></script>
+    <script src="/assets/trumbowygEditor/plugins/specialchars/trumbowyg.specialchars.min.js"></script>
+
+
+
+    <script type="text/javascript">
+
+        MathJax.Hub.Config({ tex2jax: { inlineMath: [['$', '$'], ['\\(', '\\)']] } });
+
+
+
+        $('.editor').trumbowyg({
+            imageWidthModalEdit: true,
+            btns: [
+                ['foreColor', 'backColor', 'strong', 'em', 'del', 'emoji', 'fontfamily', 'fontsize', 'lineheight'],
+                ['formatting'],
+                ['superscript', 'subscript'],
+                ['indent', 'outdent'],
+                ['justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull'],
+                ['unorderedList', 'orderedList'],
+                ['horizontalRule'],
+                ['mathml'],
+                ['insertImage', 'base64', 'insertAudio', 'noembed', 'link'],
+                ['historyUndo', 'historyRedo', 'removeformat'],
+                ['viewHTML', 'fullscreen']
+
+            ],
+            autogrow: true
+        });
+
+        plugins: {
+            color: { allowCustomForeColor: true; }
+        }
+
+    </script>
+
+    @if (TempData["warning"] != null)
+    {
+        <script>
+
+        invokeAlert('@TempData["warning"]', '', 'warning', 2000);
+        </script>
+        TempData["warning"] = null;
+    }
+    @if (TempData["success"] != null)
+    {
+        <script>
+
+            invokeAlert('@TempData["success"]','', 'success', 2000);
+        </script>
+        TempData["success"] = null;
+    }
+    @if (TempData["danger"] != null)
+    {
+        <script>
+        invokeAlert('@TempData["danger"]', '', 'danger', 2000);
+        </script>
+        TempData["danger"] = null;
+    }
+    @if (TempData["info"] != null)
+    {
+        <script>
+        invokeAlert('@TempData["info"]', '', 'info', 2000);
+        </script>
+        TempData["info"] = null;
+    }
+    @RenderSection("scripts", required: false)
+
+
+</body>
+</html>

@@ -1,0 +1,475 @@
+﻿@model StudentAffairs.Models.Student
+@using StudentAffairs.Utilities
+@{
+    ViewBag.Title = (Model.Id == Guid.Empty ? "إضافة " : "تعديل ") + " طالب  ";
+    string action = Model.Id == Guid.Empty ? "Create" : "Edit";
+    ViewBag.MainPage = "بيانات الطلاب";
+
+}
+@using (Html.BeginForm(action, "Students", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+
+    <div class="card">
+        <div class="card-header">
+            <div class="row justify-content-between">
+                <h4 class="col-auto">@ViewBag.Title</h4>
+                @Url.BackToList()
+            </div>
+        </div>
+        <div class="card-body">
+            @Html.HiddenFor(model => model.Id)
+            <div class="row">
+                <div class="form-group mb-3 col-sm-12">
+                    @Html.Label("بيانات الطالب", htmlAttributes: new { @class = "control-label" })
+
+                </div>
+                <div class="form-group mb-3 col-sm-4">
+                    @Html.Label("كود الطالب", htmlAttributes: new { @class = "control-label" })
+                    <div class="col-12">
+                        @Html.EditorFor(model => model.Code, new { htmlAttributes = new { @class = "form-control", type = "number" } })
+                        @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group mb-3 col-sm-4">
+                    @Html.Label("اسم الطالب", htmlAttributes: new { @class = "control-label" })
+                    <div class="col-12">
+                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group mb-3 col-sm-4">
+                    @Html.Label("هاتف الطالب", htmlAttributes: new { @class = "control-label" })
+                    <div class="col-12">
+                        @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                        @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group mb-3 col-sm-6">
+                    @Html.Label("الصف ", htmlAttributes: new { @class = "control-label" })
+                    <div class="col-12">
+                        @Html.DropDownListFor(model => model.LevelId, null, "--اختر--", new { @class = "form-control", required = "required" })
+                        @Html.ValidationMessageFor(model => model.LevelId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group mb-3 col-sm-4">
+                    @Html.Label("الفصل ", htmlAttributes: new { @class = "control-label" })
+                    <div class="col-12">
+                        @Html.DropDownListFor(model => model.ClassId, null, "--اختر--", new { @class = "form-control", required = "required" })
+                        @Html.ValidationMessageFor(model => model.ClassId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group mb-3 col-sm-4">
+                    @Html.Label("رقم الجلوس", htmlAttributes: new { @class = "control-label" })
+                    <div class="col-12">
+                        @Html.EditorFor(model => model.SeatNumber, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.SeatNumber, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group mb-3 col-sm-6">
+                    @Html.Label("الديانة ", htmlAttributes: new { @class = "control-label" })
+                    <div class="col-12">
+                        @Html.DropDownListFor(model => model.ReligionId, null, "--اختر--", new { @class = "form-control", required = "required" })
+                        @Html.ValidationMessageFor(model => model.ReligionId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group mb-3 col-sm-4">
+                    @Html.Label("الجنسية ", htmlAttributes: new { @class = "control-label" })
+                    <div class="col-12">
+                        @Html.DropDownListFor(model => model.NationalityId, null, "--اختر--", new { @class = "form-control", required = "required" })
+                        @Html.ValidationMessageFor(model => model.NationalityId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group mb-3 col-sm-6">
+                    @Html.Label("المصروفات ", htmlAttributes: new { @class = "control-label" })
+                    <div class="col-12">
+                        @Html.DropDownListFor(model => model.ExpenseTypeId, null, "--اختر--", new { @class = "form-control", required = "required" })
+                        @Html.ValidationMessageFor(model => model.ExpenseTypeId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group mb-3 col-sm-4">
+                    @Html.Label("سبب الاعفاء ", htmlAttributes: new { @class = "control-label" })
+                    <div class="col-12">
+                        @Html.DropDownListFor(model => model.ExemptionReasonId, null, "--اختر--", new { @class = "form-control", required = "required" })
+                        @Html.ValidationMessageFor(model => model.ExemptionReasonId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group mb-3 col-sm-4">
+                    @Html.Label("نتيجة اخر العام", htmlAttributes: new { @class = "control-label" })
+                    <div class="col-12">
+                        @Html.DropDownListFor(model => model.EndYearResultId, null, "--اختر--", new { @class = "form-control", required = "required" })
+                        @Html.ValidationMessageFor(model => model.EndYearResultId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group mb-3 col-sm-4">
+                    @Html.Label("نتيجة دور ثان", htmlAttributes: new { @class = "control-label" })
+                    <div class="col-12">
+                        @Html.DropDownListFor(model => model.SecondRoundResultId, null, "--اختر--", new { @class = "form-control", required = "required" })
+                        @Html.ValidationMessageFor(model => model.SecondRoundResultId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group mb-3 col-sm-4">
+                    @Html.Label("الحالة الصحية", htmlAttributes: new { @class = "control-label" })
+                    <div class="col-12">
+                        @Html.EditorFor(model => model.MotherName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.MotherName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group mb-3 col-sm-4">
+                    @Html.Label("نتيجة ترم اول", htmlAttributes: new { @class = "control-label" })
+                    <div class="col-12">
+                        @Html.EditorFor(model => model.FirstSemesterResult, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.FirstSemesterResult, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group mb-3 col-sm-4">
+                    @Html.Label("دمج تعليمي", htmlAttributes: new { @class = "control-label" })
+                    <div class="col-12">
+                        @Html.DropDownListFor(model => model.EducationalIntegration, null, "--اختر--", new { @class = "form-control", required = "required" })
+                        @Html.ValidationMessageFor(model => model.EducationalIntegration, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group mb-3 col-sm-4">
+                    @Html.Label("محول الي المدرسة", htmlAttributes: new { @class = "control-label" })
+                    <div class="col-12">
+                        @Html.DropDownListFor(model => model.TransferredToTheSchool, null, "--اختر--", new { @class = "form-control", required = "required" })
+                        @Html.ValidationMessageFor(model => model.TransferredToTheSchool, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group mb-3 col-sm-12">
+                    @Html.Label("العنوان ", htmlAttributes: new { @class = "control-label" })
+                    <div class="col-12">
+                        @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                        @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+
+                <div class="form-group mb-3 col-sm-12">
+                    @Html.Label("بيانات الرقم القومي والقيد", htmlAttributes: new { @class = "control-label" })
+
+                </div>
+
+                <div class="form-group mb-3 col-sm-6">
+                    @Html.Label("الرقم القومي ", htmlAttributes: new { @class = "control-label" })
+                    <div class="col-12">
+                        @Html.EditorFor(model => model.NumberId, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.NumberId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group mb-3 col-sm-6">
+                    @Html.Label("تاريخ الميلاد", htmlAttributes: new { @class = "control-label" })
+                    <div class="col-12">
+                        @Html.TextBoxFor(model => model.BirthDate, new { @class = "form-control", @Value = @ViewBag.BirthDate, type = "date", required = "required" })
+                        @Html.ValidationMessageFor(model => model.BirthDate, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group mb-3 col-sm-4">
+                    @Html.Label("يوم ", htmlAttributes: new { @class = "control-label" })
+                    <div class="col-12">
+                        @Html.EditorFor(model => model.Day, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Day, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group mb-3 col-sm-4">
+                    @Html.Label("شهر ", htmlAttributes: new { @class = "control-label" })
+                    <div class="col-12">
+                        @Html.EditorFor(model => model.Month, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Month, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group mb-3 col-sm-4">
+                    @Html.Label("سنة ", htmlAttributes: new { @class = "control-label" })
+                    <div class="col-12">
+                        @Html.EditorFor(model => model.Year, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Year, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group mb-3 col-sm-6">
+                    @Html.Label("محافظة الميلاد ", htmlAttributes: new { @class = "control-label" })
+                    <div class="col-12">
+                        @Html.DropDownListFor(model => model.CityId, null, "--اختر--", new { @class = "form-control", required = "required" })
+                        @Html.ValidationMessageFor(model => model.CityId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group mb-3 col-sm-6">
+                    @Html.Label("النوع ", htmlAttributes: new { @class = "control-label" })
+                    <div class="col-12">
+                        @Html.DropDownListFor(model => model.GenderId, null, "--اختر--", new { @class = "form-control", required = "required" })
+                        @Html.ValidationMessageFor(model => model.GenderId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group mb-3 col-sm-4">
+                    @Html.Label("حالة القيد ", htmlAttributes: new { @class = "control-label" })
+                    <div class="col-12">
+                        @Html.DropDownListFor(model => model.RegistrationStateId, null, "--اختر--", new { @class = "form-control", required = "required" })
+                        @Html.ValidationMessageFor(model => model.RegistrationStateId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group mb-3 col-sm-6">
+                    @Html.Label("رقم القيد", htmlAttributes: new { @class = "control-label" })
+                    <div class="col-12">
+                        @Html.EditorFor(model => model.RegistrationNum, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.RegistrationNum, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group mb-3 col-sm-6">
+                    @Html.Label("تاريخ القيد", htmlAttributes: new { @class = "control-label" })
+                    <div class="col-12">
+                        @Html.TextBoxFor(model => model.RegistrationDate, new { @class = "form-control", @Value = @ViewBag.RegistrationDate, type = "date", required = "required" })
+                        @Html.ValidationMessageFor(model => model.RegistrationDate, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+
+                <div class="form-group mb-3 col-sm-12">
+                    @Html.Label("بيانات ولي الامر", htmlAttributes: new { @class = "control-label" })
+
+                </div>
+
+                <div class="form-group mb-3 col-sm-4">
+                    @Html.Label("اسم ولي الامر", htmlAttributes: new { @class = "control-label" })
+                    <div class="col-12">
+                        @Html.EditorFor(model => model.ParentName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.ParentName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group mb-3 col-sm-4">
+                    @Html.Label("عنوانه", htmlAttributes: new { @class = "control-label" })
+                    <div class="col-12">
+                        @Html.EditorFor(model => model.ParentAddress, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.ParentAddress, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group mb-3 col-sm-4">
+                    @Html.Label("الوظيفة", htmlAttributes: new { @class = "control-label" })
+                    <div class="col-12">
+                        @Html.EditorFor(model => model.ParentJob, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.ParentJob, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group mb-3 col-sm-4">
+                    @Html.Label("الهاتف", htmlAttributes: new { @class = "control-label" })
+                    <div class="col-12">
+                        @Html.EditorFor(model => model.ParentPhone, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.ParentPhone, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group mb-3 col-sm-4">
+                    @Html.Label("واتساب", htmlAttributes: new { @class = "control-label" })
+                    <div class="col-12">
+                        @Html.EditorFor(model => model.ParentJob, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.ParentJob, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group mb-3 col-sm-4">
+                    @Html.Label("اسم الأم", htmlAttributes: new { @class = "control-label" })
+                    <div class="col-12">
+                        @Html.EditorFor(model => model.MotherName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.MotherName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group mb-3 col-sm-4">
+                    @Html.Label("الهاتف 2", htmlAttributes: new { @class = "control-label" })
+                    <div class="col-12">
+                        @Html.EditorFor(model => model.MotherPhone, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.MotherPhone, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group mb-3 col-sm-4">
+                    @Html.Label("الحالة الاجتماعية ", htmlAttributes: new { @class = "control-label" })
+                    <div class="col-12">
+                        @Html.DropDownListFor(model => model.SocialStateId, null, "--اختر--", new { @class = "form-control", required = "required" })
+                        @Html.ValidationMessageFor(model => model.SocialStateId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group mb-3 col-sm-12">
+                    @Html.Label("بيانات خاصة بالثانوي", htmlAttributes: new { @class = "control-label" })
+
+                </div>
+                <div class="form-group mb-3 col-sm-8">
+                    <div class="row">
+                        <div class="form-group mb-3 col-sm-6">
+                            @Html.Label(" سيريال التابلت", htmlAttributes: new { @class = "control-label" })
+                            <div class="col-12">
+                                @Html.EditorFor(model => model.TabletSerialNumber, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.TabletSerialNumber, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group mb-3 col-sm-6">
+                            @Html.Label("الشعبة", htmlAttributes: new { @class = "control-label" })
+                            <div class="col-12">
+                                @Html.DropDownListFor(model => model.ScienceDivisionId, null, "--اختر--", new { @class = "form-control", required = "required" })
+                                @Html.ValidationMessageFor(model => model.ScienceDivisionId, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group mb-3 col-sm-6">
+                            @Html.Label("IM", htmlAttributes: new { @class = "control-label" })
+                            <div class="col-12">
+                                @Html.EditorFor(model => model.IM, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.IM, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group mb-3 col-sm-6">
+                            @Html.Label("اللغة الثانية", htmlAttributes: new { @class = "control-label" })
+                            <div class="col-12">
+                                @Html.DropDownListFor(model => model.SecondLanguageIId, null, "--اختر--", new { @class = "form-control", required = "required" })
+                                @Html.ValidationMessageFor(model => model.SecondLanguageIId, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group mb-3 col-sm-12">
+                            @Html.Label("تاريخ الاستلام", htmlAttributes: new { @class = "control-label" })
+                            <div class="col-12">
+                                @Html.TextBoxFor(model => model.DateOfReceipt, new { @class = "form-control", @Value = @ViewBag.DateOfReceipt, type = "date", required = "required" })
+                                @Html.ValidationMessageFor(model => model.DateOfReceipt, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group mb-3 col-sm-6">
+                            @Html.Label("رقم بوليصة التأمين", htmlAttributes: new { @class = "control-label" })
+                            <div class="col-12">
+                                @Html.EditorFor(model => model.InsurancePolicyNumber, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.InsurancePolicyNumber, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group mb-3 col-sm-12">
+                            @Html.Label("تاريخها", htmlAttributes: new { @class = "control-label" })
+                            <div class="col-12">
+                                @Html.TextBoxFor(model => model.InsurancePolicyDate, new { @class = "form-control", @Value = @ViewBag.InsurancePolicyDate, type = "date", required = "required" })
+                                @Html.ValidationMessageFor(model => model.InsurancePolicyDate, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group mb-3 col-sm-4">
+                    <div class="row">
+                        <div class="form-group mb-3 col-sm-6">
+                            @Html.Label("الصورة الشخصية", htmlAttributes: new { @class = "control-label" })
+                            <div class="col-12">
+                                <input type="file" name="Image1" id="Image1" accept="image/*" class="form-control" onchange="loadFile(event)" />
+
+                                @*@Html.Editor("Image1", new { htmlAttributes = new { @class = "form-control", type = "file", accept = "image/*" } })*@
+                                @Html.ValidationMessage("Image1", "", new { @class = "text-danger" })
+                            </div>
+                            @if (Model.Id == Guid.Empty)
+                            {
+                                <img id="output" height="100" width="100" style="display:none" />
+                            }
+                            else
+                            {
+                                <img id="output" height="100" width="100" src="@Model.Image" />
+                            }
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <div class="form-group mb-3 col-sm-12">
+                    @Html.Label("لائحة التحفيز والانضباط", htmlAttributes: new { @class = "control-label" })
+
+                </div>
+                <div class="form-group mb-3 col-sm-4">
+                    @Html.Label("لجنة الحماية ", htmlAttributes: new { @class = "control-label" })
+                    <div class="col-12">
+                        @Html.DropDownListFor(model => model.ProtectionCommittee, null, "--اختر--", new { @class = "form-control", required = "required" })
+                        @Html.ValidationMessageFor(model => model.ProtectionCommittee, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group mb-3 col-sm-6">
+                    @Html.Label("من تاريخ  ", htmlAttributes: new { @class = "control-label" })
+                    <div class="col-12">
+                        @Html.TextBoxFor(model => model.FromDate, new { @class = "form-control", @Value = @ViewBag.JoiningDate, type = "date", required = "required" })
+                        @Html.ValidationMessageFor(model => model.ToDate, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group mb-3 col-sm-6">
+                    @Html.Label("المدة ", htmlAttributes: new { @class = "control-label" })
+                    <div class="col-12">
+                        @Html.EditorFor(model => model.Duration, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Duration, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group mb-3 col-sm-6">
+                    @Html.Label("الي تاريخ  ", htmlAttributes: new { @class = "control-label" })
+                    <div class="col-12">
+                        @Html.TextBoxFor(model => model.ToDate, new { @class = "form-control", @Value = @ViewBag.JoiningDate, type = "date", required = "required" })
+                        @Html.ValidationMessageFor(model => model.ToDate, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group mb-3 col-sm-12">
+                    @Html.Label("المشكلة ", htmlAttributes: new { @class = "control-label" })
+                    <div class="col-12">
+                        @Html.EditorFor(model => model.Problem, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Problem, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group mb-3 col-sm-12">
+                    @Html.Label("الاجراء المتخذ ", htmlAttributes: new { @class = "control-label" })
+                    <div class="col-12">
+                        @Html.EditorFor(model => model.ActionTaken, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.ActionTaken, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+
+                <div class="form-group mb-3 col-sm-12">
+                    @Html.Label("بيانات اخري", htmlAttributes: new { @class = "control-label" })
+
+                </div>
+
+                <div class="form-group mb-3 col-sm-12">
+                    @Html.Label("المواهب ", htmlAttributes: new { @class = "control-label" })
+                    <div class="col-12">
+                        @Html.EditorFor(model => model.Talents, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Talents, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group mb-3 col-sm-12">
+                    @Html.Label("المسابقات ", htmlAttributes: new { @class = "control-label" })
+                    <div class="col-12">
+                        @Html.EditorFor(model => model.Competitions, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Competitions, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+                </div>
+                <div class="card-footer">
+                    <div class="row justify-content-end">
+                        @if (Model.Id == Guid.Empty)
+                        {
+                            @Url.SubmitAdd()
+                        }
+                        else
+                        {
+                            @Url.SubmitSave()
+                        }
+                    </div>
+                </div>
+            </div>
+}
+
+@section scripts{
+    <script type="text/javascript">
+        $("#CityId").change(function () {
+            $.get('/Students/getDestricts', { Id: $("#CityId").val() }, function (data) {
+                $("#DestrictId").empty();
+                $("#DestrictId").append("<option value=''>--اختر--</option>")
+                $.each(data, function (key, value) {
+                    $("#DestrictId").append("<option value=" + value["Id"] + ">" + value["Name"] + "</option>")
+                });
+            });
+        });
+
+        var now = new Date();
+        now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+        if (document.getElementById('BirthDate').value == "") {
+            document.getElementById('BirthDate').value = now.toISOString().slice(0, 10);
+        }
+        if (document.getElementById('JoiningDate').value == "") {
+            document.getElementById('JoiningDate').value = now.toISOString().slice(0, 10);
+        }
+       
+    </script>
+}

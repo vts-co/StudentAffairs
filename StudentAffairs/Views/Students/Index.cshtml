@@ -1,0 +1,130 @@
+﻿@model IEnumerable<StudentAffairs.Dtos.Students.StudentsDto>
+@using StudentAffairs.Utilities
+@using StudentAffairs.Enums
+@{
+    ViewBag.Title = "ادارة السجلات ";
+
+}
+<div class="card">
+    <div class="card-header">
+
+        <div class="row">
+            <h2 class="col">@ViewBag.Title  </h2>
+
+            <p class="col-auto">
+                <a href='/Students/Create' class='btn btn-soft-primary  waves-effect waves-light px-4'><i class="fas fa-plus me-3"></i> اضافة طالب جديد</a>
+            </p>
+
+        </div>
+    </div>
+    @using (Html.BeginForm("Index", "Students", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <div class="card-body">
+            <div class="row mt-3">
+                <div class="form-group mb-3 col-sm-12">
+                    @Html.Label(" كود/ الاسم /الرقم القومي للطالب", htmlAttributes: new { @class = "control-label" })
+                    <div class="col-12">
+                        @Html.Editor("Code", new { htmlAttributes = new { @class = "form-control", type = "number" } })
+                        @*@Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger" })*@
+                    </div>
+                </div>
+
+            </div>
+            <div class="row justify-content-end">
+                <button type='submit' class='btn btn-primary  waves-effect waves-light px-3 m-1 col-12 col-md-auto'><i class='fas fa-search me-1'></i>عرض</button>
+            </div>
+        </div>
+
+    }
+
+    <div class="card-body">
+        <table id="datatable" class="table table-striped dt-responsive  nowrap w-100 table-bordered ">
+            <thead class="bg-soft-primary">
+                <tr>
+                    <th>
+                        @Html.DisplayName("الكود")
+                    </th>
+                    <th>
+                        @Html.DisplayName("الاسم")
+                    </th>
+                    <th>
+                        @Html.DisplayName("رقم التليفون")
+                    </th>
+
+                    <th>
+                        @Html.DisplayName("الصورة الشخصية")
+                    </th>
+                    <th>
+                        @Html.DisplayName("تاريخ الميلاد")
+                    </th>
+                    <th>
+                        @Html.DisplayName("النوع")
+                    </th>
+
+                    <th>
+                        @Html.DisplayName("عمليات")
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Code)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Phone)
+                        </td>
+                        
+                        <td>
+                                <img src="@item.Image" width="50" />
+                            </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BirthDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => ((Gender)item.GenderId).ToString())
+                        </td>
+
+                        <td>
+                            @Url.Edit(routeValues: new { id = item.Id })
+                            @Url.Delete(routeValues: new { id = item.Id })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>
+@section scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $("#StudyTypeId").change(function () {
+            $.get('/Students/getLevels', { Id: $("#StudyTypeId").val() }, function (data) {
+                $("#LevelId").empty();
+                $("#LevelId").append("<option>--اختر--</option>")
+                $.each(data, function (key, value) {
+                    $("#LevelId").append("<option value=" + value["Id"] + ">" + value["Name"] + "</option>")
+                });
+            });
+        });
+        $("#LevelId").change(function () {
+            $.get('/Students/getClasses', { Id: $("#LevelId").val() }, function (data) {
+                $("#ClassId").empty();
+                $("#ClassId").append("<option>--اختر--</option>")
+                $.each(data, function (key, value) {
+                    $("#ClassId").append("<option value=" + value["Id"] + ">" + value["Name"] + "</option>")
+                });
+            });
+        });
+        function excel() {
+            $("#exampleModal").modal('show');
+        }
+
+    </script>
+}
