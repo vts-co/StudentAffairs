@@ -7,7 +7,8 @@ namespace StudentAffairs.Enums
 {
     public enum Role
     {
-        SystemAdmin=1,
-        Employee=2
+        Super_Admin=1,
+        School_Admin,
+        Employee,
     }
 }

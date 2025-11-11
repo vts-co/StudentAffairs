@@ -10,7 +10,26 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Code" Type="nvarchar(max)" />
           <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="SortNum" Type="int" />
+          <Property Name="Notes" Type="nvarchar(max)" />
+          <Property Name="CreatedOn" Type="datetime" />
+          <Property Name="CreatedBy" Type="uniqueidentifier" />
+          <Property Name="ModifiedOn" Type="datetime" />
+          <Property Name="ModifiedBy" Type="uniqueidentifier" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="DeletedOn" Type="datetime" />
+          <Property Name="DeletedBy" Type="uniqueidentifier" />
+        </EntityType>
+        <EntityType Name="CityDepartments">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="CityId" Type="uniqueidentifier" />
+          <Property Name="SchoolId" Type="uniqueidentifier" />
           <Property Name="Notes" Type="nvarchar(max)" />
           <Property Name="CreatedOn" Type="datetime" />
           <Property Name="CreatedBy" Type="uniqueidentifier" />
@@ -26,6 +45,8 @@
           </Key>
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="LevelId" Type="uniqueidentifier" />
+          <Property Name="SchoolId" Type="uniqueidentifier" />
           <Property Name="Notes" Type="nvarchar(max)" />
           <Property Name="CreatedOn" Type="datetime" />
           <Property Name="CreatedBy" Type="uniqueidentifier" />
@@ -40,21 +61,11 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="JopId" Type="uniqueidentifier" />
-          <Property Name="Code" Type="nvarchar" MaxLength="50" />
           <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="Phone" Type="nvarchar(max)" />
           <Property Name="NumberId" Type="nvarchar(max)" />
-          <Property Name="Image" Type="nvarchar(max)" />
-          <Property Name="BirthDate" Type="nvarchar(max)" />
-          <Property Name="Qualification" Type="nvarchar(max)" />
-          <Property Name="GenderId" Type="int" />
-          <Property Name="MaritalStateId" Type="int" />
-          <Property Name="RegistrationTypeId" Type="uniqueidentifier" />
-          <Property Name="Phone" Type="nvarchar" MaxLength="50" />
-          <Property Name="Address" Type="nvarchar(max)" />
-          <Property Name="JoiningDate" Type="nvarchar(max)" />
-          <Property Name="WorkDayCost" Type="float" />
-          <Property Name="ContractOrNo" Type="bit" Nullable="false" />
+          <Property Name="JobId" Type="uniqueidentifier" />
+          <Property Name="SchoolId" Type="uniqueidentifier" />
           <Property Name="Notes" Type="nvarchar(max)" />
           <Property Name="CreatedOn" Type="datetime" />
           <Property Name="CreatedBy" Type="uniqueidentifier" />
@@ -85,6 +96,27 @@
           </Key>
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="SchoolId" Type="uniqueidentifier" />
+          <Property Name="Notes" Type="nvarchar(max)" />
+          <Property Name="CreatedOn" Type="datetime" />
+          <Property Name="CreatedBy" Type="uniqueidentifier" />
+          <Property Name="ModifiedOn" Type="datetime" />
+          <Property Name="ModifiedBy" Type="uniqueidentifier" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="DeletedOn" Type="datetime" />
+          <Property Name="DeletedBy" Type="uniqueidentifier" />
+        </EntityType>
+        <EntityType Name="ExitPermission">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Code" Type="nvarchar(max)" />
+          <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="LevelName" Type="nvarchar(max)" />
+          <Property Name="ExitDate" Type="datetime" />
+          <Property Name="StudentId" Type="uniqueidentifier" />
+          <Property Name="SchoolId" Type="uniqueidentifier" />
           <Property Name="Notes" Type="nvarchar(max)" />
           <Property Name="CreatedOn" Type="datetime" />
           <Property Name="CreatedBy" Type="uniqueidentifier" />
@@ -100,6 +132,7 @@
           </Key>
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="SchoolId" Type="uniqueidentifier" />
           <Property Name="Notes" Type="nvarchar(max)" />
           <Property Name="CreatedOn" Type="datetime" />
           <Property Name="CreatedBy" Type="uniqueidentifier" />
@@ -115,6 +148,7 @@
           </Key>
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="SchoolId" Type="uniqueidentifier" />
           <Property Name="Notes" Type="nvarchar(max)" />
           <Property Name="CreatedOn" Type="datetime" />
           <Property Name="CreatedBy" Type="uniqueidentifier" />
@@ -130,6 +164,8 @@
           </Key>
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="SchoolId" Type="uniqueidentifier" />
+          <Property Name="SortNum" Type="int" />
           <Property Name="Notes" Type="nvarchar(max)" />
           <Property Name="CreatedOn" Type="datetime" />
           <Property Name="CreatedBy" Type="uniqueidentifier" />
@@ -145,6 +181,25 @@
           </Key>
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="SortNum" Type="int" />
+          <Property Name="Notes" Type="nvarchar(max)" />
+          <Property Name="CreatedOn" Type="datetime" />
+          <Property Name="CreatedBy" Type="uniqueidentifier" />
+          <Property Name="ModifiedOn" Type="datetime" />
+          <Property Name="ModifiedBy" Type="uniqueidentifier" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="DeletedOn" Type="datetime" />
+          <Property Name="DeletedBy" Type="uniqueidentifier" />
+        </EntityType>
+        <EntityType Name="Pages">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="Link" Type="nvarchar(max)" />
+          <Property Name="Num" Type="int" />
+          <Property Name="ParentId" Type="uniqueidentifier" />
           <Property Name="Notes" Type="nvarchar(max)" />
           <Property Name="CreatedOn" Type="datetime" />
           <Property Name="CreatedBy" Type="uniqueidentifier" />
@@ -175,6 +230,7 @@
           </Key>
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="SortNum" Type="int" />
           <Property Name="Notes" Type="nvarchar(max)" />
           <Property Name="CreatedOn" Type="datetime" />
           <Property Name="CreatedBy" Type="uniqueidentifier" />
@@ -192,9 +248,11 @@
           <Property Name="Name" Type="nvarchar(max)" />
           <Property Name="Image" Type="nvarchar(max)" />
           <Property Name="CityId" Type="uniqueidentifier" />
+          <Property Name="DepartmentId" Type="uniqueidentifier" />
           <Property Name="SchoolPrincipal" Type="nvarchar(max)" />
           <Property Name="Administration" Type="nvarchar(max)" />
           <Property Name="StudentAffairsOfficer" Type="nvarchar(max)" />
+          <Property Name="SocialWorker" Type="nvarchar(max)" />
           <Property Name="StudyYear" Type="nvarchar(max)" />
           <Property Name="Notes" Type="nvarchar(max)" />
           <Property Name="CreatedOn" Type="datetime" />
@@ -211,6 +269,7 @@
           </Key>
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="SchoolId" Type="uniqueidentifier" />
           <Property Name="Notes" Type="nvarchar(max)" />
           <Property Name="CreatedOn" Type="datetime" />
           <Property Name="CreatedBy" Type="uniqueidentifier" />
@@ -226,6 +285,7 @@
           </Key>
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="SchoolId" Type="uniqueidentifier" />
           <Property Name="Notes" Type="nvarchar(max)" />
           <Property Name="CreatedOn" Type="datetime" />
           <Property Name="CreatedBy" Type="uniqueidentifier" />
@@ -256,6 +316,44 @@
           </Key>
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="SchoolId" Type="uniqueidentifier" />
+          <Property Name="Notes" Type="nvarchar(max)" />
+          <Property Name="CreatedOn" Type="datetime" />
+          <Property Name="CreatedBy" Type="uniqueidentifier" />
+          <Property Name="ModifiedOn" Type="datetime" />
+          <Property Name="ModifiedBy" Type="uniqueidentifier" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="DeletedOn" Type="datetime" />
+          <Property Name="DeletedBy" Type="uniqueidentifier" />
+        </EntityType>
+        <EntityType Name="StudentAttachments">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="StudentId" Type="uniqueidentifier" />
+          <Property Name="FileName" Type="nvarchar(max)" />
+          <Property Name="Notes" Type="nvarchar(max)" />
+          <Property Name="CreatedOn" Type="datetime" />
+          <Property Name="CreatedBy" Type="uniqueidentifier" />
+          <Property Name="ModifiedOn" Type="datetime" />
+          <Property Name="ModifiedBy" Type="uniqueidentifier" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="DeletedOn" Type="datetime" />
+          <Property Name="DeletedBy" Type="uniqueidentifier" />
+        </EntityType>
+        <EntityType Name="StudentReceipt">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Code" Type="nvarchar(max)" />
+          <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="LevelName" Type="nvarchar(max)" />
+          <Property Name="ReceiptDate" Type="datetime" />
+          <Property Name="ReceiptPerson" Type="nvarchar(max)" />
+          <Property Name="StudentId" Type="uniqueidentifier" />
+          <Property Name="SchoolId" Type="uniqueidentifier" />
           <Property Name="Notes" Type="nvarchar(max)" />
           <Property Name="CreatedOn" Type="datetime" />
           <Property Name="CreatedBy" Type="uniqueidentifier" />
@@ -309,7 +407,7 @@
           <Property Name="TabletSerialNumber" Type="nvarchar(max)" />
           <Property Name="ScienceDivisionId" Type="uniqueidentifier" />
           <Property Name="IM" Type="nvarchar(max)" />
-          <Property Name="SecondLanguageIId" Type="uniqueidentifier" />
+          <Property Name="SecondLanguageId" Type="uniqueidentifier" />
           <Property Name="DateOfReceipt" Type="datetime" />
           <Property Name="InsurancePolicyNumber" Type="nvarchar(max)" />
           <Property Name="InsurancePolicyDate" Type="datetime" />
@@ -322,6 +420,7 @@
           <Property Name="Talents" Type="nvarchar(max)" />
           <Property Name="Competitions" Type="nvarchar(max)" />
           <Property Name="StudentTypeId" Type="int" />
+          <Property Name="SchoolId" Type="uniqueidentifier" />
           <Property Name="Notes" Type="nvarchar(max)" />
           <Property Name="CreatedOn" Type="datetime" />
           <Property Name="CreatedBy" Type="uniqueidentifier" />
@@ -336,10 +435,11 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="RoleName" Type="nvarchar(max)" />
           <Property Name="Username" Type="nvarchar(max)" />
           <Property Name="Password" Type="nvarchar(max)" />
           <Property Name="RoleId" Type="int" />
-          <Property Name="EmployeeId" Type="uniqueidentifier" />
+          <Property Name="SchoolId" Type="uniqueidentifier" />
           <Property Name="UserScreens" Type="nvarchar(max)" />
           <Property Name="CreatedOn" Type="datetime" />
           <Property Name="CreatedBy" Type="uniqueidentifier" />
@@ -349,6 +449,54 @@
           <Property Name="DeletedOn" Type="datetime" />
           <Property Name="DeletedBy" Type="uniqueidentifier" />
         </EntityType>
+        <Association Name="FK_CityDepartments_Cities">
+          <End Role="Cities" Type="Self.Cities" Multiplicity="0..1" />
+          <End Role="CityDepartments" Type="Self.CityDepartments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cities">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CityDepartments">
+              <PropertyRef Name="CityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CityDepartments_SchoolInfo">
+          <End Role="SchoolInfo" Type="Self.SchoolInfo" Multiplicity="0..1" />
+          <End Role="CityDepartments" Type="Self.CityDepartments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SchoolInfo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CityDepartments">
+              <PropertyRef Name="SchoolId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Classes_Levels">
+          <End Role="Levels" Type="Self.Levels" Multiplicity="0..1" />
+          <End Role="Classes" Type="Self.Classes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Levels">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Classes">
+              <PropertyRef Name="LevelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Classes_SchoolInfo">
+          <End Role="SchoolInfo" Type="Self.SchoolInfo" Multiplicity="0..1" />
+          <End Role="Classes" Type="Self.Classes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SchoolInfo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Classes">
+              <PropertyRef Name="SchoolId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Employees_Jobs">
           <End Role="Jobs" Type="Self.Jobs" Multiplicity="0..1" />
           <End Role="Employees" Type="Self.Employees" Multiplicity="*" />
@@ -357,7 +505,103 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Employees">
-              <PropertyRef Name="JopId" />
+              <PropertyRef Name="JobId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employees_SchoolInfo">
+          <End Role="SchoolInfo" Type="Self.SchoolInfo" Multiplicity="0..1" />
+          <End Role="Employees" Type="Self.Employees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SchoolInfo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Employees">
+              <PropertyRef Name="SchoolId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ExemptionReasons_SchoolInfo">
+          <End Role="SchoolInfo" Type="Self.SchoolInfo" Multiplicity="0..1" />
+          <End Role="ExemptionReasons" Type="Self.ExemptionReasons" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SchoolInfo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ExemptionReasons">
+              <PropertyRef Name="SchoolId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ExitPermission_SchoolInfo">
+          <End Role="SchoolInfo" Type="Self.SchoolInfo" Multiplicity="0..1" />
+          <End Role="ExitPermission" Type="Self.ExitPermission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SchoolInfo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ExitPermission">
+              <PropertyRef Name="SchoolId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ExitPermission_Students">
+          <End Role="Students" Type="Self.Students" Multiplicity="0..1" />
+          <End Role="ExitPermission" Type="Self.ExitPermission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Students">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ExitPermission">
+              <PropertyRef Name="StudentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ExpenseTypes_SchoolInfo">
+          <End Role="SchoolInfo" Type="Self.SchoolInfo" Multiplicity="0..1" />
+          <End Role="ExpenseTypes" Type="Self.ExpenseTypes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SchoolInfo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ExpenseTypes">
+              <PropertyRef Name="SchoolId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Jobs_SchoolInfo">
+          <End Role="SchoolInfo" Type="Self.SchoolInfo" Multiplicity="0..1" />
+          <End Role="Jobs" Type="Self.Jobs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SchoolInfo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Jobs">
+              <PropertyRef Name="SchoolId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Levels_SchoolInfo">
+          <End Role="SchoolInfo" Type="Self.SchoolInfo" Multiplicity="0..1" />
+          <End Role="Levels" Type="Self.Levels" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SchoolInfo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Levels">
+              <PropertyRef Name="SchoolId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pages_Pages1">
+          <End Role="Pages" Type="Self.Pages" Multiplicity="0..1" />
+          <End Role="Pages1" Type="Self.Pages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pages">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Pages1">
+              <PropertyRef Name="ParentId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -370,6 +614,90 @@
             </Principal>
             <Dependent Role="SchoolInfo">
               <PropertyRef Name="CityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SchoolInfo_CityDepartments">
+          <End Role="CityDepartments" Type="Self.CityDepartments" Multiplicity="0..1" />
+          <End Role="SchoolInfo" Type="Self.SchoolInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CityDepartments">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SchoolInfo">
+              <PropertyRef Name="DepartmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ScienceDivision_SchoolInfo">
+          <End Role="SchoolInfo" Type="Self.SchoolInfo" Multiplicity="0..1" />
+          <End Role="ScienceDivision" Type="Self.ScienceDivision" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SchoolInfo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ScienceDivision">
+              <PropertyRef Name="SchoolId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SecondLanguage_SchoolInfo">
+          <End Role="SchoolInfo" Type="Self.SchoolInfo" Multiplicity="0..1" />
+          <End Role="SecondLanguage" Type="Self.SecondLanguage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SchoolInfo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SecondLanguage">
+              <PropertyRef Name="SchoolId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SocialStatus_SchoolInfo">
+          <End Role="SchoolInfo" Type="Self.SchoolInfo" Multiplicity="0..1" />
+          <End Role="SocialStatus" Type="Self.SocialStatus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SchoolInfo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SocialStatus">
+              <PropertyRef Name="SchoolId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StudentAttachments_Students">
+          <End Role="Students" Type="Self.Students" Multiplicity="0..1" />
+          <End Role="StudentAttachments" Type="Self.StudentAttachments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Students">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StudentAttachments">
+              <PropertyRef Name="StudentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StudentReceipt_SchoolInfo">
+          <End Role="SchoolInfo" Type="Self.SchoolInfo" Multiplicity="0..1" />
+          <End Role="StudentReceipt" Type="Self.StudentReceipt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SchoolInfo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StudentReceipt">
+              <PropertyRef Name="SchoolId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StudentReceipt_Students">
+          <End Role="Students" Type="Self.Students" Multiplicity="0..1" />
+          <End Role="StudentReceipt" Type="Self.StudentReceipt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Students">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StudentReceipt">
+              <PropertyRef Name="StudentId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -481,6 +809,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Students_SchoolInfo">
+          <End Role="SchoolInfo" Type="Self.SchoolInfo" Multiplicity="0..1" />
+          <End Role="Students" Type="Self.Students" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SchoolInfo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Students">
+              <PropertyRef Name="SchoolId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Students_ScienceDivision">
           <End Role="ScienceDivision" Type="Self.ScienceDivision" Multiplicity="0..1" />
           <End Role="Students" Type="Self.Students" Multiplicity="*" />
@@ -501,7 +841,7 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Students">
-              <PropertyRef Name="SecondLanguageIId" />
+              <PropertyRef Name="SecondLanguageId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -541,28 +881,31 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Users_Employees">
-          <End Role="Employees" Type="Self.Employees" Multiplicity="0..1" />
+        <Association Name="FK_Users_SchoolInfo">
+          <End Role="SchoolInfo" Type="Self.SchoolInfo" Multiplicity="0..1" />
           <End Role="Users" Type="Self.Users" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Employees">
+            <Principal Role="SchoolInfo">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Users">
-              <PropertyRef Name="EmployeeId" />
+              <PropertyRef Name="SchoolId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="StudentAffairsModelStoreContainer">
           <EntitySet Name="Cities" EntityType="Self.Cities" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CityDepartments" EntityType="Self.CityDepartments" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Classes" EntityType="Self.Classes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Employees" EntityType="Self.Employees" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EndYearResults" EntityType="Self.EndYearResults" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ExemptionReasons" EntityType="Self.ExemptionReasons" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ExitPermission" EntityType="Self.ExitPermission" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ExpenseTypes" EntityType="Self.ExpenseTypes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Jobs" EntityType="Self.Jobs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Levels" EntityType="Self.Levels" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Nationalities" EntityType="Self.Nationalities" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Pages" EntityType="Self.Pages" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RegistrationStatus" EntityType="Self.RegistrationStatus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Religion" EntityType="Self.Religion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SchoolInfo" EntityType="Self.SchoolInfo" Schema="dbo" store:Type="Tables" />
@@ -570,15 +913,93 @@
           <EntitySet Name="SecondLanguage" EntityType="Self.SecondLanguage" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SecondRoundResults" EntityType="Self.SecondRoundResults" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SocialStatus" EntityType="Self.SocialStatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StudentAttachments" EntityType="Self.StudentAttachments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StudentReceipt" EntityType="Self.StudentReceipt" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Students" EntityType="Self.Students" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_CityDepartments_Cities" Association="Self.FK_CityDepartments_Cities">
+            <End Role="Cities" EntitySet="Cities" />
+            <End Role="CityDepartments" EntitySet="CityDepartments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CityDepartments_SchoolInfo" Association="Self.FK_CityDepartments_SchoolInfo">
+            <End Role="SchoolInfo" EntitySet="SchoolInfo" />
+            <End Role="CityDepartments" EntitySet="CityDepartments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Classes_Levels" Association="Self.FK_Classes_Levels">
+            <End Role="Levels" EntitySet="Levels" />
+            <End Role="Classes" EntitySet="Classes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Classes_SchoolInfo" Association="Self.FK_Classes_SchoolInfo">
+            <End Role="SchoolInfo" EntitySet="SchoolInfo" />
+            <End Role="Classes" EntitySet="Classes" />
+          </AssociationSet>
           <AssociationSet Name="FK_Employees_Jobs" Association="Self.FK_Employees_Jobs">
             <End Role="Jobs" EntitySet="Jobs" />
             <End Role="Employees" EntitySet="Employees" />
           </AssociationSet>
+          <AssociationSet Name="FK_Employees_SchoolInfo" Association="Self.FK_Employees_SchoolInfo">
+            <End Role="SchoolInfo" EntitySet="SchoolInfo" />
+            <End Role="Employees" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ExemptionReasons_SchoolInfo" Association="Self.FK_ExemptionReasons_SchoolInfo">
+            <End Role="SchoolInfo" EntitySet="SchoolInfo" />
+            <End Role="ExemptionReasons" EntitySet="ExemptionReasons" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ExitPermission_SchoolInfo" Association="Self.FK_ExitPermission_SchoolInfo">
+            <End Role="SchoolInfo" EntitySet="SchoolInfo" />
+            <End Role="ExitPermission" EntitySet="ExitPermission" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ExitPermission_Students" Association="Self.FK_ExitPermission_Students">
+            <End Role="Students" EntitySet="Students" />
+            <End Role="ExitPermission" EntitySet="ExitPermission" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ExpenseTypes_SchoolInfo" Association="Self.FK_ExpenseTypes_SchoolInfo">
+            <End Role="SchoolInfo" EntitySet="SchoolInfo" />
+            <End Role="ExpenseTypes" EntitySet="ExpenseTypes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Jobs_SchoolInfo" Association="Self.FK_Jobs_SchoolInfo">
+            <End Role="SchoolInfo" EntitySet="SchoolInfo" />
+            <End Role="Jobs" EntitySet="Jobs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Levels_SchoolInfo" Association="Self.FK_Levels_SchoolInfo">
+            <End Role="SchoolInfo" EntitySet="SchoolInfo" />
+            <End Role="Levels" EntitySet="Levels" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pages_Pages1" Association="Self.FK_Pages_Pages1">
+            <End Role="Pages" EntitySet="Pages" />
+            <End Role="Pages1" EntitySet="Pages" />
+          </AssociationSet>
           <AssociationSet Name="FK_SchoolInfo_Cities" Association="Self.FK_SchoolInfo_Cities">
             <End Role="Cities" EntitySet="Cities" />
             <End Role="SchoolInfo" EntitySet="SchoolInfo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SchoolInfo_CityDepartments" Association="Self.FK_SchoolInfo_CityDepartments">
+            <End Role="CityDepartments" EntitySet="CityDepartments" />
+            <End Role="SchoolInfo" EntitySet="SchoolInfo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ScienceDivision_SchoolInfo" Association="Self.FK_ScienceDivision_SchoolInfo">
+            <End Role="SchoolInfo" EntitySet="SchoolInfo" />
+            <End Role="ScienceDivision" EntitySet="ScienceDivision" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SecondLanguage_SchoolInfo" Association="Self.FK_SecondLanguage_SchoolInfo">
+            <End Role="SchoolInfo" EntitySet="SchoolInfo" />
+            <End Role="SecondLanguage" EntitySet="SecondLanguage" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SocialStatus_SchoolInfo" Association="Self.FK_SocialStatus_SchoolInfo">
+            <End Role="SchoolInfo" EntitySet="SchoolInfo" />
+            <End Role="SocialStatus" EntitySet="SocialStatus" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StudentAttachments_Students" Association="Self.FK_StudentAttachments_Students">
+            <End Role="Students" EntitySet="Students" />
+            <End Role="StudentAttachments" EntitySet="StudentAttachments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StudentReceipt_SchoolInfo" Association="Self.FK_StudentReceipt_SchoolInfo">
+            <End Role="SchoolInfo" EntitySet="SchoolInfo" />
+            <End Role="StudentReceipt" EntitySet="StudentReceipt" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StudentReceipt_Students" Association="Self.FK_StudentReceipt_Students">
+            <End Role="Students" EntitySet="Students" />
+            <End Role="StudentReceipt" EntitySet="StudentReceipt" />
           </AssociationSet>
           <AssociationSet Name="FK_Students_Cities" Association="Self.FK_Students_Cities">
             <End Role="Cities" EntitySet="Cities" />
@@ -616,6 +1037,10 @@
             <End Role="Religion" EntitySet="Religion" />
             <End Role="Students" EntitySet="Students" />
           </AssociationSet>
+          <AssociationSet Name="FK_Students_SchoolInfo" Association="Self.FK_Students_SchoolInfo">
+            <End Role="SchoolInfo" EntitySet="SchoolInfo" />
+            <End Role="Students" EntitySet="Students" />
+          </AssociationSet>
           <AssociationSet Name="FK_Students_ScienceDivision" Association="Self.FK_Students_ScienceDivision">
             <End Role="ScienceDivision" EntitySet="ScienceDivision" />
             <End Role="Students" EntitySet="Students" />
@@ -636,8 +1061,8 @@
             <End Role="Students" EntitySet="Students" />
             <End Role="Students1" EntitySet="Students" />
           </AssociationSet>
-          <AssociationSet Name="FK_Users_Employees" Association="Self.FK_Users_Employees">
-            <End Role="Employees" EntitySet="Employees" />
+          <AssociationSet Name="FK_Users_SchoolInfo" Association="Self.FK_Users_SchoolInfo">
+            <End Role="SchoolInfo" EntitySet="SchoolInfo" />
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
         </EntityContainer>
@@ -647,14 +1072,17 @@
       <Schema Namespace="StudentAffairsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="StudentAffairsEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Cities" EntityType="StudentAffairsModel.City" />
+          <EntitySet Name="CityDepartments" EntityType="StudentAffairsModel.CityDepartment" />
           <EntitySet Name="Classes" EntityType="StudentAffairsModel.Class" />
           <EntitySet Name="Employees" EntityType="StudentAffairsModel.Employee" />
           <EntitySet Name="EndYearResults" EntityType="StudentAffairsModel.EndYearResult" />
           <EntitySet Name="ExemptionReasons" EntityType="StudentAffairsModel.ExemptionReason" />
+          <EntitySet Name="ExitPermissions" EntityType="StudentAffairsModel.ExitPermission" />
           <EntitySet Name="ExpenseTypes" EntityType="StudentAffairsModel.ExpenseType" />
           <EntitySet Name="Jobs" EntityType="StudentAffairsModel.Job" />
           <EntitySet Name="Levels" EntityType="StudentAffairsModel.Level" />
           <EntitySet Name="Nationalities" EntityType="StudentAffairsModel.Nationality" />
+          <EntitySet Name="Pages" EntityType="StudentAffairsModel.Page" />
           <EntitySet Name="RegistrationStatus" EntityType="StudentAffairsModel.RegistrationStatu" />
           <EntitySet Name="Religions" EntityType="StudentAffairsModel.Religion" />
           <EntitySet Name="SchoolInfoes" EntityType="StudentAffairsModel.SchoolInfo" />
@@ -662,8 +1090,14 @@
           <EntitySet Name="SecondLanguages" EntityType="StudentAffairsModel.SecondLanguage" />
           <EntitySet Name="SecondRoundResults" EntityType="StudentAffairsModel.SecondRoundResult" />
           <EntitySet Name="SocialStatus" EntityType="StudentAffairsModel.SocialStatu" />
+          <EntitySet Name="StudentAttachments" EntityType="StudentAffairsModel.StudentAttachment" />
+          <EntitySet Name="StudentReceipts" EntityType="StudentAffairsModel.StudentReceipt" />
           <EntitySet Name="Students" EntityType="StudentAffairsModel.Student" />
           <EntitySet Name="Users" EntityType="StudentAffairsModel.User" />
+          <AssociationSet Name="FK_CityDepartments_Cities" Association="StudentAffairsModel.FK_CityDepartments_Cities">
+            <End Role="City" EntitySet="Cities" />
+            <End Role="CityDepartment" EntitySet="CityDepartments" />
+          </AssociationSet>
           <AssociationSet Name="FK_SchoolInfo_Cities" Association="StudentAffairsModel.FK_SchoolInfo_Cities">
             <End Role="City" EntitySet="Cities" />
             <End Role="SchoolInfo" EntitySet="SchoolInfoes" />
@@ -671,6 +1105,22 @@
           <AssociationSet Name="FK_Students_Cities" Association="StudentAffairsModel.FK_Students_Cities">
             <End Role="City" EntitySet="Cities" />
             <End Role="Student" EntitySet="Students" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CityDepartments_SchoolInfo" Association="StudentAffairsModel.FK_CityDepartments_SchoolInfo">
+            <End Role="SchoolInfo" EntitySet="SchoolInfoes" />
+            <End Role="CityDepartment" EntitySet="CityDepartments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SchoolInfo_CityDepartments" Association="StudentAffairsModel.FK_SchoolInfo_CityDepartments">
+            <End Role="CityDepartment" EntitySet="CityDepartments" />
+            <End Role="SchoolInfo" EntitySet="SchoolInfoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Classes_Levels" Association="StudentAffairsModel.FK_Classes_Levels">
+            <End Role="Level" EntitySet="Levels" />
+            <End Role="Class" EntitySet="Classes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Classes_SchoolInfo" Association="StudentAffairsModel.FK_Classes_SchoolInfo">
+            <End Role="SchoolInfo" EntitySet="SchoolInfoes" />
+            <End Role="Class" EntitySet="Classes" />
           </AssociationSet>
           <AssociationSet Name="FK_Students_Classes" Association="StudentAffairsModel.FK_Students_Classes">
             <End Role="Class" EntitySet="Classes" />
@@ -680,21 +1130,45 @@
             <End Role="Job" EntitySet="Jobs" />
             <End Role="Employee" EntitySet="Employees" />
           </AssociationSet>
-          <AssociationSet Name="FK_Users_Employees" Association="StudentAffairsModel.FK_Users_Employees">
+          <AssociationSet Name="FK_Employees_SchoolInfo" Association="StudentAffairsModel.FK_Employees_SchoolInfo">
+            <End Role="SchoolInfo" EntitySet="SchoolInfoes" />
             <End Role="Employee" EntitySet="Employees" />
-            <End Role="User" EntitySet="Users" />
           </AssociationSet>
           <AssociationSet Name="FK_Students_EndYearResults" Association="StudentAffairsModel.FK_Students_EndYearResults">
             <End Role="EndYearResult" EntitySet="EndYearResults" />
             <End Role="Student" EntitySet="Students" />
           </AssociationSet>
+          <AssociationSet Name="FK_ExemptionReasons_SchoolInfo" Association="StudentAffairsModel.FK_ExemptionReasons_SchoolInfo">
+            <End Role="SchoolInfo" EntitySet="SchoolInfoes" />
+            <End Role="ExemptionReason" EntitySet="ExemptionReasons" />
+          </AssociationSet>
           <AssociationSet Name="FK_Students_ExemptionReasons" Association="StudentAffairsModel.FK_Students_ExemptionReasons">
             <End Role="ExemptionReason" EntitySet="ExemptionReasons" />
             <End Role="Student" EntitySet="Students" />
           </AssociationSet>
+          <AssociationSet Name="FK_ExitPermission_SchoolInfo" Association="StudentAffairsModel.FK_ExitPermission_SchoolInfo">
+            <End Role="SchoolInfo" EntitySet="SchoolInfoes" />
+            <End Role="ExitPermission" EntitySet="ExitPermissions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ExitPermission_Students" Association="StudentAffairsModel.FK_ExitPermission_Students">
+            <End Role="Student" EntitySet="Students" />
+            <End Role="ExitPermission" EntitySet="ExitPermissions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ExpenseTypes_SchoolInfo" Association="StudentAffairsModel.FK_ExpenseTypes_SchoolInfo">
+            <End Role="SchoolInfo" EntitySet="SchoolInfoes" />
+            <End Role="ExpenseType" EntitySet="ExpenseTypes" />
+          </AssociationSet>
           <AssociationSet Name="FK_Students_ExpenseTypes" Association="StudentAffairsModel.FK_Students_ExpenseTypes">
             <End Role="ExpenseType" EntitySet="ExpenseTypes" />
             <End Role="Student" EntitySet="Students" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Jobs_SchoolInfo" Association="StudentAffairsModel.FK_Jobs_SchoolInfo">
+            <End Role="SchoolInfo" EntitySet="SchoolInfoes" />
+            <End Role="Job" EntitySet="Jobs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Levels_SchoolInfo" Association="StudentAffairsModel.FK_Levels_SchoolInfo">
+            <End Role="SchoolInfo" EntitySet="SchoolInfoes" />
+            <End Role="Level" EntitySet="Levels" />
           </AssociationSet>
           <AssociationSet Name="FK_Students_Levels" Association="StudentAffairsModel.FK_Students_Levels">
             <End Role="Level" EntitySet="Levels" />
@@ -704,6 +1178,10 @@
             <End Role="Nationality" EntitySet="Nationalities" />
             <End Role="Student" EntitySet="Students" />
           </AssociationSet>
+          <AssociationSet Name="FK_Pages_Pages1" Association="StudentAffairsModel.FK_Pages_Pages1">
+            <End Role="Page" EntitySet="Pages" />
+            <End Role="Page1" EntitySet="Pages" />
+          </AssociationSet>
           <AssociationSet Name="FK_Students_RegistrationStatus" Association="StudentAffairsModel.FK_Students_RegistrationStatus">
             <End Role="RegistrationStatu" EntitySet="RegistrationStatus" />
             <End Role="Student" EntitySet="Students" />
@@ -711,6 +1189,30 @@
           <AssociationSet Name="FK_Students_Religion" Association="StudentAffairsModel.FK_Students_Religion">
             <End Role="Religion" EntitySet="Religions" />
             <End Role="Student" EntitySet="Students" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ScienceDivision_SchoolInfo" Association="StudentAffairsModel.FK_ScienceDivision_SchoolInfo">
+            <End Role="SchoolInfo" EntitySet="SchoolInfoes" />
+            <End Role="ScienceDivision" EntitySet="ScienceDivisions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SecondLanguage_SchoolInfo" Association="StudentAffairsModel.FK_SecondLanguage_SchoolInfo">
+            <End Role="SchoolInfo" EntitySet="SchoolInfoes" />
+            <End Role="SecondLanguage" EntitySet="SecondLanguages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SocialStatus_SchoolInfo" Association="StudentAffairsModel.FK_SocialStatus_SchoolInfo">
+            <End Role="SchoolInfo" EntitySet="SchoolInfoes" />
+            <End Role="SocialStatu" EntitySet="SocialStatus" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StudentReceipt_SchoolInfo" Association="StudentAffairsModel.FK_StudentReceipt_SchoolInfo">
+            <End Role="SchoolInfo" EntitySet="SchoolInfoes" />
+            <End Role="StudentReceipt" EntitySet="StudentReceipts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Students_SchoolInfo" Association="StudentAffairsModel.FK_Students_SchoolInfo">
+            <End Role="SchoolInfo" EntitySet="SchoolInfoes" />
+            <End Role="Student" EntitySet="Students" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_SchoolInfo" Association="StudentAffairsModel.FK_Users_SchoolInfo">
+            <End Role="SchoolInfo" EntitySet="SchoolInfoes" />
+            <End Role="User" EntitySet="Users" />
           </AssociationSet>
           <AssociationSet Name="FK_Students_ScienceDivision" Association="StudentAffairsModel.FK_Students_ScienceDivision">
             <End Role="ScienceDivision" EntitySet="ScienceDivisions" />
@@ -728,6 +1230,14 @@
             <End Role="SocialStatu" EntitySet="SocialStatus" />
             <End Role="Student" EntitySet="Students" />
           </AssociationSet>
+          <AssociationSet Name="FK_StudentAttachments_Students" Association="StudentAffairsModel.FK_StudentAttachments_Students">
+            <End Role="Student" EntitySet="Students" />
+            <End Role="StudentAttachment" EntitySet="StudentAttachments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StudentReceipt_Students" Association="StudentAffairsModel.FK_StudentReceipt_Students">
+            <End Role="Student" EntitySet="Students" />
+            <End Role="StudentReceipt" EntitySet="StudentReceipts" />
+          </AssociationSet>
           <AssociationSet Name="FK_Students_Students" Association="StudentAffairsModel.FK_Students_Students">
             <End Role="Student" EntitySet="Students" />
             <End Role="Student1" EntitySet="Students" />
@@ -738,7 +1248,9 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Code" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SortNum" Type="Int32" />
           <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="CreatedOn" Type="DateTime" Precision="3" />
           <Property Name="CreatedBy" Type="Guid" />
@@ -747,8 +1259,29 @@
           <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
           <Property Name="DeletedOn" Type="DateTime" Precision="3" />
           <Property Name="DeletedBy" Type="Guid" />
+          <NavigationProperty Name="CityDepartments" Relationship="StudentAffairsModel.FK_CityDepartments_Cities" FromRole="City" ToRole="CityDepartment" />
           <NavigationProperty Name="SchoolInfoes" Relationship="StudentAffairsModel.FK_SchoolInfo_Cities" FromRole="City" ToRole="SchoolInfo" />
           <NavigationProperty Name="Students" Relationship="StudentAffairsModel.FK_Students_Cities" FromRole="City" ToRole="Student" />
+        </EntityType>
+        <EntityType Name="CityDepartment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CityId" Type="Guid" />
+          <Property Name="SchoolId" Type="Guid" />
+          <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="Guid" />
+          <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="Guid" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="DeletedOn" Type="DateTime" Precision="3" />
+          <Property Name="DeletedBy" Type="Guid" />
+          <NavigationProperty Name="City" Relationship="StudentAffairsModel.FK_CityDepartments_Cities" FromRole="CityDepartment" ToRole="City" />
+          <NavigationProperty Name="SchoolInfo" Relationship="StudentAffairsModel.FK_CityDepartments_SchoolInfo" FromRole="CityDepartment" ToRole="SchoolInfo" />
+          <NavigationProperty Name="SchoolInfoes" Relationship="StudentAffairsModel.FK_SchoolInfo_CityDepartments" FromRole="CityDepartment" ToRole="SchoolInfo" />
         </EntityType>
         <EntityType Name="Class">
           <Key>
@@ -756,6 +1289,8 @@
           </Key>
           <Property Name="Id" Type="Guid" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LevelId" Type="Guid" />
+          <Property Name="SchoolId" Type="Guid" />
           <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="CreatedOn" Type="DateTime" Precision="3" />
           <Property Name="CreatedBy" Type="Guid" />
@@ -764,6 +1299,8 @@
           <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
           <Property Name="DeletedOn" Type="DateTime" Precision="3" />
           <Property Name="DeletedBy" Type="Guid" />
+          <NavigationProperty Name="Level" Relationship="StudentAffairsModel.FK_Classes_Levels" FromRole="Class" ToRole="Level" />
+          <NavigationProperty Name="SchoolInfo" Relationship="StudentAffairsModel.FK_Classes_SchoolInfo" FromRole="Class" ToRole="SchoolInfo" />
           <NavigationProperty Name="Students" Relationship="StudentAffairsModel.FK_Students_Classes" FromRole="Class" ToRole="Student" />
         </EntityType>
         <EntityType Name="Employee">
@@ -771,21 +1308,11 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Guid" Nullable="false" />
-          <Property Name="JopId" Type="Guid" />
-          <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="NumberId" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="BirthDate" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Qualification" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="GenderId" Type="Int32" />
-          <Property Name="MaritalStateId" Type="Int32" />
-          <Property Name="RegistrationTypeId" Type="Guid" />
-          <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="JoiningDate" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="WorkDayCost" Type="Double" />
-          <Property Name="ContractOrNo" Type="Boolean" Nullable="false" />
+          <Property Name="JobId" Type="Guid" />
+          <Property Name="SchoolId" Type="Guid" />
           <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="CreatedOn" Type="DateTime" Precision="3" />
           <Property Name="CreatedBy" Type="Guid" />
@@ -795,7 +1322,7 @@
           <Property Name="DeletedOn" Type="DateTime" Precision="3" />
           <Property Name="DeletedBy" Type="Guid" />
           <NavigationProperty Name="Job" Relationship="StudentAffairsModel.FK_Employees_Jobs" FromRole="Employee" ToRole="Job" />
-          <NavigationProperty Name="Users" Relationship="StudentAffairsModel.FK_Users_Employees" FromRole="Employee" ToRole="User" />
+          <NavigationProperty Name="SchoolInfo" Relationship="StudentAffairsModel.FK_Employees_SchoolInfo" FromRole="Employee" ToRole="SchoolInfo" />
         </EntityType>
         <EntityType Name="EndYearResult">
           <Key>
@@ -819,6 +1346,7 @@
           </Key>
           <Property Name="Id" Type="Guid" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SchoolId" Type="Guid" />
           <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="CreatedOn" Type="DateTime" Precision="3" />
           <Property Name="CreatedBy" Type="Guid" />
@@ -827,7 +1355,30 @@
           <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
           <Property Name="DeletedOn" Type="DateTime" Precision="3" />
           <Property Name="DeletedBy" Type="Guid" />
+          <NavigationProperty Name="SchoolInfo" Relationship="StudentAffairsModel.FK_ExemptionReasons_SchoolInfo" FromRole="ExemptionReason" ToRole="SchoolInfo" />
           <NavigationProperty Name="Students" Relationship="StudentAffairsModel.FK_Students_ExemptionReasons" FromRole="ExemptionReason" ToRole="Student" />
+        </EntityType>
+        <EntityType Name="ExitPermission">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Code" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LevelName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ExitDate" Type="DateTime" Precision="3" />
+          <Property Name="StudentId" Type="Guid" />
+          <Property Name="SchoolId" Type="Guid" />
+          <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="Guid" />
+          <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="Guid" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="DeletedOn" Type="DateTime" Precision="3" />
+          <Property Name="DeletedBy" Type="Guid" />
+          <NavigationProperty Name="SchoolInfo" Relationship="StudentAffairsModel.FK_ExitPermission_SchoolInfo" FromRole="ExitPermission" ToRole="SchoolInfo" />
+          <NavigationProperty Name="Student" Relationship="StudentAffairsModel.FK_ExitPermission_Students" FromRole="ExitPermission" ToRole="Student" />
         </EntityType>
         <EntityType Name="ExpenseType">
           <Key>
@@ -835,6 +1386,7 @@
           </Key>
           <Property Name="Id" Type="Guid" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SchoolId" Type="Guid" />
           <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="CreatedOn" Type="DateTime" Precision="3" />
           <Property Name="CreatedBy" Type="Guid" />
@@ -843,6 +1395,7 @@
           <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
           <Property Name="DeletedOn" Type="DateTime" Precision="3" />
           <Property Name="DeletedBy" Type="Guid" />
+          <NavigationProperty Name="SchoolInfo" Relationship="StudentAffairsModel.FK_ExpenseTypes_SchoolInfo" FromRole="ExpenseType" ToRole="SchoolInfo" />
           <NavigationProperty Name="Students" Relationship="StudentAffairsModel.FK_Students_ExpenseTypes" FromRole="ExpenseType" ToRole="Student" />
         </EntityType>
         <EntityType Name="Job">
@@ -851,6 +1404,7 @@
           </Key>
           <Property Name="Id" Type="Guid" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SchoolId" Type="Guid" />
           <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="CreatedOn" Type="DateTime" Precision="3" />
           <Property Name="CreatedBy" Type="Guid" />
@@ -860,6 +1414,7 @@
           <Property Name="DeletedOn" Type="DateTime" Precision="3" />
           <Property Name="DeletedBy" Type="Guid" />
           <NavigationProperty Name="Employees" Relationship="StudentAffairsModel.FK_Employees_Jobs" FromRole="Job" ToRole="Employee" />
+          <NavigationProperty Name="SchoolInfo" Relationship="StudentAffairsModel.FK_Jobs_SchoolInfo" FromRole="Job" ToRole="SchoolInfo" />
         </EntityType>
         <EntityType Name="Level">
           <Key>
@@ -867,6 +1422,8 @@
           </Key>
           <Property Name="Id" Type="Guid" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SchoolId" Type="Guid" />
+          <Property Name="SortNum" Type="Int32" />
           <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="CreatedOn" Type="DateTime" Precision="3" />
           <Property Name="CreatedBy" Type="Guid" />
@@ -875,6 +1432,8 @@
           <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
           <Property Name="DeletedOn" Type="DateTime" Precision="3" />
           <Property Name="DeletedBy" Type="Guid" />
+          <NavigationProperty Name="Classes" Relationship="StudentAffairsModel.FK_Classes_Levels" FromRole="Level" ToRole="Class" />
+          <NavigationProperty Name="SchoolInfo" Relationship="StudentAffairsModel.FK_Levels_SchoolInfo" FromRole="Level" ToRole="SchoolInfo" />
           <NavigationProperty Name="Students" Relationship="StudentAffairsModel.FK_Students_Levels" FromRole="Level" ToRole="Student" />
         </EntityType>
         <EntityType Name="Nationality">
@@ -883,6 +1442,7 @@
           </Key>
           <Property Name="Id" Type="Guid" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SortNum" Type="Int32" />
           <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="CreatedOn" Type="DateTime" Precision="3" />
           <Property Name="CreatedBy" Type="Guid" />
@@ -892,6 +1452,26 @@
           <Property Name="DeletedOn" Type="DateTime" Precision="3" />
           <Property Name="DeletedBy" Type="Guid" />
           <NavigationProperty Name="Students" Relationship="StudentAffairsModel.FK_Students_Nationalities" FromRole="Nationality" ToRole="Student" />
+        </EntityType>
+        <EntityType Name="Page">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Link" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Num" Type="Int32" />
+          <Property Name="ParentId" Type="Guid" />
+          <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="Guid" />
+          <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="Guid" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="DeletedOn" Type="DateTime" Precision="3" />
+          <Property Name="DeletedBy" Type="Guid" />
+          <NavigationProperty Name="Pages1" Relationship="StudentAffairsModel.FK_Pages_Pages1" FromRole="Page" ToRole="Page1" />
+          <NavigationProperty Name="Page1" Relationship="StudentAffairsModel.FK_Pages_Pages1" FromRole="Page1" ToRole="Page" />
         </EntityType>
         <EntityType Name="RegistrationStatu">
           <Key>
@@ -915,6 +1495,7 @@
           </Key>
           <Property Name="Id" Type="Guid" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SortNum" Type="Int32" />
           <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="CreatedOn" Type="DateTime" Precision="3" />
           <Property Name="CreatedBy" Type="Guid" />
@@ -933,9 +1514,11 @@
           <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="CityId" Type="Guid" />
+          <Property Name="DepartmentId" Type="Guid" />
           <Property Name="SchoolPrincipal" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Administration" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="StudentAffairsOfficer" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SocialWorker" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="StudyYear" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="CreatedOn" Type="DateTime" Precision="3" />
@@ -946,6 +1529,21 @@
           <Property Name="DeletedOn" Type="DateTime" Precision="3" />
           <Property Name="DeletedBy" Type="Guid" />
           <NavigationProperty Name="City" Relationship="StudentAffairsModel.FK_SchoolInfo_Cities" FromRole="SchoolInfo" ToRole="City" />
+          <NavigationProperty Name="CityDepartments" Relationship="StudentAffairsModel.FK_CityDepartments_SchoolInfo" FromRole="SchoolInfo" ToRole="CityDepartment" />
+          <NavigationProperty Name="CityDepartment" Relationship="StudentAffairsModel.FK_SchoolInfo_CityDepartments" FromRole="SchoolInfo" ToRole="CityDepartment" />
+          <NavigationProperty Name="Classes" Relationship="StudentAffairsModel.FK_Classes_SchoolInfo" FromRole="SchoolInfo" ToRole="Class" />
+          <NavigationProperty Name="Employees" Relationship="StudentAffairsModel.FK_Employees_SchoolInfo" FromRole="SchoolInfo" ToRole="Employee" />
+          <NavigationProperty Name="ExemptionReasons" Relationship="StudentAffairsModel.FK_ExemptionReasons_SchoolInfo" FromRole="SchoolInfo" ToRole="ExemptionReason" />
+          <NavigationProperty Name="ExitPermissions" Relationship="StudentAffairsModel.FK_ExitPermission_SchoolInfo" FromRole="SchoolInfo" ToRole="ExitPermission" />
+          <NavigationProperty Name="ExpenseTypes" Relationship="StudentAffairsModel.FK_ExpenseTypes_SchoolInfo" FromRole="SchoolInfo" ToRole="ExpenseType" />
+          <NavigationProperty Name="Jobs" Relationship="StudentAffairsModel.FK_Jobs_SchoolInfo" FromRole="SchoolInfo" ToRole="Job" />
+          <NavigationProperty Name="Levels" Relationship="StudentAffairsModel.FK_Levels_SchoolInfo" FromRole="SchoolInfo" ToRole="Level" />
+          <NavigationProperty Name="ScienceDivisions" Relationship="StudentAffairsModel.FK_ScienceDivision_SchoolInfo" FromRole="SchoolInfo" ToRole="ScienceDivision" />
+          <NavigationProperty Name="SecondLanguages" Relationship="StudentAffairsModel.FK_SecondLanguage_SchoolInfo" FromRole="SchoolInfo" ToRole="SecondLanguage" />
+          <NavigationProperty Name="SocialStatus" Relationship="StudentAffairsModel.FK_SocialStatus_SchoolInfo" FromRole="SchoolInfo" ToRole="SocialStatu" />
+          <NavigationProperty Name="StudentReceipts" Relationship="StudentAffairsModel.FK_StudentReceipt_SchoolInfo" FromRole="SchoolInfo" ToRole="StudentReceipt" />
+          <NavigationProperty Name="Students" Relationship="StudentAffairsModel.FK_Students_SchoolInfo" FromRole="SchoolInfo" ToRole="Student" />
+          <NavigationProperty Name="Users" Relationship="StudentAffairsModel.FK_Users_SchoolInfo" FromRole="SchoolInfo" ToRole="User" />
         </EntityType>
         <EntityType Name="ScienceDivision">
           <Key>
@@ -953,6 +1551,7 @@
           </Key>
           <Property Name="Id" Type="Guid" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SchoolId" Type="Guid" />
           <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="CreatedOn" Type="DateTime" Precision="3" />
           <Property Name="CreatedBy" Type="Guid" />
@@ -961,6 +1560,7 @@
           <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
           <Property Name="DeletedOn" Type="DateTime" Precision="3" />
           <Property Name="DeletedBy" Type="Guid" />
+          <NavigationProperty Name="SchoolInfo" Relationship="StudentAffairsModel.FK_ScienceDivision_SchoolInfo" FromRole="ScienceDivision" ToRole="SchoolInfo" />
           <NavigationProperty Name="Students" Relationship="StudentAffairsModel.FK_Students_ScienceDivision" FromRole="ScienceDivision" ToRole="Student" />
         </EntityType>
         <EntityType Name="SecondLanguage">
@@ -969,6 +1569,7 @@
           </Key>
           <Property Name="Id" Type="Guid" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SchoolId" Type="Guid" />
           <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="CreatedOn" Type="DateTime" Precision="3" />
           <Property Name="CreatedBy" Type="Guid" />
@@ -977,6 +1578,7 @@
           <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
           <Property Name="DeletedOn" Type="DateTime" Precision="3" />
           <Property Name="DeletedBy" Type="Guid" />
+          <NavigationProperty Name="SchoolInfo" Relationship="StudentAffairsModel.FK_SecondLanguage_SchoolInfo" FromRole="SecondLanguage" ToRole="SchoolInfo" />
           <NavigationProperty Name="Students" Relationship="StudentAffairsModel.FK_Students_SecondLanguage" FromRole="SecondLanguage" ToRole="Student" />
         </EntityType>
         <EntityType Name="SecondRoundResult">
@@ -1001,6 +1603,7 @@
           </Key>
           <Property Name="Id" Type="Guid" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SchoolId" Type="Guid" />
           <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="CreatedOn" Type="DateTime" Precision="3" />
           <Property Name="CreatedBy" Type="Guid" />
@@ -1009,7 +1612,48 @@
           <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
           <Property Name="DeletedOn" Type="DateTime" Precision="3" />
           <Property Name="DeletedBy" Type="Guid" />
+          <NavigationProperty Name="SchoolInfo" Relationship="StudentAffairsModel.FK_SocialStatus_SchoolInfo" FromRole="SocialStatu" ToRole="SchoolInfo" />
           <NavigationProperty Name="Students" Relationship="StudentAffairsModel.FK_Students_SocialStatus" FromRole="SocialStatu" ToRole="Student" />
+        </EntityType>
+        <EntityType Name="StudentAttachment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="StudentId" Type="Guid" />
+          <Property Name="FileName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="Guid" />
+          <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="Guid" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="DeletedOn" Type="DateTime" Precision="3" />
+          <Property Name="DeletedBy" Type="Guid" />
+          <NavigationProperty Name="Student" Relationship="StudentAffairsModel.FK_StudentAttachments_Students" FromRole="StudentAttachment" ToRole="Student" />
+        </EntityType>
+        <EntityType Name="StudentReceipt">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Code" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LevelName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ReceiptDate" Type="DateTime" Precision="3" />
+          <Property Name="ReceiptPerson" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="StudentId" Type="Guid" />
+          <Property Name="SchoolId" Type="Guid" />
+          <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="Guid" />
+          <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="Guid" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="DeletedOn" Type="DateTime" Precision="3" />
+          <Property Name="DeletedBy" Type="Guid" />
+          <NavigationProperty Name="SchoolInfo" Relationship="StudentAffairsModel.FK_StudentReceipt_SchoolInfo" FromRole="StudentReceipt" ToRole="SchoolInfo" />
+          <NavigationProperty Name="Student" Relationship="StudentAffairsModel.FK_StudentReceipt_Students" FromRole="StudentReceipt" ToRole="Student" />
         </EntityType>
         <EntityType Name="Student">
           <Key>
@@ -1055,7 +1699,7 @@
           <Property Name="TabletSerialNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="ScienceDivisionId" Type="Guid" />
           <Property Name="IM" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="SecondLanguageIId" Type="Guid" />
+          <Property Name="SecondLanguageId" Type="Guid" />
           <Property Name="DateOfReceipt" Type="DateTime" Precision="3" />
           <Property Name="InsurancePolicyNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="InsurancePolicyDate" Type="DateTime" Precision="3" />
@@ -1068,6 +1712,7 @@
           <Property Name="Talents" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Competitions" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="StudentTypeId" Type="Int32" />
+          <Property Name="SchoolId" Type="Guid" />
           <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="CreatedOn" Type="DateTime" Precision="3" />
           <Property Name="CreatedBy" Type="Guid" />
@@ -1080,15 +1725,19 @@
           <NavigationProperty Name="Class" Relationship="StudentAffairsModel.FK_Students_Classes" FromRole="Student" ToRole="Class" />
           <NavigationProperty Name="EndYearResult" Relationship="StudentAffairsModel.FK_Students_EndYearResults" FromRole="Student" ToRole="EndYearResult" />
           <NavigationProperty Name="ExemptionReason" Relationship="StudentAffairsModel.FK_Students_ExemptionReasons" FromRole="Student" ToRole="ExemptionReason" />
+          <NavigationProperty Name="ExitPermissions" Relationship="StudentAffairsModel.FK_ExitPermission_Students" FromRole="Student" ToRole="ExitPermission" />
           <NavigationProperty Name="ExpenseType" Relationship="StudentAffairsModel.FK_Students_ExpenseTypes" FromRole="Student" ToRole="ExpenseType" />
           <NavigationProperty Name="Level" Relationship="StudentAffairsModel.FK_Students_Levels" FromRole="Student" ToRole="Level" />
           <NavigationProperty Name="Nationality" Relationship="StudentAffairsModel.FK_Students_Nationalities" FromRole="Student" ToRole="Nationality" />
           <NavigationProperty Name="RegistrationStatu" Relationship="StudentAffairsModel.FK_Students_RegistrationStatus" FromRole="Student" ToRole="RegistrationStatu" />
           <NavigationProperty Name="Religion" Relationship="StudentAffairsModel.FK_Students_Religion" FromRole="Student" ToRole="Religion" />
+          <NavigationProperty Name="SchoolInfo" Relationship="StudentAffairsModel.FK_Students_SchoolInfo" FromRole="Student" ToRole="SchoolInfo" />
           <NavigationProperty Name="ScienceDivision" Relationship="StudentAffairsModel.FK_Students_ScienceDivision" FromRole="Student" ToRole="ScienceDivision" />
           <NavigationProperty Name="SecondLanguage" Relationship="StudentAffairsModel.FK_Students_SecondLanguage" FromRole="Student" ToRole="SecondLanguage" />
           <NavigationProperty Name="SecondRoundResult" Relationship="StudentAffairsModel.FK_Students_SecondRoundResults" FromRole="Student" ToRole="SecondRoundResult" />
           <NavigationProperty Name="SocialStatu" Relationship="StudentAffairsModel.FK_Students_SocialStatus" FromRole="Student" ToRole="SocialStatu" />
+          <NavigationProperty Name="StudentAttachments" Relationship="StudentAffairsModel.FK_StudentAttachments_Students" FromRole="Student" ToRole="StudentAttachment" />
+          <NavigationProperty Name="StudentReceipts" Relationship="StudentAffairsModel.FK_StudentReceipt_Students" FromRole="Student" ToRole="StudentReceipt" />
           <NavigationProperty Name="Students1" Relationship="StudentAffairsModel.FK_Students_Students" FromRole="Student" ToRole="Student1" />
           <NavigationProperty Name="Student1" Relationship="StudentAffairsModel.FK_Students_Students" FromRole="Student1" ToRole="Student" />
         </EntityType>
@@ -1097,10 +1746,11 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="RoleName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Username" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="RoleId" Type="Int32" />
-          <Property Name="EmployeeId" Type="Guid" />
+          <Property Name="SchoolId" Type="Guid" />
           <Property Name="UserScreens" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="CreatedOn" Type="DateTime" Precision="3" />
           <Property Name="CreatedBy" Type="Guid" />
@@ -1109,8 +1759,20 @@
           <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
           <Property Name="DeletedOn" Type="DateTime" Precision="3" />
           <Property Name="DeletedBy" Type="Guid" />
-          <NavigationProperty Name="Employee" Relationship="StudentAffairsModel.FK_Users_Employees" FromRole="User" ToRole="Employee" />
+          <NavigationProperty Name="SchoolInfo" Relationship="StudentAffairsModel.FK_Users_SchoolInfo" FromRole="User" ToRole="SchoolInfo" />
         </EntityType>
+        <Association Name="FK_CityDepartments_Cities">
+          <End Type="StudentAffairsModel.City" Role="City" Multiplicity="0..1" />
+          <End Type="StudentAffairsModel.CityDepartment" Role="CityDepartment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="City">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CityDepartment">
+              <PropertyRef Name="CityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_SchoolInfo_Cities">
           <End Type="StudentAffairsModel.City" Role="City" Multiplicity="0..1" />
           <End Type="StudentAffairsModel.SchoolInfo" Role="SchoolInfo" Multiplicity="*" />
@@ -1135,6 +1797,54 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_CityDepartments_SchoolInfo">
+          <End Type="StudentAffairsModel.SchoolInfo" Role="SchoolInfo" Multiplicity="0..1" />
+          <End Type="StudentAffairsModel.CityDepartment" Role="CityDepartment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SchoolInfo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CityDepartment">
+              <PropertyRef Name="SchoolId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SchoolInfo_CityDepartments">
+          <End Type="StudentAffairsModel.CityDepartment" Role="CityDepartment" Multiplicity="0..1" />
+          <End Type="StudentAffairsModel.SchoolInfo" Role="SchoolInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CityDepartment">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SchoolInfo">
+              <PropertyRef Name="DepartmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Classes_Levels">
+          <End Type="StudentAffairsModel.Level" Role="Level" Multiplicity="0..1" />
+          <End Type="StudentAffairsModel.Class" Role="Class" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Level">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Class">
+              <PropertyRef Name="LevelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Classes_SchoolInfo">
+          <End Type="StudentAffairsModel.SchoolInfo" Role="SchoolInfo" Multiplicity="0..1" />
+          <End Type="StudentAffairsModel.Class" Role="Class" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SchoolInfo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Class">
+              <PropertyRef Name="SchoolId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Students_Classes">
           <End Type="StudentAffairsModel.Class" Role="Class" Multiplicity="0..1" />
           <End Type="StudentAffairsModel.Student" Role="Student" Multiplicity="*" />
@@ -1155,19 +1865,19 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Employee">
-              <PropertyRef Name="JopId" />
+              <PropertyRef Name="JobId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Users_Employees">
-          <End Type="StudentAffairsModel.Employee" Role="Employee" Multiplicity="0..1" />
-          <End Type="StudentAffairsModel.User" Role="User" Multiplicity="*" />
+        <Association Name="FK_Employees_SchoolInfo">
+          <End Type="StudentAffairsModel.SchoolInfo" Role="SchoolInfo" Multiplicity="0..1" />
+          <End Type="StudentAffairsModel.Employee" Role="Employee" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Employee">
+            <Principal Role="SchoolInfo">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="User">
-              <PropertyRef Name="EmployeeId" />
+            <Dependent Role="Employee">
+              <PropertyRef Name="SchoolId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1183,6 +1893,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ExemptionReasons_SchoolInfo">
+          <End Type="StudentAffairsModel.SchoolInfo" Role="SchoolInfo" Multiplicity="0..1" />
+          <End Type="StudentAffairsModel.ExemptionReason" Role="ExemptionReason" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SchoolInfo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ExemptionReason">
+              <PropertyRef Name="SchoolId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Students_ExemptionReasons">
           <End Type="StudentAffairsModel.ExemptionReason" Role="ExemptionReason" Multiplicity="0..1" />
           <End Type="StudentAffairsModel.Student" Role="Student" Multiplicity="*" />
@@ -1195,6 +1917,42 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ExitPermission_SchoolInfo">
+          <End Type="StudentAffairsModel.SchoolInfo" Role="SchoolInfo" Multiplicity="0..1" />
+          <End Type="StudentAffairsModel.ExitPermission" Role="ExitPermission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SchoolInfo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ExitPermission">
+              <PropertyRef Name="SchoolId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ExitPermission_Students">
+          <End Type="StudentAffairsModel.Student" Role="Student" Multiplicity="0..1" />
+          <End Type="StudentAffairsModel.ExitPermission" Role="ExitPermission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ExitPermission">
+              <PropertyRef Name="StudentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ExpenseTypes_SchoolInfo">
+          <End Type="StudentAffairsModel.SchoolInfo" Role="SchoolInfo" Multiplicity="0..1" />
+          <End Type="StudentAffairsModel.ExpenseType" Role="ExpenseType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SchoolInfo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ExpenseType">
+              <PropertyRef Name="SchoolId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Students_ExpenseTypes">
           <End Type="StudentAffairsModel.ExpenseType" Role="ExpenseType" Multiplicity="0..1" />
           <End Type="StudentAffairsModel.Student" Role="Student" Multiplicity="*" />
@@ -1204,6 +1962,30 @@
             </Principal>
             <Dependent Role="Student">
               <PropertyRef Name="ExpenseTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Jobs_SchoolInfo">
+          <End Type="StudentAffairsModel.SchoolInfo" Role="SchoolInfo" Multiplicity="0..1" />
+          <End Type="StudentAffairsModel.Job" Role="Job" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SchoolInfo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Job">
+              <PropertyRef Name="SchoolId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Levels_SchoolInfo">
+          <End Type="StudentAffairsModel.SchoolInfo" Role="SchoolInfo" Multiplicity="0..1" />
+          <End Type="StudentAffairsModel.Level" Role="Level" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SchoolInfo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Level">
+              <PropertyRef Name="SchoolId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1231,6 +2013,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Pages_Pages1">
+          <End Type="StudentAffairsModel.Page" Role="Page" Multiplicity="0..1" />
+          <End Type="StudentAffairsModel.Page" Role="Page1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Page">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Page1">
+              <PropertyRef Name="ParentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Students_RegistrationStatus">
           <End Type="StudentAffairsModel.RegistrationStatu" Role="RegistrationStatu" Multiplicity="0..1" />
           <End Type="StudentAffairsModel.Student" Role="Student" Multiplicity="*" />
@@ -1255,6 +2049,78 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ScienceDivision_SchoolInfo">
+          <End Type="StudentAffairsModel.SchoolInfo" Role="SchoolInfo" Multiplicity="0..1" />
+          <End Type="StudentAffairsModel.ScienceDivision" Role="ScienceDivision" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SchoolInfo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ScienceDivision">
+              <PropertyRef Name="SchoolId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SecondLanguage_SchoolInfo">
+          <End Type="StudentAffairsModel.SchoolInfo" Role="SchoolInfo" Multiplicity="0..1" />
+          <End Type="StudentAffairsModel.SecondLanguage" Role="SecondLanguage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SchoolInfo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SecondLanguage">
+              <PropertyRef Name="SchoolId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SocialStatus_SchoolInfo">
+          <End Type="StudentAffairsModel.SchoolInfo" Role="SchoolInfo" Multiplicity="0..1" />
+          <End Type="StudentAffairsModel.SocialStatu" Role="SocialStatu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SchoolInfo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SocialStatu">
+              <PropertyRef Name="SchoolId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StudentReceipt_SchoolInfo">
+          <End Type="StudentAffairsModel.SchoolInfo" Role="SchoolInfo" Multiplicity="0..1" />
+          <End Type="StudentAffairsModel.StudentReceipt" Role="StudentReceipt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SchoolInfo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StudentReceipt">
+              <PropertyRef Name="SchoolId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Students_SchoolInfo">
+          <End Type="StudentAffairsModel.SchoolInfo" Role="SchoolInfo" Multiplicity="0..1" />
+          <End Type="StudentAffairsModel.Student" Role="Student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SchoolInfo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Student">
+              <PropertyRef Name="SchoolId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_SchoolInfo">
+          <End Type="StudentAffairsModel.SchoolInfo" Role="SchoolInfo" Multiplicity="0..1" />
+          <End Type="StudentAffairsModel.User" Role="User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SchoolInfo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="SchoolId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Students_ScienceDivision">
           <End Type="StudentAffairsModel.ScienceDivision" Role="ScienceDivision" Multiplicity="0..1" />
           <End Type="StudentAffairsModel.Student" Role="Student" Multiplicity="*" />
@@ -1275,7 +2141,7 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Student">
-              <PropertyRef Name="SecondLanguageIId" />
+              <PropertyRef Name="SecondLanguageId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1300,6 +2166,30 @@
             </Principal>
             <Dependent Role="Student">
               <PropertyRef Name="SocialStateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StudentAttachments_Students">
+          <End Type="StudentAffairsModel.Student" Role="Student" Multiplicity="0..1" />
+          <End Type="StudentAffairsModel.StudentAttachment" Role="StudentAttachment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StudentAttachment">
+              <PropertyRef Name="StudentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StudentReceipt_Students">
+          <End Type="StudentAffairsModel.Student" Role="Student" Multiplicity="0..1" />
+          <End Type="StudentAffairsModel.StudentReceipt" Role="StudentReceipt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StudentReceipt">
+              <PropertyRef Name="StudentId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1332,6 +2222,26 @@
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
                 <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="SortNum" ColumnName="SortNum" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CityDepartments">
+            <EntityTypeMapping TypeName="StudentAffairsModel.CityDepartment">
+              <MappingFragment StoreEntitySet="CityDepartments">
+                <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+                <ScalarProperty Name="DeletedOn" ColumnName="DeletedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="SchoolId" ColumnName="SchoolId" />
+                <ScalarProperty Name="CityId" ColumnName="CityId" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
@@ -1348,6 +2258,8 @@
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
                 <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="SchoolId" ColumnName="SchoolId" />
+                <ScalarProperty Name="LevelId" ColumnName="LevelId" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
@@ -1364,21 +2276,11 @@
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
                 <ScalarProperty Name="Notes" ColumnName="Notes" />
-                <ScalarProperty Name="ContractOrNo" ColumnName="ContractOrNo" />
-                <ScalarProperty Name="WorkDayCost" ColumnName="WorkDayCost" />
-                <ScalarProperty Name="JoiningDate" ColumnName="JoiningDate" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="Phone" ColumnName="Phone" />
-                <ScalarProperty Name="RegistrationTypeId" ColumnName="RegistrationTypeId" />
-                <ScalarProperty Name="MaritalStateId" ColumnName="MaritalStateId" />
-                <ScalarProperty Name="GenderId" ColumnName="GenderId" />
-                <ScalarProperty Name="Qualification" ColumnName="Qualification" />
-                <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
-                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="SchoolId" ColumnName="SchoolId" />
+                <ScalarProperty Name="JobId" ColumnName="JobId" />
                 <ScalarProperty Name="NumberId" ColumnName="NumberId" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Code" ColumnName="Code" />
-                <ScalarProperty Name="JopId" ColumnName="JopId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1410,7 +2312,29 @@
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
                 <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="SchoolId" ColumnName="SchoolId" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ExitPermissions">
+            <EntityTypeMapping TypeName="StudentAffairsModel.ExitPermission">
+              <MappingFragment StoreEntitySet="ExitPermission">
+                <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+                <ScalarProperty Name="DeletedOn" ColumnName="DeletedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="SchoolId" ColumnName="SchoolId" />
+                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+                <ScalarProperty Name="ExitDate" ColumnName="ExitDate" />
+                <ScalarProperty Name="LevelName" ColumnName="LevelName" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1426,6 +2350,7 @@
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
                 <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="SchoolId" ColumnName="SchoolId" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
@@ -1442,6 +2367,7 @@
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
                 <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="SchoolId" ColumnName="SchoolId" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
@@ -1458,6 +2384,8 @@
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
                 <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="SortNum" ColumnName="SortNum" />
+                <ScalarProperty Name="SchoolId" ColumnName="SchoolId" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
@@ -1474,6 +2402,26 @@
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
                 <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="SortNum" ColumnName="SortNum" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pages">
+            <EntityTypeMapping TypeName="StudentAffairsModel.Page">
+              <MappingFragment StoreEntitySet="Pages">
+                <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+                <ScalarProperty Name="DeletedOn" ColumnName="DeletedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+                <ScalarProperty Name="Num" ColumnName="Num" />
+                <ScalarProperty Name="Link" ColumnName="Link" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
@@ -1506,6 +2454,7 @@
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
                 <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="SortNum" ColumnName="SortNum" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
@@ -1523,9 +2472,11 @@
                 <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
                 <ScalarProperty Name="Notes" ColumnName="Notes" />
                 <ScalarProperty Name="StudyYear" ColumnName="StudyYear" />
+                <ScalarProperty Name="SocialWorker" ColumnName="SocialWorker" />
                 <ScalarProperty Name="StudentAffairsOfficer" ColumnName="StudentAffairsOfficer" />
                 <ScalarProperty Name="Administration" ColumnName="Administration" />
                 <ScalarProperty Name="SchoolPrincipal" ColumnName="SchoolPrincipal" />
+                <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
                 <ScalarProperty Name="CityId" ColumnName="CityId" />
                 <ScalarProperty Name="Image" ColumnName="Image" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -1544,6 +2495,7 @@
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
                 <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="SchoolId" ColumnName="SchoolId" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
@@ -1560,6 +2512,7 @@
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
                 <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="SchoolId" ColumnName="SchoolId" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
@@ -1592,7 +2545,47 @@
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
                 <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="SchoolId" ColumnName="SchoolId" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StudentAttachments">
+            <EntityTypeMapping TypeName="StudentAffairsModel.StudentAttachment">
+              <MappingFragment StoreEntitySet="StudentAttachments">
+                <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+                <ScalarProperty Name="DeletedOn" ColumnName="DeletedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StudentReceipts">
+            <EntityTypeMapping TypeName="StudentAffairsModel.StudentReceipt">
+              <MappingFragment StoreEntitySet="StudentReceipt">
+                <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+                <ScalarProperty Name="DeletedOn" ColumnName="DeletedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="SchoolId" ColumnName="SchoolId" />
+                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+                <ScalarProperty Name="ReceiptPerson" ColumnName="ReceiptPerson" />
+                <ScalarProperty Name="ReceiptDate" ColumnName="ReceiptDate" />
+                <ScalarProperty Name="LevelName" ColumnName="LevelName" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1608,6 +2601,7 @@
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
                 <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="SchoolId" ColumnName="SchoolId" />
                 <ScalarProperty Name="StudentTypeId" ColumnName="StudentTypeId" />
                 <ScalarProperty Name="Competitions" ColumnName="Competitions" />
                 <ScalarProperty Name="Talents" ColumnName="Talents" />
@@ -1620,7 +2614,7 @@
                 <ScalarProperty Name="InsurancePolicyDate" ColumnName="InsurancePolicyDate" />
                 <ScalarProperty Name="InsurancePolicyNumber" ColumnName="InsurancePolicyNumber" />
                 <ScalarProperty Name="DateOfReceipt" ColumnName="DateOfReceipt" />
-                <ScalarProperty Name="SecondLanguageIId" ColumnName="SecondLanguageIId" />
+                <ScalarProperty Name="SecondLanguageId" ColumnName="SecondLanguageId" />
                 <ScalarProperty Name="IM" ColumnName="IM" />
                 <ScalarProperty Name="ScienceDivisionId" ColumnName="ScienceDivisionId" />
                 <ScalarProperty Name="TabletSerialNumber" ColumnName="TabletSerialNumber" />
@@ -1675,10 +2669,11 @@
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
                 <ScalarProperty Name="UserScreens" ColumnName="UserScreens" />
-                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="SchoolId" ColumnName="SchoolId" />
                 <ScalarProperty Name="RoleId" ColumnName="RoleId" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

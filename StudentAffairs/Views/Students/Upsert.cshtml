@@ -13,7 +13,10 @@
         <div class="card-header">
             <div class="row justify-content-between">
                 <h4 class="col-auto">@ViewBag.Title</h4>
-                @Url.BackToList()
+                @if (ViewBag.userscreens.ToString().Contains(",12,"))
+                {
+                    @Url.BackToList()
+                }
             </div>
         </div>
         <div class="card-body">
@@ -23,10 +26,12 @@
                     @Html.Label("بيانات الطالب", htmlAttributes: new { @class = "control-label" })
 
                 </div>
+                <hr />
+
                 <div class="form-group mb-3 col-sm-4">
                     @Html.Label("كود الطالب", htmlAttributes: new { @class = "control-label" })
                     <div class="col-12">
-                        @Html.EditorFor(model => model.Code, new { htmlAttributes = new { @class = "form-control", type = "number" } })
+                        @Html.EditorFor(model => model.Code, new { htmlAttributes = new { @class = "form-control", type = "number", required = "required" } })
                         @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -51,14 +56,14 @@
                         @Html.ValidationMessageFor(model => model.LevelId, "", new { @class = "text-danger" })
                     </div>
                 </div>
-                <div class="form-group mb-3 col-sm-4">
+                <div class="form-group mb-3 col-sm-6">
                     @Html.Label("الفصل ", htmlAttributes: new { @class = "control-label" })
                     <div class="col-12">
-                        @Html.DropDownListFor(model => model.ClassId, null, "--اختر--", new { @class = "form-control", required = "required" })
+                        @Html.DropDownListFor(model => model.ClassId, null, "--اختر--", new { @class = "form-control"})
                         @Html.ValidationMessageFor(model => model.ClassId, "", new { @class = "text-danger" })
                     </div>
                 </div>
-                <div class="form-group mb-3 col-sm-4">
+                <div class="form-group mb-3 col-sm-6">
                     @Html.Label("رقم الجلوس", htmlAttributes: new { @class = "control-label" })
                     <div class="col-12">
                         @Html.EditorFor(model => model.SeatNumber, new { htmlAttributes = new { @class = "form-control" } })
@@ -68,28 +73,28 @@
                 <div class="form-group mb-3 col-sm-6">
                     @Html.Label("الديانة ", htmlAttributes: new { @class = "control-label" })
                     <div class="col-12">
-                        @Html.DropDownListFor(model => model.ReligionId, null, "--اختر--", new { @class = "form-control", required = "required" })
+                        @Html.DropDownListFor(model => model.ReligionId, null, "--اختر--", new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.ReligionId, "", new { @class = "text-danger" })
                     </div>
                 </div>
-                <div class="form-group mb-3 col-sm-4">
+                <div class="form-group mb-3 col-sm-6">
                     @Html.Label("الجنسية ", htmlAttributes: new { @class = "control-label" })
                     <div class="col-12">
-                        @Html.DropDownListFor(model => model.NationalityId, null, "--اختر--", new { @class = "form-control", required = "required" })
+                        @Html.DropDownListFor(model => model.NationalityId, null, "--اختر--", new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.NationalityId, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group mb-3 col-sm-6">
                     @Html.Label("المصروفات ", htmlAttributes: new { @class = "control-label" })
                     <div class="col-12">
-                        @Html.DropDownListFor(model => model.ExpenseTypeId, null, "--اختر--", new { @class = "form-control", required = "required" })
+                        @Html.DropDownListFor(model => model.ExpenseTypeId, null, "--اختر--", new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.ExpenseTypeId, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group mb-3 col-sm-4">
                     @Html.Label("سبب الاعفاء ", htmlAttributes: new { @class = "control-label" })
                     <div class="col-12">
-                        @Html.DropDownListFor(model => model.ExemptionReasonId, null, "--اختر--", new { @class = "form-control", required = "required" })
+                        @Html.DropDownListFor(model => model.ExemptionReasonId, null, "--اختر--", new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.ExemptionReasonId, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -97,14 +102,14 @@
                 <div class="form-group mb-3 col-sm-4">
                     @Html.Label("نتيجة اخر العام", htmlAttributes: new { @class = "control-label" })
                     <div class="col-12">
-                        @Html.DropDownListFor(model => model.EndYearResultId, null, "--اختر--", new { @class = "form-control", required = "required" })
+                        @Html.DropDownListFor(model => model.EndYearResultId, null, "--اختر--", new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.EndYearResultId, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group mb-3 col-sm-4">
                     @Html.Label("نتيجة دور ثان", htmlAttributes: new { @class = "control-label" })
                     <div class="col-12">
-                        @Html.DropDownListFor(model => model.SecondRoundResultId, null, "--اختر--", new { @class = "form-control", required = "required" })
+                        @Html.DropDownListFor(model => model.SecondRoundResultId, null, "--اختر--", new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.SecondRoundResultId, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -125,84 +130,85 @@
                 <div class="form-group mb-3 col-sm-4">
                     @Html.Label("دمج تعليمي", htmlAttributes: new { @class = "control-label" })
                     <div class="col-12">
-                        @Html.DropDownListFor(model => model.EducationalIntegration, null, "--اختر--", new { @class = "form-control", required = "required" })
+                        @Html.DropDownListFor(model => model.EducationalIntegration, null, "--اختر--", new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.EducationalIntegration, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group mb-3 col-sm-4">
                     @Html.Label("محول الي المدرسة", htmlAttributes: new { @class = "control-label" })
                     <div class="col-12">
-                        @Html.DropDownListFor(model => model.TransferredToTheSchool, null, "--اختر--", new { @class = "form-control", required = "required" })
+                        @Html.DropDownListFor(model => model.TransferredToTheSchool, null, "--اختر--", new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.TransferredToTheSchool, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group mb-3 col-sm-12">
                     @Html.Label("العنوان ", htmlAttributes: new { @class = "control-label" })
                     <div class="col-12">
-                        @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                        @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
                     </div>
                 </div>
-
+                <hr />
 
                 <div class="form-group mb-3 col-sm-12">
                     @Html.Label("بيانات الرقم القومي والقيد", htmlAttributes: new { @class = "control-label" })
 
                 </div>
+                <hr />
 
                 <div class="form-group mb-3 col-sm-6">
                     @Html.Label("الرقم القومي ", htmlAttributes: new { @class = "control-label" })
                     <div class="col-12">
-                        @Html.EditorFor(model => model.NumberId, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.EditorFor(model => model.NumberId, new { htmlAttributes = new { @class = "form-control", required = "required" } })
                         @Html.ValidationMessageFor(model => model.NumberId, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group mb-3 col-sm-6">
                     @Html.Label("تاريخ الميلاد", htmlAttributes: new { @class = "control-label" })
                     <div class="col-12">
-                        @Html.TextBoxFor(model => model.BirthDate, new { @class = "form-control", @Value = @ViewBag.BirthDate, type = "date", required = "required" })
+                        @Html.TextBoxFor(model => model.BirthDate, new { @class = "form-control", type = "date", required = "required" })
                         @Html.ValidationMessageFor(model => model.BirthDate, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group mb-3 col-sm-4">
                     @Html.Label("يوم ", htmlAttributes: new { @class = "control-label" })
                     <div class="col-12">
-                        @Html.EditorFor(model => model.Day, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.EditorFor(model => model.Day, new { htmlAttributes = new { @class = "form-control", required = "required" } })
                         @Html.ValidationMessageFor(model => model.Day, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group mb-3 col-sm-4">
                     @Html.Label("شهر ", htmlAttributes: new { @class = "control-label" })
                     <div class="col-12">
-                        @Html.EditorFor(model => model.Month, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.EditorFor(model => model.Month, new { htmlAttributes = new { @class = "form-control", required = "required" } })
                         @Html.ValidationMessageFor(model => model.Month, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group mb-3 col-sm-4">
                     @Html.Label("سنة ", htmlAttributes: new { @class = "control-label" })
                     <div class="col-12">
-                        @Html.EditorFor(model => model.Year, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.EditorFor(model => model.Year, new { htmlAttributes = new { @class = "form-control", required = "required" } })
                         @Html.ValidationMessageFor(model => model.Year, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group mb-3 col-sm-6">
                     @Html.Label("محافظة الميلاد ", htmlAttributes: new { @class = "control-label" })
                     <div class="col-12">
-                        @Html.DropDownListFor(model => model.CityId, null, "--اختر--", new { @class = "form-control", required = "required" })
+                        @Html.DropDownListFor(model => model.CityId, null, "--اختر--", new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.CityId, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group mb-3 col-sm-6">
                     @Html.Label("النوع ", htmlAttributes: new { @class = "control-label" })
                     <div class="col-12">
-                        @Html.DropDownListFor(model => model.GenderId, null, "--اختر--", new { @class = "form-control", required = "required" })
+                        @Html.DropDownListFor(model => model.GenderId, null, "--اختر--", new { @class = "form-control"})
                         @Html.ValidationMessageFor(model => model.GenderId, "", new { @class = "text-danger" })
                     </div>
                 </div>
-                <div class="form-group mb-3 col-sm-4">
+                <div class="form-group mb-3 col-sm-6">
                     @Html.Label("حالة القيد ", htmlAttributes: new { @class = "control-label" })
                     <div class="col-12">
-                        @Html.DropDownListFor(model => model.RegistrationStateId, null, "--اختر--", new { @class = "form-control", required = "required" })
+                        @Html.DropDownListFor(model => model.RegistrationStateId, null, "--اختر--", new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.RegistrationStateId, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -216,16 +222,18 @@
                 <div class="form-group mb-3 col-sm-6">
                     @Html.Label("تاريخ القيد", htmlAttributes: new { @class = "control-label" })
                     <div class="col-12">
-                        @Html.TextBoxFor(model => model.RegistrationDate, new { @class = "form-control", @Value = @ViewBag.RegistrationDate, type = "date", required = "required" })
+                        @Html.TextBoxFor(model => model.RegistrationDate, new { @class = "form-control",  type = "date" })
                         @Html.ValidationMessageFor(model => model.RegistrationDate, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
+                <hr />
 
                 <div class="form-group mb-3 col-sm-12">
                     @Html.Label("بيانات ولي الامر", htmlAttributes: new { @class = "control-label" })
 
                 </div>
+                <hr />
 
                 <div class="form-group mb-3 col-sm-4">
                     @Html.Label("اسم ولي الامر", htmlAttributes: new { @class = "control-label" })
@@ -279,15 +287,18 @@
                 <div class="form-group mb-3 col-sm-4">
                     @Html.Label("الحالة الاجتماعية ", htmlAttributes: new { @class = "control-label" })
                     <div class="col-12">
-                        @Html.DropDownListFor(model => model.SocialStateId, null, "--اختر--", new { @class = "form-control", required = "required" })
+                        @Html.DropDownListFor(model => model.SocialStateId, null, "--اختر--", new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.SocialStateId, "", new { @class = "text-danger" })
                     </div>
                 </div>
+                <hr />
 
                 <div class="form-group mb-3 col-sm-12">
                     @Html.Label("بيانات خاصة بالثانوي", htmlAttributes: new { @class = "control-label" })
 
                 </div>
+                <hr />
+
                 <div class="form-group mb-3 col-sm-8">
                     <div class="row">
                         <div class="form-group mb-3 col-sm-6">
@@ -301,7 +312,7 @@
                         <div class="form-group mb-3 col-sm-6">
                             @Html.Label("الشعبة", htmlAttributes: new { @class = "control-label" })
                             <div class="col-12">
-                                @Html.DropDownListFor(model => model.ScienceDivisionId, null, "--اختر--", new { @class = "form-control", required = "required" })
+                                @Html.DropDownListFor(model => model.ScienceDivisionId, null, "--اختر--", new { @class = "form-control" })
                                 @Html.ValidationMessageFor(model => model.ScienceDivisionId, "", new { @class = "text-danger" })
                             </div>
                         </div>
@@ -315,14 +326,14 @@
                         <div class="form-group mb-3 col-sm-6">
                             @Html.Label("اللغة الثانية", htmlAttributes: new { @class = "control-label" })
                             <div class="col-12">
-                                @Html.DropDownListFor(model => model.SecondLanguageIId, null, "--اختر--", new { @class = "form-control", required = "required" })
-                                @Html.ValidationMessageFor(model => model.SecondLanguageIId, "", new { @class = "text-danger" })
+                                @Html.DropDownListFor(model => model.SecondLanguageId, null, "--اختر--", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.SecondLanguageId, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="form-group mb-3 col-sm-12">
                             @Html.Label("تاريخ الاستلام", htmlAttributes: new { @class = "control-label" })
                             <div class="col-12">
-                                @Html.TextBoxFor(model => model.DateOfReceipt, new { @class = "form-control", @Value = @ViewBag.DateOfReceipt, type = "date", required = "required" })
+                                @Html.TextBoxFor(model => model.DateOfReceipt, new { @class = "form-control", type = "date" })
                                 @Html.ValidationMessageFor(model => model.DateOfReceipt, "", new { @class = "text-danger" })
                             </div>
                         </div>
@@ -336,7 +347,7 @@
                         <div class="form-group mb-3 col-sm-12">
                             @Html.Label("تاريخها", htmlAttributes: new { @class = "control-label" })
                             <div class="col-12">
-                                @Html.TextBoxFor(model => model.InsurancePolicyDate, new { @class = "form-control", @Value = @ViewBag.InsurancePolicyDate, type = "date", required = "required" })
+                                @Html.TextBoxFor(model => model.InsurancePolicyDate, new { @class = "form-control", type = "date" })
                                 @Html.ValidationMessageFor(model => model.InsurancePolicyDate, "", new { @class = "text-danger" })
                             </div>
                         </div>
@@ -365,22 +376,25 @@
                     </div>
                 </div>
 
+                <hr />
 
                 <div class="form-group mb-3 col-sm-12">
                     @Html.Label("لائحة التحفيز والانضباط", htmlAttributes: new { @class = "control-label" })
 
                 </div>
-                <div class="form-group mb-3 col-sm-4">
+                <hr />
+
+                <div class="form-group mb-3 col-sm-6">
                     @Html.Label("لجنة الحماية ", htmlAttributes: new { @class = "control-label" })
                     <div class="col-12">
-                        @Html.DropDownListFor(model => model.ProtectionCommittee, null, "--اختر--", new { @class = "form-control", required = "required" })
+                        @Html.DropDownListFor(model => model.ProtectionCommittee, null, "--اختر--", new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.ProtectionCommittee, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group mb-3 col-sm-6">
                     @Html.Label("من تاريخ  ", htmlAttributes: new { @class = "control-label" })
                     <div class="col-12">
-                        @Html.TextBoxFor(model => model.FromDate, new { @class = "form-control", @Value = @ViewBag.JoiningDate, type = "date", required = "required" })
+                        @Html.TextBoxFor(model => model.FromDate, new { @class = "form-control", type = "date" })
                         @Html.ValidationMessageFor(model => model.ToDate, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -394,7 +408,7 @@
                 <div class="form-group mb-3 col-sm-6">
                     @Html.Label("الي تاريخ  ", htmlAttributes: new { @class = "control-label" })
                     <div class="col-12">
-                        @Html.TextBoxFor(model => model.ToDate, new { @class = "form-control", @Value = @ViewBag.JoiningDate, type = "date", required = "required" })
+                        @Html.TextBoxFor(model => model.ToDate, new { @class = "form-control", type = "date"})
                         @Html.ValidationMessageFor(model => model.ToDate, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -413,11 +427,13 @@
                     </div>
                 </div>
 
+                <hr />
 
                 <div class="form-group mb-3 col-sm-12">
                     @Html.Label("بيانات اخري", htmlAttributes: new { @class = "control-label" })
 
                 </div>
+                <hr />
 
                 <div class="form-group mb-3 col-sm-12">
                     @Html.Label("المواهب ", htmlAttributes: new { @class = "control-label" })
@@ -434,42 +450,317 @@
                     </div>
                 </div>
             </div>
-                </div>
-                <div class="card-footer">
-                    <div class="row justify-content-end">
-                        @if (Model.Id == Guid.Empty)
-                        {
-                            @Url.SubmitAdd()
-                        }
-                        else
-                        {
-                            @Url.SubmitSave()
-                        }
-                    </div>
-                </div>
+            
+        </div>
+        <div class="card-footer">
+            <div class="row justify-content-end">
+                @if (Model.Id == Guid.Empty)
+                {
+                    @Url.SubmitAdd()
+                }
+                else
+                {
+                    @Url.SubmitSave()
+                }
             </div>
+        </div>
+    </div>
 }
 
 @section scripts{
     <script type="text/javascript">
-        $("#CityId").change(function () {
-            $.get('/Students/getDestricts', { Id: $("#CityId").val() }, function (data) {
-                $("#DestrictId").empty();
-                $("#DestrictId").append("<option value=''>--اختر--</option>")
-                $.each(data, function (key, value) {
-                    $("#DestrictId").append("<option value=" + value["Id"] + ">" + value["Name"] + "</option>")
+       
+
+        //var now = new Date();
+        //now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+        //if (document.getElementById('BirthDate').value == "") {
+        //    document.getElementById('BirthDate').value = now.toISOString().slice(0, 10);
+        //}
+
+        $("#NumberId").keypress(function () {
+            var NumberId = document.getElementById("NumberId").value;
+            var spl = NumberId.toString().split('');
+            if (spl[0].toString() == "2" && spl.length == 14) {
+                var year = "19" + spl[1].toString() + spl[2].toString();
+                var month = spl[3].toString() + spl[4].toString();
+                var day = spl[5].toString() + spl[6].toString();
+
+                var now = new Date();
+                var date1 = new Date(month + "/" + day + "/" + year);
+                var date2 = new Date("10/" + "01/" + now.getFullYear());
+
+                date1.setMinutes(date1.getMinutes() - date1.getTimezoneOffset());
+                document.getElementById("BirthDate").value = date1.toISOString().slice(0, 10);
+                //const diffTime = Math.abs(now - date1);
+                //const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+
+                calcDate(date1, date2)
+
+
+                var city = spl[7].toString() + spl[8].toString();
+
+               
+                $.get('/Students/getCities', { Id: $("#CityId").val() }, function (data) {
+                    $("#CityId").empty();
+                    $("#CityId").append("<option value=''>--اختر--</option>")
+                    $.each(data, function (key, value) {
+                        if (city == value["Code"].toString()) {
+                            $("#CityId").append("<option  value=" + value["Id"] + " selected='selected'>" + value["Name"] + "</option>")
+                        }
+                        else {
+                            $("#CityId").append("<option value=" + value["Id"] + ">" + value["Name"] + "</option>")
+                        }
+                    });
                 });
-            });
+                var gender = parseInt(spl[12].toString());
+                const selectElement = document.getElementById("GenderId");
+                if (gender % 2 == 0) {
+                    selectElement.value = "2";
+                }
+                else {
+                    selectElement.value = "1";
+                }
+                //var months = Math.floor(days / 31);
+                //var years = Math.floor(months / 12);
+
+                //var years = diffDays / 365;
+                //var months = years.split(".")
+
+            }
+            else if (spl[0].toString() == "3" && spl.length == 14) {
+                var year = "20" + spl[1].toString() + spl[2].toString();
+                var month = spl[3].toString() + spl[4].toString();
+                var day = spl[5].toString() + spl[6].toString();
+
+                var now = new Date();
+                var date1 = new Date(month + "/" + day + "/" + year);
+                var date2 = new Date("10/" + "01/" + now.getFullYear());
+                date1.setMinutes(date1.getMinutes() - date1.getTimezoneOffset());
+                document.getElementById("BirthDate").value = date1.toISOString().slice(0, 10);
+                //const diffTime = Math.abs(now - date1);
+                //const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+
+                calcDate(date1, date2)
+                //var months = Math.floor(days / 31);
+                //var years = Math.floor(months / 12);
+
+                //var years = diffDays / 365;
+                //var months = years.split(".")
+
+            }
+            else {
+                document.getElementById("CityId").value = "";
+                document.getElementById("GenderId").value = "";
+                document.getElementById("BirthDate").value = "";
+                document.getElementById("Year").value = "";
+                document.getElementById("Month").value = "";
+                document.getElementById("Day").value = "";
+            }
+
         });
 
-        var now = new Date();
-        now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
-        if (document.getElementById('BirthDate').value == "") {
-            document.getElementById('BirthDate').value = now.toISOString().slice(0, 10);
+        $("#NumberId").click(function () {
+            var NumberId = document.getElementById("NumberId").value;
+            var spl = NumberId.toString().split('');
+            if (spl[0].toString() == "2" && spl.length == 14) {
+                var year = "19" + spl[1].toString() + spl[2].toString();
+                var month = spl[3].toString() + spl[4].toString();
+                var day = spl[5].toString() + spl[6].toString();
+
+                var now = new Date();
+                var date1 = new Date(month + "/" + day + "/" + year);
+                var date2 = new Date("10/" + "01/" + now.getFullYear());
+
+                date1.setMinutes(date1.getMinutes() - date1.getTimezoneOffset());
+                document.getElementById("BirthDate").value = date1.toISOString().slice(0, 10);
+                //const diffTime = Math.abs(now - date1);
+                //const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+
+                calcDate(date1, date2)
+
+
+                var city = spl[7].toString() + spl[8].toString();
+
+
+                $.get('/Students/getCities', { Id: $("#CityId").val() }, function (data) {
+                    $("#CityId").empty();
+                    $("#CityId").append("<option value=''>--اختر--</option>")
+                    $.each(data, function (key, value) {
+                        if (city == value["Code"].toString()) {
+                            $("#CityId").append("<option  value=" + value["Id"] + " selected='selected'>" + value["Name"] + "</option>")
+                        }
+                        else {
+                            $("#CityId").append("<option value=" + value["Id"] + ">" + value["Name"] + "</option>")
+                        }
+                    });
+                });
+                var gender = parseInt(spl[12].toString());
+                const selectElement = document.getElementById("GenderId");
+                if (gender % 2 == 0) {
+                    selectElement.value = "2";
+                }
+                else {
+                    selectElement.value = "1";
+                }
+                //var months = Math.floor(days / 31);
+                //var years = Math.floor(months / 12);
+
+                //var years = diffDays / 365;
+                //var months = years.split(".")
+
+            }
+            else if (spl[0].toString() == "3" && spl.length == 14) {
+                var year = "20" + spl[1].toString() + spl[2].toString();
+                var month = spl[3].toString() + spl[4].toString();
+                var day = spl[5].toString() + spl[6].toString();
+
+                var now = new Date();
+                var date1 = new Date(month + "/" + day + "/" + year);
+                var date2 = new Date("10/" + "01/" + now.getFullYear());
+                date1.setMinutes(date1.getMinutes() - date1.getTimezoneOffset());
+                document.getElementById("BirthDate").value = date1.toISOString().slice(0, 10);
+                //const diffTime = Math.abs(now - date1);
+                //const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+
+                calcDate(date1, date2)
+                //var months = Math.floor(days / 31);
+                //var years = Math.floor(months / 12);
+
+                //var years = diffDays / 365;
+                //var months = years.split(".")
+
+            }
+            else {
+                document.getElementById("CityId").value = "";
+                document.getElementById("GenderId").value = "";
+                document.getElementById("BirthDate").value = "";
+                document.getElementById("Year").value = "";
+                document.getElementById("Month").value = "";
+                document.getElementById("Day").value = "";
+            }
+
+        });
+
+
+        $("#NumberId").change(function () {
+            var NumberId = document.getElementById("NumberId").value;
+            var spl = NumberId.toString().split('');
+            if (spl[0].toString() == "2" && spl.length == 14) {
+                var year = "19" + spl[1].toString() + spl[2].toString();
+                var month = spl[3].toString() + spl[4].toString();
+                var day = spl[5].toString() + spl[6].toString();
+
+                var now = new Date();
+                var date1 = new Date(month + "/" + day + "/" + year);
+                var date2 = new Date("10/" + "01/" + now.getFullYear());
+
+                date1.setMinutes(date1.getMinutes() - date1.getTimezoneOffset());
+                document.getElementById("BirthDate").value = date1.toISOString().slice(0, 10);
+                //const diffTime = Math.abs(now - date1);
+                //const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+
+                calcDate(date1, date2)
+
+
+                var city = spl[7].toString() + spl[8].toString();
+
+
+                $.get('/Students/getCities', { Id: $("#CityId").val() }, function (data) {
+                    $("#CityId").empty();
+                    $("#CityId").append("<option value=''>--اختر--</option>")
+                    $.each(data, function (key, value) {
+                        if (city == value["Code"].toString()) {
+                            $("#CityId").append("<option  value=" + value["Id"] + " selected='selected'>" + value["Name"] + "</option>")
+                        }
+                        else {
+                            $("#CityId").append("<option value=" + value["Id"] + ">" + value["Name"] + "</option>")
+                        }
+                    });
+                });
+                var gender = parseInt(spl[12].toString());
+                const selectElement = document.getElementById("GenderId");
+                if (gender % 2 == 0) {
+                    selectElement.value = "2";
+                }
+                else {
+                    selectElement.value = "1";
+                }
+                //var months = Math.floor(days / 31);
+                //var years = Math.floor(months / 12);
+
+                //var years = diffDays / 365;
+                //var months = years.split(".")
+
+            }
+            else if (spl[0].toString() == "3" && spl.length == 14) {
+                var year = "20" + spl[1].toString() + spl[2].toString();
+                var month = spl[3].toString() + spl[4].toString();
+                var day = spl[5].toString() + spl[6].toString();
+
+                var now = new Date();
+                var date1 = new Date(month + "/" + day + "/" + year);
+                var date2 = new Date("10/" + "01/" + now.getFullYear());
+                date1.setMinutes(date1.getMinutes() - date1.getTimezoneOffset());
+                document.getElementById("BirthDate").value = date1.toISOString().slice(0, 10);
+                //const diffTime = Math.abs(now - date1);
+                //const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+
+                calcDate(date1, date2)
+                //var months = Math.floor(days / 31);
+                //var years = Math.floor(months / 12);
+
+                //var years = diffDays / 365;
+                //var months = years.split(".")
+
+            }
+            else {
+                document.getElementById("CityId").value = "";
+                document.getElementById("GenderId").value = "";
+                document.getElementById("BirthDate").value = "";
+                document.getElementById("Year").value = "";
+                document.getElementById("Month").value = "";
+                document.getElementById("Day").value = "";
+            }
+
+        });
+
+        function calcDate(date1, date2) {
+
+            //new date instance
+            const dt_date1 = new Date(date1);
+            const dt_date2 = new Date(date2);
+
+            //Get the Timestamp
+            const date1_time_stamp = dt_date1.getTime();
+            const date2_time_stamp = dt_date2.getTime();
+
+            let calc;
+
+            //Check which timestamp is greater
+            if (date1_time_stamp > date2_time_stamp) {
+                calc = new Date(date1_time_stamp - date2_time_stamp);
+            } else {
+                calc = new Date(date2_time_stamp - date1_time_stamp);
+            }
+            //Retrieve the date, month and year
+            const calcFormatTmp = calc.getDate() + '-' + (calc.getMonth() + 1) + '-' + calc.getFullYear();
+            //Convert to an array and store
+            const calcFormat = calcFormatTmp.split("-");
+            //Subtract each member of our array from the default date
+            const days_passed = Number(Math.abs(calcFormat[0]) - 1);
+            const months_passed = Number(Math.abs(calcFormat[1]) - 1);
+            const years_passed = Number(Math.abs(calcFormat[2]) - 1970);
+            document.getElementById("Year").value = years_passed;
+            document.getElementById("Month").value = months_passed;
+            document.getElementById("Day").value = days_passed;
+
+            //Set up custom text
+            //    const yrsTxt = ["year", "years"];
+            //    const mnthsTxt = ["month", "months"];
+            //    const daysTxt = ["day", "days"];
+
+            //    //Convert to days and sum together
+            //    const total_days = (years_passed * 365) + (months_passed * 30.417) + days_passed;
         }
-        if (document.getElementById('JoiningDate').value == "") {
-            document.getElementById('JoiningDate').value = now.toISOString().slice(0, 10);
-        }
-       
     </script>
 }

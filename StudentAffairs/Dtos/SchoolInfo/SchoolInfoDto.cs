@@ -12,9 +12,12 @@ namespace StudentAffairs.Dtos.SchoolInfo
         public string Image { get; set; }
         public Guid CityId { get; set; }
         public string CityName { get; set; }
+        public Guid CityDepartmentId { get; set; }
+        public string CityDepartmentName { get; set; }
         public string SchoolPrincipal { get; set; }
         public string Administration { get; set; }
         public string StudentAffairsOfficer { get; set; }
+        public string SocialWorker { get; set; }
         public string StudyYear { get; set; }
         public string Notes { get; set; }
     }

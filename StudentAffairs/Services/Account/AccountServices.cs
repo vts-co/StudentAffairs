@@ -37,8 +37,10 @@ namespace StudentAffairs.Services
                 {
                     RoleId = (Role)user.RoleId,
                     UserId = user.Id,
-                    EmployeeId = user.EmployeeId != null ? user.EmployeeId.Value : Guid.Empty,
-                    EmployeeName = user.EmployeeId != null ? user.Employee.Name : "Admin",
+                    SchoolId= user.SchoolId!=null?(Guid)user.SchoolId:Guid.Empty,
+                    SchoolName= user.SchoolId != null ? user.SchoolInfo.Name:"",
+                    //EmployeeId = user.EmployeeId != null ? user.EmployeeId.Value : Guid.Empty,
+                    //EmployeeName = user.EmployeeId != null ? user.Employee.Name : "Admin",
 
                     UserName = user.Username,
                     UserScreens = user.UserScreens

@@ -16,7 +16,14 @@ namespace StudentAffairs.Services.Cities
                 return model;
             }
         }
-
+        public City Get(Guid Id)
+        {
+            using (var dbContext = new StudentAffairsEntities())
+            {
+                var model = dbContext.Cities.Where(x => x.IsDeleted == false&&x.Id==Id).OrderBy(x => x.CreatedOn).FirstOrDefault();
+                return model;
+            }
+        }
         public ResultDto<City> Create(City model, Guid UserId)
         {
             using (var dbContext = new StudentAffairsEntities())

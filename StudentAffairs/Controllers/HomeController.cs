@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace StudentAffairs.Controllers
 {
-    [Authorized]
+    [Authorized(ScreenId = "0")]
 
     public class HomeController : Controller
     {

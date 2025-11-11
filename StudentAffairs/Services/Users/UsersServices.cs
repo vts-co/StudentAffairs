@@ -1,4 +1,5 @@
-﻿using StudentAffairs.Models;
+﻿using StudentAffairs.Enums;
+using StudentAffairs.Models;
 using StudentAffairs.Utilities;
 using System;
 using System.Collections.Generic;
@@ -9,12 +10,27 @@ namespace StudentAffairs.Services.Users
 {
     public class UsersServices
     {
-       
-        public List<User> GetAll()
+        public List<Page> GetAllPerants()
         {
             using (var dbContext = new StudentAffairsEntities())
             {
-                var model = dbContext.Users.Where(x => x.IsDeleted == false).OrderBy(x => x.CreatedOn).ToList();
+                var model = dbContext.Pages.Where(x => x.IsDeleted == false && x.ParentId == null).OrderBy(x => x.Num).ToList();
+                return model;
+            }
+        }
+        public List<Page> GetAllChilds()
+        {
+            using (var dbContext = new StudentAffairsEntities())
+            {
+                var model = dbContext.Pages.Where(x => x.IsDeleted == false && x.ParentId != null).OrderBy(x => x.Num).ToList();
+                return model;
+            }
+        }
+        public List<User> GetAll(Guid UserId, Guid SchoolId, Guid EmployeeId, Role RoleId)
+        {
+            using (var dbContext = new StudentAffairsEntities())
+            {
+                var model = dbContext.Users.Where(x => x.IsDeleted == false && (x.CreatedBy == UserId || x.SchoolId == SchoolId || x.SchoolInfo.Employees.Any(y => !y.IsDeleted && y.Id == EmployeeId) || RoleId == Role.Super_Admin)).OrderBy(x => x.CreatedOn).ToList();
                 return model;
             }
         }
@@ -41,7 +57,7 @@ namespace StudentAffairs.Services.Users
                     result.Message = "هذا المستخدم موجود بالفعل";
                     return result;
                 }
-                if (model.EmployeeId == Guid.Empty || model.EmployeeId == null)
+                if ((model.SchoolId == Guid.Empty || model.SchoolId == null))
                 {
                     result.Result = model;
                     result.IsSuccess = false;
@@ -88,7 +104,7 @@ namespace StudentAffairs.Services.Users
                     result.Message = "هذا المستخدم موجود بالفعل";
                     return result;
                 }
-                if (model.EmployeeId == Guid.Empty || model.EmployeeId == null)
+                if ((model.SchoolId == Guid.Empty || model.SchoolId == null))
                 {
                     result.Result = model;
                     result.IsSuccess = false;
@@ -107,8 +123,8 @@ namespace StudentAffairs.Services.Users
                 Oldmodel.Username = model.Username;
                 Oldmodel.Password = pass;
                 Oldmodel.UserScreens = model.UserScreens;
-                Oldmodel.EmployeeId = model.EmployeeId;
                 Oldmodel.RoleId = model.RoleId;
+                Oldmodel.RoleName = model.RoleName;
 
                 dbContext.SaveChanges();
                 result.IsSuccess = true;
@@ -138,5 +154,17 @@ namespace StudentAffairs.Services.Users
                 return result;
             }
         }
+
+        public string Pages(Guid UserId)
+        {
+            using (var dbContext = new StudentAffairsEntities())
+            {
+                var Oldmodel = dbContext.Users.Where(x => x.Id == UserId  && x.IsDeleted == false).FirstOrDefault();
+
+                var result = Oldmodel.UserScreens;         
+                return result;
+            }
+        }
+
     }
 }

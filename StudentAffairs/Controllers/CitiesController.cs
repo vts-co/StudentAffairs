@@ -11,7 +11,7 @@ using System.Web.Mvc;
 namespace StudentAffairs.Controllers
 {
     //Role = Role.SystemAdmin,
-    [Authorized]
+    [Authorized(ScreenId = "1")]
     public class CitiesController : Controller
     {
 

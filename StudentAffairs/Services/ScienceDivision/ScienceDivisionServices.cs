@@ -1,4 +1,5 @@
-﻿using StudentAffairs.Models;
+﻿using StudentAffairs.Enums;
+using StudentAffairs.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,11 +9,11 @@ namespace StudentAffairs.Services.ScienceDivision
 {
     public class ScienceDivisionServices
     {
-        public List<Models.ScienceDivision> GetAll()
+        public List<Models.ScienceDivision> GetAll(Guid UserId, Guid SchoolId, Guid EmployeeId, Role RoleId)
         {
             using (var dbContext = new StudentAffairsEntities())
             {
-                var model = dbContext.ScienceDivisions.Where(x => x.IsDeleted == false).OrderBy(x => x.CreatedOn).ToList();
+                var model = dbContext.ScienceDivisions.Where(x => x.IsDeleted == false && (x.CreatedBy == UserId || x.SchoolId == SchoolId || x.SchoolInfo.Employees.Any(y => !y.IsDeleted && y.Id == EmployeeId) || RoleId == Role.Super_Admin)).OrderBy(x => x.CreatedOn).ToList();
                 return model;
             }
         }

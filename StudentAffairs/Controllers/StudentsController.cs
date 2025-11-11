@@ -25,7 +25,7 @@ using System.Web.UI.WebControls;
 
 namespace StudentAffairs.Controllers
 {
-    [Authorized]
+    [Authorized(ScreenId = "11")]
     public class StudentsController : Controller
     {
         LevelsServices levelsServices = new LevelsServices();
@@ -46,27 +46,29 @@ namespace StudentAffairs.Controllers
         SecondLanguageServices secondLanguageServices = new SecondLanguageServices();
 
         StudentsServices studentsServices = new StudentsServices();
-        public ActionResult Index()
+        [Authorized(ScreenId = "12")]
+
+        public ActionResult Index(string code)
         {
-            var model = studentsServices.GetAll((Guid)TempData["UserId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]);
-            return View(model);
+            if(code==null)
+            {
+                var model = studentsServices.GetAll((Guid)TempData["UserId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]);
+                return View(model);
+            }
+            else
+            {
+                var model = studentsServices.GetByCodeOrNameOrNumberId((Guid)TempData["UserId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"],code);
+                return View(model);
+            }
         }
-        public ActionResult Graduates()
-        {
-            var model = studentsServices.GetAllGraduates((Guid)TempData["UserId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]);
-            return View(model);
-        }
-        public ActionResult TransferFromSchool()
-        {
-            var model = studentsServices.GetAllTransferFromSchool((Guid)TempData["UserId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]);
-            return View(model);
-        }
+        [Authorized(ScreenId = "11")]
+
         public ActionResult Create()
         {
-            var Levels = levelsServices.GetAll();
+            var Levels = levelsServices.GetAll((Guid)TempData["UserId"], (Guid)TempData["SchoolId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]);
             ViewBag.LevelId = new SelectList(Levels, "Id", "Name");
 
-            var Classes = classesServices.GetAll();
+            var Classes = classesServices.GetAll((Guid)TempData["UserId"], (Guid)TempData["SchoolId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]);
             ViewBag.ClassId = new SelectList(Classes, "Id", "Name");
 
             var Religion = religionServices.GetAll();
@@ -75,10 +77,10 @@ namespace StudentAffairs.Controllers
             var Nationalities = nationalitiesServices.GetAll();
             ViewBag.NationalityId = new SelectList(Nationalities, "Id", "Name");
 
-            var ExpenseTypes = expenseTypesServices.GetAll();
+            var ExpenseTypes = expenseTypesServices.GetAll((Guid)TempData["UserId"], (Guid)TempData["SchoolId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]);
             ViewBag.ExpenseTypeId = new SelectList(ExpenseTypes, "Id", "Name");
 
-            var ExemptionReasons = exemptionReasonsServices.GetAll();
+            var ExemptionReasons = exemptionReasonsServices.GetAll((Guid)TempData["UserId"], (Guid)TempData["SchoolId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]);
             ViewBag.ExemptionReasonId = new SelectList(ExemptionReasons, "Id", "Name");
 
             var EndYearResults = endYearResultsServices.GetAll();
@@ -96,18 +98,18 @@ namespace StudentAffairs.Controllers
 
             ViewBag.GenderId = new SelectList(Genders(), "Value", "Text");
 
-            var RegistrationStatus = registrationStatusServices.GetAll();
+            var RegistrationStatus = registrationStatusServices.GetAll((Guid)TempData["UserId"], (Guid)TempData["SchoolId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]);
             ViewBag.RegistrationStateId = new SelectList(RegistrationStatus, "Id", "Name");
 
             ViewBag.RegistrationDate = DateTime.Now.ToString("yyyy-MM-dd");
 
-            var SocialStatus = socialStatusServices.GetAll();
+            var SocialStatus = socialStatusServices.GetAll((Guid)TempData["UserId"], (Guid)TempData["SchoolId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]);
             ViewBag.SocialStateId = new SelectList(SocialStatus, "Id", "Name");
 
-            var ScienceDivision = scienceDivisionServices.GetAll();
+            var ScienceDivision = scienceDivisionServices.GetAll((Guid)TempData["UserId"], (Guid)TempData["SchoolId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]);
             ViewBag.ScienceDivisionId = new SelectList(ScienceDivision, "Id", "Name");
 
-            var SecondLanguage = secondLanguageServices.GetAll();
+            var SecondLanguage = secondLanguageServices.GetAll((Guid)TempData["UserId"], (Guid)TempData["SchoolId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]);
             ViewBag.SecondLanguageId = new SelectList(SecondLanguage, "Id", "Name");
 
             ViewBag.InsurancePolicyDate = DateTime.Now.ToString("yyyy-MM-dd");
@@ -119,7 +121,7 @@ namespace StudentAffairs.Controllers
 
 
             var studentsCount = studentsServices.GetAll((Guid)TempData["UserId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]).Count();
-            studentsCount += 1;
+            studentsCount += 100;
             return View("Upsert", new Student() { Code = studentsCount.ToString() });
         }
         [HttpPost, ValidateInput(false)]
@@ -146,10 +148,10 @@ namespace StudentAffairs.Controllers
             {
                 student.Id = Guid.Empty;
 
-                var Levels = levelsServices.GetAll();
+                var Levels = levelsServices.GetAll((Guid)TempData["UserId"], (Guid)TempData["SchoolId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]);
                 ViewBag.LevelId = new SelectList(Levels, "Id", "Name", student.LevelId);
 
-                var Classes = classesServices.GetAll();
+                var Classes = classesServices.GetAll((Guid)TempData["UserId"], (Guid)TempData["SchoolId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]);
                 ViewBag.ClassId = new SelectList(Classes, "Id", "Name", student.ClassId);
 
                 var Religion = religionServices.GetAll();
@@ -158,10 +160,10 @@ namespace StudentAffairs.Controllers
                 var Nationalities = nationalitiesServices.GetAll();
                 ViewBag.NationalityId = new SelectList(Nationalities, "Id", "Name", student.NationalityId);
 
-                var ExpenseTypes = expenseTypesServices.GetAll();
+                var ExpenseTypes = expenseTypesServices.GetAll((Guid)TempData["UserId"], (Guid)TempData["SchoolId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]);
                 ViewBag.ExpenseTypeId = new SelectList(ExpenseTypes, "Id", "Name", student.ExpenseTypeId);
 
-                var ExemptionReasons = exemptionReasonsServices.GetAll();
+                var ExemptionReasons = exemptionReasonsServices.GetAll((Guid)TempData["UserId"], (Guid)TempData["SchoolId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]);
                 ViewBag.ExemptionReasonId = new SelectList(ExemptionReasons, "Id", "Name", student.ExemptionReasonId);
 
                 var EndYearResults = endYearResultsServices.GetAll();
@@ -182,7 +184,7 @@ namespace StudentAffairs.Controllers
 
                 ViewBag.GenderId = new SelectList(Genders(), "Value", "Text", student.GenderId);
 
-                var RegistrationStatus = registrationStatusServices.GetAll();
+                var RegistrationStatus = registrationStatusServices.GetAll((Guid)TempData["UserId"], (Guid)TempData["SchoolId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]);
                 ViewBag.RegistrationStateId = new SelectList(RegistrationStatus, "Id", "Name", student.RegistrationStateId);
 
                 if (student.RegistrationDate != null)
@@ -191,14 +193,14 @@ namespace StudentAffairs.Controllers
                     ViewBag.RegistrationDate = DateTime.Now.ToString("yyyy-MM-dd");
 
 
-                var SocialStatus = socialStatusServices.GetAll();
+                var SocialStatus = socialStatusServices.GetAll((Guid)TempData["UserId"], (Guid)TempData["SchoolId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]);
                 ViewBag.SocialStateId = new SelectList(SocialStatus, "Id", "Name", student.SocialStateId);
 
-                var ScienceDivision = scienceDivisionServices.GetAll();
+                var ScienceDivision = scienceDivisionServices.GetAll((Guid)TempData["UserId"], (Guid)TempData["SchoolId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]);
                 ViewBag.ScienceDivisionId = new SelectList(ScienceDivision, "Id", "Name", student.ScienceDivisionId);
 
-                var SecondLanguage = secondLanguageServices.GetAll();
-                ViewBag.SecondLanguageId = new SelectList(SecondLanguage, "Id", "Name", student.SecondLanguageIId);
+                var SecondLanguage = secondLanguageServices.GetAll((Guid)TempData["UserId"], (Guid)TempData["SchoolId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]);
+                ViewBag.SecondLanguageId = new SelectList(SecondLanguage, "Id", "Name", student.SecondLanguageId);
 
                 if (student.InsurancePolicyDate != null)
                     ViewBag.InsurancePolicyDate = student.InsurancePolicyDate.Value.ToString("yyyy-MM-dd");
@@ -223,14 +225,16 @@ namespace StudentAffairs.Controllers
                 return View("Upsert", student);
             }
         }
+        [Authorized(ScreenId = "12")]
+
         public ActionResult Edit(Guid Id)
         {
             var student = studentsServices.Get(Id);
 
-            var Levels = levelsServices.GetAll();
+            var Levels = levelsServices.GetAll((Guid)TempData["UserId"], (Guid)TempData["SchoolId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]);
             ViewBag.LevelId = new SelectList(Levels, "Id", "Name", student.LevelId);
 
-            var Classes = classesServices.GetAll();
+            var Classes = classesServices.GetAll((Guid)TempData["UserId"], (Guid)TempData["SchoolId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]);
             ViewBag.ClassId = new SelectList(Classes, "Id", "Name", student.ClassId);
 
             var Religion = religionServices.GetAll();
@@ -239,10 +243,10 @@ namespace StudentAffairs.Controllers
             var Nationalities = nationalitiesServices.GetAll();
             ViewBag.NationalityId = new SelectList(Nationalities, "Id", "Name", student.NationalityId);
 
-            var ExpenseTypes = expenseTypesServices.GetAll();
+            var ExpenseTypes = expenseTypesServices.GetAll((Guid)TempData["UserId"], (Guid)TempData["SchoolId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]);
             ViewBag.ExpenseTypeId = new SelectList(ExpenseTypes, "Id", "Name", student.ExpenseTypeId);
 
-            var ExemptionReasons = exemptionReasonsServices.GetAll();
+            var ExemptionReasons = exemptionReasonsServices.GetAll((Guid)TempData["UserId"], (Guid)TempData["SchoolId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]);
             ViewBag.ExemptionReasonId = new SelectList(ExemptionReasons, "Id", "Name", student.ExemptionReasonId);
 
             var EndYearResults = endYearResultsServices.GetAll();
@@ -263,7 +267,7 @@ namespace StudentAffairs.Controllers
 
             ViewBag.GenderId = new SelectList(Genders(), "Value", "Text", student.GenderId);
 
-            var RegistrationStatus = registrationStatusServices.GetAll();
+            var RegistrationStatus = registrationStatusServices.GetAll((Guid)TempData["UserId"], (Guid)TempData["SchoolId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]);
             ViewBag.RegistrationStateId = new SelectList(RegistrationStatus, "Id", "Name", student.RegistrationStateId);
 
             if (student.RegistrationDate != null)
@@ -272,14 +276,14 @@ namespace StudentAffairs.Controllers
                 ViewBag.RegistrationDate = DateTime.Now.ToString("yyyy-MM-dd");
 
 
-            var SocialStatus = socialStatusServices.GetAll();
+            var SocialStatus = socialStatusServices.GetAll((Guid)TempData["UserId"], (Guid)TempData["SchoolId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]);
             ViewBag.SocialStateId = new SelectList(SocialStatus, "Id", "Name", student.SocialStateId);
 
-            var ScienceDivision = scienceDivisionServices.GetAll();
+            var ScienceDivision = scienceDivisionServices.GetAll((Guid)TempData["UserId"], (Guid)TempData["SchoolId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]);
             ViewBag.ScienceDivisionId = new SelectList(ScienceDivision, "Id", "Name", student.ScienceDivisionId);
 
-            var SecondLanguage = secondLanguageServices.GetAll();
-            ViewBag.SecondLanguageId = new SelectList(SecondLanguage, "Id", "Name", student.SecondLanguageIId);
+            var SecondLanguage = secondLanguageServices.GetAll((Guid)TempData["UserId"], (Guid)TempData["SchoolId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]);
+            ViewBag.SecondLanguageId = new SelectList(SecondLanguage, "Id", "Name", student.SecondLanguageId);
 
             if (student.InsurancePolicyDate != null)
                 ViewBag.InsurancePolicyDate = student.InsurancePolicyDate.Value.ToString("yyyy-MM-dd");
@@ -322,10 +326,10 @@ namespace StudentAffairs.Controllers
             }
             else
             {
-                var Levels = levelsServices.GetAll();
+                var Levels = levelsServices.GetAll((Guid)TempData["UserId"], (Guid)TempData["SchoolId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]);
                 ViewBag.LevelId = new SelectList(Levels, "Id", "Name", student.LevelId);
 
-                var Classes = classesServices.GetAll();
+                var Classes = classesServices.GetAll((Guid)TempData["UserId"], (Guid)TempData["SchoolId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]);
                 ViewBag.ClassId = new SelectList(Classes, "Id", "Name", student.ClassId);
 
                 var Religion = religionServices.GetAll();
@@ -334,10 +338,10 @@ namespace StudentAffairs.Controllers
                 var Nationalities = nationalitiesServices.GetAll();
                 ViewBag.NationalityId = new SelectList(Nationalities, "Id", "Name", student.NationalityId);
 
-                var ExpenseTypes = expenseTypesServices.GetAll();
+                var ExpenseTypes = expenseTypesServices.GetAll((Guid)TempData["UserId"], (Guid)TempData["SchoolId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]);
                 ViewBag.ExpenseTypeId = new SelectList(ExpenseTypes, "Id", "Name", student.ExpenseTypeId);
 
-                var ExemptionReasons = exemptionReasonsServices.GetAll();
+                var ExemptionReasons = exemptionReasonsServices.GetAll((Guid)TempData["UserId"], (Guid)TempData["SchoolId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]);
                 ViewBag.ExemptionReasonId = new SelectList(ExemptionReasons, "Id", "Name", student.ExemptionReasonId);
 
                 var EndYearResults = endYearResultsServices.GetAll();
@@ -358,7 +362,7 @@ namespace StudentAffairs.Controllers
 
                 ViewBag.GenderId = new SelectList(Genders(), "Value", "Text", student.GenderId);
 
-                var RegistrationStatus = registrationStatusServices.GetAll();
+                var RegistrationStatus = registrationStatusServices.GetAll((Guid)TempData["UserId"], (Guid)TempData["SchoolId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]);
                 ViewBag.RegistrationStateId = new SelectList(RegistrationStatus, "Id", "Name", student.RegistrationStateId);
 
                 if (student.RegistrationDate != null)
@@ -367,14 +371,14 @@ namespace StudentAffairs.Controllers
                     ViewBag.RegistrationDate = DateTime.Now.ToString("yyyy-MM-dd");
 
 
-                var SocialStatus = socialStatusServices.GetAll();
+                var SocialStatus = socialStatusServices.GetAll((Guid)TempData["UserId"], (Guid)TempData["SchoolId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]);
                 ViewBag.SocialStateId = new SelectList(SocialStatus, "Id", "Name", student.SocialStateId);
 
-                var ScienceDivision = scienceDivisionServices.GetAll();
+                var ScienceDivision = scienceDivisionServices.GetAll((Guid)TempData["UserId"], (Guid)TempData["SchoolId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]);
                 ViewBag.ScienceDivisionId = new SelectList(ScienceDivision, "Id", "Name", student.ScienceDivisionId);
 
-                var SecondLanguage = secondLanguageServices.GetAll();
-                ViewBag.SecondLanguageId = new SelectList(SecondLanguage, "Id", "Name", student.SecondLanguageIId);
+                var SecondLanguage = secondLanguageServices.GetAll((Guid)TempData["UserId"], (Guid)TempData["SchoolId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]);
+                ViewBag.SecondLanguageId = new SelectList(SecondLanguage, "Id", "Name", student.SecondLanguageId);
 
                 if (student.InsurancePolicyDate != null)
                     ViewBag.InsurancePolicyDate = student.InsurancePolicyDate.Value.ToString("yyyy-MM-dd");
@@ -413,6 +417,58 @@ namespace StudentAffairs.Controllers
             }
         }
 
+        [Authorized(ScreenId = "13")]
+
+        public ActionResult Graduates()
+        {
+            var model = studentsServices.GetAllGraduates((Guid)TempData["UserId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]);
+            return View(model);
+        }
+        public ActionResult Graduated(Guid Id)
+        {
+            var result = studentsServices.Graduated(Id, (Guid)TempData["UserId"]);
+            if (result.IsSuccess)
+            {
+                TempData["success"] = result.Message;
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                TempData["warning"] = result.Message;
+                return RedirectToAction("Index");
+            }
+        }
+
+        [Authorized(ScreenId = "14")]
+
+        public ActionResult TransferFromSchool()
+        {
+            var model = studentsServices.GetAllTransferFromSchool((Guid)TempData["UserId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]);
+            return View(model);
+        }
+        public ActionResult Transfered(Guid Id)
+        {
+            var result = studentsServices.Transfered(Id, (Guid)TempData["UserId"]);
+            if (result.IsSuccess)
+            {
+                TempData["success"] = result.Message;
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                TempData["warning"] = result.Message;
+                return RedirectToAction("Index");
+            }
+        }
+
+        [Authorized(ScreenId = "0")]
+        public ActionResult getCities(Guid? Id)
+        {
+            var result = citiesServices.GetAll().Select(x=>new { x.Id,x.Name,x.Code}).ToList();
+           
+                return Json(result,JsonRequestBehavior.AllowGet);
+            
+        }
         List<ListItem> Genders()
         {
             Array values = Enum.GetValues(typeof(Gender));

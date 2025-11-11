@@ -1,0 +1,91 @@
+﻿@model StudentAffairs.Models.StudentReceipt
+@using StudentAffairs.Utilities
+@{
+    ViewBag.Title = " استلام طالب  ";
+    string action = "Create";
+    ViewBag.MainPage = "استلام الطلاب";
+
+}
+@using (Html.BeginForm(action, "StudentReceipt", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+
+    <div class="card">
+        <div class="card-header">
+            <div class="row justify-content-between">
+                <h4 class="col-auto">@ViewBag.Title</h4>
+                @Url.BackToList()
+            </div>
+        </div>
+        <div class="card-body">
+            @Html.HiddenFor(model => model.Id)
+            <div class="row">
+                <div class="form-group mb-3 col-sm-6">
+                    @Html.Label("الكود", htmlAttributes: new { @class = "control-label" })
+                    <div class="col-12">
+                        @Html.EditorFor(model => model.Code, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                        @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger" })
+                    </div>
+                    <input type="hidden" id="StudentId" name="StudentId" />
+                </div>
+                <div class="form-group mb-3 col-sm-6">
+                    @Html.Label("اسم الطالب", htmlAttributes: new { @class = "control-label" })
+                    <div class="col-12">
+                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", required = "required" } })
+                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group mb-3 col-sm-6">
+                    @Html.Label("الصف", htmlAttributes: new { @class = "control-label" })
+                    <div class="col-12">
+                        @Html.EditorFor(model => model.LevelName, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                        @Html.ValidationMessageFor(model => model.LevelName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group mb-3 col-sm-6">
+                    @Html.Label("تاريخ الاستلام", htmlAttributes: new { @class = "control-label" })
+                    <div class="col-12">
+                        @Html.EditorFor(model => model.ReceiptDate, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", required = "required" } })
+                    </div>
+                </div>
+                <div class="form-group mb-3 col-sm-6">
+                    @Html.Label("المستلم", htmlAttributes: new { @class = "control-label" })
+                    <div class="col-12">
+                        @Html.EditorFor(model => model.ReceiptPerson, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                        @Html.ValidationMessageFor(model => model.ReceiptPerson, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="card-footer">
+            <div class="row justify-content-end">
+
+                @Url.SubmitDismissalRegistration()
+
+            </div>
+        </div>
+    </div>
+}
+
+@section scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        $("#Code").keypress(function () {
+            $.get('/StudentReceipt/getStudent', { code: $("#Code").val() }, function (data) {
+                if (data != null) {
+                    document.getElementById("StudentId").value = data.Id;
+                    document.getElementById("Name").value = data.Name;
+                    document.getElementById("LevelName").value = data.LevelName;
+                }
+                else {
+                    document.getElementById("Name").value = "";
+                    document.getElementById("LevelName").value = "";
+                }
+                var now = new Date();
+                now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+                document.getElementById('ReceiptDate').value = now.getFullYear() + "-" + (now.getMonth() + 1).toString().padStart(2, "0") + "-" + now.getDate().toString().padStart(2, "0") + " " + now.getHours() + ":" + now.getMinutes() ;
+            });
+        });
+    </script>
+}

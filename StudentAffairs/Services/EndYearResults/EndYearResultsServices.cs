@@ -55,6 +55,7 @@ namespace StudentAffairs.Services.EndYearResults
                 Oldmodel.ModifiedOn = DateTime.UtcNow;
                 Oldmodel.ModifiedBy = UserId;
                 Oldmodel.Name = model.Name;
+
                 Oldmodel.Notes = model.Notes;
 
                 dbContext.SaveChanges();

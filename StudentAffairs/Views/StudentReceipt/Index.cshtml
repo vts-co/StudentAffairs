@@ -1,0 +1,74 @@
+﻿@model IEnumerable<StudentAffairs.Models.StudentReceipt>
+@using StudentAffairs.Utilities
+@{
+    ViewBag.Title = "ادارة استلام الطلاب ";
+
+}
+<div class="card" >
+    <div class="card-header">
+
+        <div class="row">
+            <h2 class="col">  </h2>
+            <p class="col-auto">
+                @Url.StudentReceipt()
+            </p>
+        </div>
+    </div>
+    <div class="card-body">
+        <table id="datatable" class="table table-striped dt-responsive  nowrap w-100 table-bordered">
+            <thead class="bg-soft-primary">
+                <tr>
+                    <th>
+                        @Html.DisplayName("كود الطالب")
+                    </th>
+                    <th>
+                        @Html.DisplayName("اسم الطالب")
+                    </th>
+                    <th>
+                        @Html.DisplayName("الصف")
+                    </th>
+                    
+                    <th>
+                        @Html.DisplayName("تاريخ الاستلام")
+                    </th>
+                    <th>
+                        @Html.DisplayName("المستلم")
+                    </th>
+                   
+                    <th>
+                        @Html.DisplayName("عمليات")
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Code)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LevelName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ReceiptDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ReceiptPerson)
+                    </td>
+                    <td>
+                        @Url.Delete(routeValues: new { id = item.Id })
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>
+@section Scripts{
+    
+}

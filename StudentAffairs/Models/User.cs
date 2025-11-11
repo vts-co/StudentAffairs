@@ -15,10 +15,11 @@ namespace StudentAffairs.Models
     public partial class User
     {
         public System.Guid Id { get; set; }
+        public string RoleName { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
         public Nullable<int> RoleId { get; set; }
-        public Nullable<System.Guid> EmployeeId { get; set; }
+        public Nullable<System.Guid> SchoolId { get; set; }
         public string UserScreens { get; set; }
         public Nullable<System.DateTime> CreatedOn { get; set; }
         public Nullable<System.Guid> CreatedBy { get; set; }
@@ -28,6 +29,6 @@ namespace StudentAffairs.Models
         public Nullable<System.DateTime> DeletedOn { get; set; }
         public Nullable<System.Guid> DeletedBy { get; set; }
     
-        public virtual Employee Employee { get; set; }
+        public virtual SchoolInfo SchoolInfo { get; set; }
     }
 }

@@ -14,28 +14,12 @@ namespace StudentAffairs.Models
     
     public partial class Employee
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Employee()
-        {
-            this.Users = new HashSet<User>();
-        }
-    
         public System.Guid Id { get; set; }
-        public Nullable<System.Guid> JopId { get; set; }
-        public string Code { get; set; }
         public string Name { get; set; }
-        public string NumberId { get; set; }
-        public string Image { get; set; }
-        public string BirthDate { get; set; }
-        public string Qualification { get; set; }
-        public Nullable<int> GenderId { get; set; }
-        public Nullable<int> MaritalStateId { get; set; }
-        public Nullable<System.Guid> RegistrationTypeId { get; set; }
         public string Phone { get; set; }
-        public string Address { get; set; }
-        public string JoiningDate { get; set; }
-        public Nullable<double> WorkDayCost { get; set; }
-        public bool ContractOrNo { get; set; }
+        public string NumberId { get; set; }
+        public Nullable<System.Guid> JobId { get; set; }
+        public Nullable<System.Guid> SchoolId { get; set; }
         public string Notes { get; set; }
         public Nullable<System.DateTime> CreatedOn { get; set; }
         public Nullable<System.Guid> CreatedBy { get; set; }
@@ -46,7 +30,6 @@ namespace StudentAffairs.Models
         public Nullable<System.Guid> DeletedBy { get; set; }
     
         public virtual Job Job { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<User> Users { get; set; }
+        public virtual SchoolInfo SchoolInfo { get; set; }
     }
 }

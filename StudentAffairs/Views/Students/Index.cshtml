@@ -10,14 +10,15 @@
 
         <div class="row">
             <h2 class="col">@ViewBag.Title  </h2>
-
-            <p class="col-auto">
-                <a href='/Students/Create' class='btn btn-soft-primary  waves-effect waves-light px-4'><i class="fas fa-plus me-3"></i> اضافة طالب جديد</a>
-            </p>
-
+            @if (ViewBag.userscreens.ToString().Contains(",11,"))
+            {
+                <p class="col-auto">
+                    <a href='/Students/Create' class='btn btn-soft-primary  waves-effect waves-light px-4'><i class="fas fa-plus me-3"></i> اضافة طالب جديد</a>
+                </p>
+            }
         </div>
     </div>
-    @using (Html.BeginForm("Index", "Students", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    @using (Html.BeginForm("Index", "Students", FormMethod.Get, new { enctype = "multipart/form-data" }))
     {
         <div class="card-body">
             <div class="row mt-3">
@@ -79,18 +80,20 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.Phone)
                         </td>
-                        
+
                         <td>
-                                <img src="@item.Image" width="50" />
-                            </td>
+                            <img src="@item.Image" width="50" />
+                        </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.BirthDate)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => ((Gender)item.GenderId).ToString())
+                            @Html.DisplayFor(modelItem => item.GenderName)
                         </td>
 
                         <td>
+                            <a href='/Students/Graduated?Id=@item.Id' title='تخرج من المدرسة' class='btn btn-soft-warning  waves-effect waves-light p-2'><i class="fas fa-graduation-cap"></i></a>
+                            <a href='/Students/Transfered?Id=@item.Id' title='محول من المدرسة' class='btn btn-soft-secondary  waves-effect waves-light p-2'><i class="fas fa-user-slash"></i></a>
                             @Url.Edit(routeValues: new { id = item.Id })
                             @Url.Delete(routeValues: new { id = item.Id })
                         </td>

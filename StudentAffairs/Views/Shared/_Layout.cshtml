@@ -1,4 +1,4 @@
-﻿
+﻿@using StudentAffairs.Enums
 @{
     var lang = "ar-EG";
     var userInfo = TempData["UserInfo"];
@@ -106,11 +106,11 @@
 
 
                 </div>
-               
+
                 <div class="d-flex col-xl-3 col-md-4 col-5 col-lg-6 justify-content-end mb-2">
 
 
-                    
+
                     <div class="dropdown d-none d-sm-inline-block">
                         <button type="button" class="btn header-item" id="mode-setting-btn" onclick="shiftMode();">
                             <i data-feather="moon" class="icon-lg layout-mode-dark fa fa-moon"></i>
@@ -118,7 +118,7 @@
                         </button>
                     </div>
 
-                    
+
                     <div class="dropdown d-inline-block">
                         <button type="button" class="btn header-item right-bar-toggle me-2 ">
                             <i data-feather="settings" class="icon-lg d-none"></i>
@@ -128,7 +128,7 @@
                     <div class="dropdown d-inline-block din-bold">
                         <button type="button" class="btn header-item bg-soft-light border-start border-end" id="page-header-user-dropdown"
                                 data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                   
+
                             <span class="d-none d-xl-inline-block ms-1 fw-medium ">Welcome @TempData["UserName"]</span>
                             <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
                         </button>
@@ -149,32 +149,123 @@
 
                     <div class="collapse navbar-collapse row" id="topnav-menu-content">
                         <ul class="navbar-nav din-bold justify-content-center">
+
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle arrow-none" href="/Home" id="topnav-dashboard" role="button">
                                     <i data-feather="home"></i><span data-key="t-dashboards">الصفحة الرئيسية </span>
                                 </a>
                             </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle arrow-none" href="/SchoolInfo/Edit" id="topnav-dashboard" role="button">
-                                    <i class="fa fa-building p-1"></i><span data-key="t-dashboards">بيانات المدرسة </span>
-                                </a>
-                            </li>
-
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle arrow-none" href="/Students" id="topnav-dashboard" role="button">
-                                    <i class="fa fa-user p-1"></i><span data-key="t-dashboards">بيانات الطالب / ادارة السجلات </span>
-                                </a>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle arrow-none" href="/Students/Graduates" id="topnav-dashboard" role="button">
-                                    <i class="fa fa-graduation-cap p-1"></i><span data-key="t-dashboards">عرض الخريجين </span>
-                                </a>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle arrow-none" href="/Students/Graduates" id="topnav-dashboard" role="button">
-                                    <i class="fa fa-user-alt-slash p-1"></i><span data-key="t-dashboards">المحولين من المدرسة </span>
-                                </a>
-                            </li>
+                            @if (ViewBag.userscreens.ToString().Contains(",1,") || ViewBag.userscreens.ToString().Contains(",2,") || ViewBag.userscreens.ToString().Contains(",3,") || ViewBag.userscreens.ToString().Contains(",4,") || ViewBag.userscreens.ToString().Contains(",5,") || ViewBag.userscreens.ToString().Contains(",6,") || ViewBag.userscreens.ToString().Contains(",7,") || ViewBag.userscreens.ToString().Contains(",8,") || ViewBag.userscreens.ToString().Contains(",9,"))
+                            {
+                                <li class="Stund">
+                                    <a href="javascript: void(0);" class="has-arrow">
+                                        <i class="fas fa-users p-1"></i>
+                                        <span data-key="t-apps">التعريفات الاساسية </span>
+                                    </a>
+                                    <ul class="sub-menu" aria-expanded="false" id="side-menu7">
+                                        @if (ViewBag.userscreens.ToString().Contains(",1,"))
+                                        {
+                                            <li class="Stund2"><a href="@Url.Action("Index", "Cities")"><i class="fas fa-city p-1"></i> المحافظات</a></li>
+                                        }
+                                        @if (ViewBag.userscreens.ToString().Contains(",2,"))
+                                        {
+                                            <li class="Stund2"><a href="@Url.Action("Index", "CityDepartments")"><i class="fas fa-list-alt p-1"></i> الادارات</a></li>
+                                        }
+                                        @if (ViewBag.userscreens.ToString().Contains(",3,"))
+                                        {
+                                            <li class="Stund2"><a href="@Url.Action("Index", "Levels")"><i class="fas fa-layer-group p-1"></i> الصفوف </a></li>
+                                        }
+                                        @if (ViewBag.userscreens.ToString().Contains(",4,"))
+                                        {
+                                            <li class="Stund2"><a href="@Url.Action("Index", "Classes")"><i class="fas fa-home p-1"></i> الفصول </a></li>
+                                        }
+                                        @if (ViewBag.userscreens.ToString().Contains(",5,"))
+                                        {
+                                            <li class="Stund2"><a href="@Url.Action("Index", "ExpenseTypes")"><i class="fas fa-coins p-1"></i> المصروفات </a></li>
+                                        }
+                                        @if (ViewBag.userscreens.ToString().Contains(",6,"))
+                                        {
+                                            <li class="Stund2"><a href="@Url.Action("Index", "ExemptionReasons")"><i class="fas fa-list p-1"></i> اسباب الاعفاء </a></li>
+                                        }
+                                        @if (ViewBag.userscreens.ToString().Contains(",7,"))
+                                        {
+                                            <li class="Stund2"><a href="@Url.Action("Index", "SocialStatus")"><i class="fas fa-list p-1"></i> الحالات الاجتماعية </a></li>
+                                        }
+                                        @if (ViewBag.userscreens.ToString().Contains(",8,"))
+                                        {
+                                            <li class="Stund2"><a href="@Url.Action("Index", "ScienceDivision")"><i class="fas fa-object-group p-1"></i> الشعب  </a></li>
+                                        }
+                                        @if (ViewBag.userscreens.ToString().Contains(",9,"))
+                                        {
+                                            <li class="Stund2"><a href="@Url.Action("Index", "SecondLanguage")"><i class="fas fa-language p-1"></i> اللغة التانية  </a></li>
+                                        }
+                                    </ul>
+                                </li>
+                            }
+                            @if (ViewBag.userscreens.ToString().Contains(",10,") && (Role)TempData["RoleId"] == Role.Super_Admin)
+                            {
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle arrow-none" href="/SchoolInfo" id="topnav-dashboard" role="button">
+                                        <i class="fa fa-building p-1"></i><span data-key="t-dashboards">بيانات المدارس </span>
+                                    </a>
+                                </li>
+                            }
+                            @if (ViewBag.userscreens.ToString().Contains(",10,") && (Role)TempData["RoleId"] != Role.Super_Admin && TempData["SchoolId"] != null)
+                            {
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle arrow-none" href="/SchoolInfo/Edit?Id=@((Guid)TempData["SchoolId"])" id="topnav-dashboard" role="button">
+                                        <i class="fa fa-building p-1"></i><span data-key="t-dashboards">بيانات المدرسة </span>
+                                    </a>
+                                </li>
+                            }
+                            @if (ViewBag.userscreens.ToString().Contains(",11,"))
+                            {
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle arrow-none" href="/Students/Create" id="topnav-dashboard" role="button">
+                                        <i class="fa fa-user-edit p-1"></i><span data-key="t-dashboards">بيانات الطالب  </span>
+                                    </a>
+                                </li>
+                            }
+                            @if (ViewBag.userscreens.ToString().Contains(",12,"))
+                            {
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle arrow-none" href="/Students" id="topnav-dashboard" role="button">
+                                        <i class="fa fa-users p-1"></i><span data-key="t-dashboards"> ادارة السجلات </span>
+                                    </a>
+                                </li>
+                            }
+                            @if (ViewBag.userscreens.ToString().Contains(",13,"))
+                            {
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle arrow-none" href="/Students/Graduates" id="topnav-dashboard" role="button">
+                                        <i class="fa fa-graduation-cap p-1"></i><span data-key="t-dashboards">عرض الخريجين </span>
+                                    </a>
+                                </li>
+                            }
+                            @if (ViewBag.userscreens.ToString().Contains(",14,"))
+                            {
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle arrow-none" href="/Students/TransferFromSchool" id="topnav-dashboard" role="button">
+                                        <i class="fa fa-user-alt-slash p-1"></i><span data-key="t-dashboards">المحولين من المدرسة </span>
+                                    </a>
+                                </li>
+                            }
+                            @if (ViewBag.userscreens.ToString().Contains(",15,"))
+                            {
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle arrow-none" href="/StudentReceipt" id="topnav-dashboard" role="button">
+                                        <i class="fa fa-check-circle p-1"></i><span data-key="t-dashboards">استلام الطالب </span>
+                                    </a>
+                                </li>
+                            }
+                            @if (ViewBag.userscreens.ToString().Contains(",16,"))
+                            {
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle arrow-none" href="/ExitPermission" id="topnav-dashboard" role="button">
+                                        <i class="fa fa-sign-out-alt p-1"></i><span data-key="t-dashboards">اذن خروج </span>
+                                    </a>
+                                </li>
+                            }
                         </ul>
                     </div>
                 </nav>

@@ -1,4 +1,5 @@
-﻿using StudentAffairs.Models;
+﻿using StudentAffairs.Enums;
+using StudentAffairs.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,11 +9,11 @@ namespace StudentAffairs.Services.Classes
 {
     public class ClassesServices
     {
-        public List<Class> GetAll()
+        public List<Class> GetAll(Guid UserId, Guid SchoolId, Guid EmployeeId, Role RoleId)
         {
             using (var dbContext = new StudentAffairsEntities())
             {
-                var model = dbContext.Classes.Where(x => x.IsDeleted == false).OrderBy(x => x.CreatedOn).ToList();
+                var model = dbContext.Classes.Where(x => x.IsDeleted == false&& (x.CreatedBy == UserId || x.SchoolId==SchoolId ||x.SchoolInfo.Employees.Any(y=>!y.IsDeleted&&y.Id==EmployeeId) || RoleId == Role.Super_Admin)).OrderBy(x => x.CreatedOn).ToList();
                 return model;
             }
         }
@@ -55,6 +56,7 @@ namespace StudentAffairs.Services.Classes
                 Oldmodel.ModifiedOn = DateTime.UtcNow;
                 Oldmodel.ModifiedBy = UserId;
                 Oldmodel.Name = model.Name;
+                Oldmodel.LevelId = model.LevelId;
                 Oldmodel.Notes = model.Notes;
 
                 dbContext.SaveChanges();

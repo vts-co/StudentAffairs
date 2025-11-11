@@ -26,14 +26,17 @@ namespace StudentAffairs.Models
         }
     
         public virtual DbSet<City> Cities { get; set; }
+        public virtual DbSet<CityDepartment> CityDepartments { get; set; }
         public virtual DbSet<Class> Classes { get; set; }
         public virtual DbSet<Employee> Employees { get; set; }
         public virtual DbSet<EndYearResult> EndYearResults { get; set; }
         public virtual DbSet<ExemptionReason> ExemptionReasons { get; set; }
+        public virtual DbSet<ExitPermission> ExitPermissions { get; set; }
         public virtual DbSet<ExpenseType> ExpenseTypes { get; set; }
         public virtual DbSet<Job> Jobs { get; set; }
         public virtual DbSet<Level> Levels { get; set; }
         public virtual DbSet<Nationality> Nationalities { get; set; }
+        public virtual DbSet<Page> Pages { get; set; }
         public virtual DbSet<RegistrationStatu> RegistrationStatus { get; set; }
         public virtual DbSet<Religion> Religions { get; set; }
         public virtual DbSet<SchoolInfo> SchoolInfoes { get; set; }
@@ -41,6 +44,8 @@ namespace StudentAffairs.Models
         public virtual DbSet<SecondLanguage> SecondLanguages { get; set; }
         public virtual DbSet<SecondRoundResult> SecondRoundResults { get; set; }
         public virtual DbSet<SocialStatu> SocialStatus { get; set; }
+        public virtual DbSet<StudentAttachment> StudentAttachments { get; set; }
+        public virtual DbSet<StudentReceipt> StudentReceipts { get; set; }
         public virtual DbSet<Student> Students { get; set; }
         public virtual DbSet<User> Users { get; set; }
     }

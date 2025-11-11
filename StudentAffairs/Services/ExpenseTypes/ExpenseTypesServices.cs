@@ -1,4 +1,5 @@
-﻿using StudentAffairs.Models;
+﻿using StudentAffairs.Enums;
+using StudentAffairs.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,11 +9,11 @@ namespace StudentAffairs.Services.ExpenseTypes
 {
     public class ExpenseTypesServices
     {
-        public List<ExpenseType> GetAll()
+        public List<ExpenseType> GetAll(Guid UserId, Guid SchoolId, Guid EmployeeId, Role RoleId)
         {
             using (var dbContext = new StudentAffairsEntities())
             {
-                var model = dbContext.ExpenseTypes.Where(x => x.IsDeleted == false).OrderBy(x => x.CreatedOn).ToList();
+                var model = dbContext.ExpenseTypes.Where(x => x.IsDeleted == false && (x.CreatedBy == UserId || x.SchoolId == SchoolId || x.SchoolInfo.Employees.Any(y => !y.IsDeleted && y.Id == EmployeeId) || RoleId == Role.Super_Admin)).OrderBy(x => x.CreatedOn).ToList();
                 return model;
             }
         }
@@ -40,7 +41,7 @@ namespace StudentAffairs.Services.ExpenseTypes
                 return result;
             }
         }
-        public ResultDto<ExpenseType> Edit(Level model, Guid UserId)
+        public ResultDto<ExpenseType> Edit(ExpenseType model, Guid UserId)
         {
             using (var dbContext = new StudentAffairsEntities())
             {
@@ -55,6 +56,7 @@ namespace StudentAffairs.Services.ExpenseTypes
                 Oldmodel.ModifiedOn = DateTime.UtcNow;
                 Oldmodel.ModifiedBy = UserId;
                 Oldmodel.Name = model.Name;
+                Oldmodel.SchoolId = model.SchoolId;
                 Oldmodel.Notes = model.Notes;
 
                 dbContext.SaveChanges();

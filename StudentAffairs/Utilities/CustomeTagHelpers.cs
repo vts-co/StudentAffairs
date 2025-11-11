@@ -44,5 +44,17 @@ namespace StudentAffairs.Utilities
         {
             return new MvcHtmlString($"<button type='submit' class='btn btn-success  waves-effect waves-light px-3 m-1 col-12 col-md-auto'><i class='fas fa-save me-1'></i>حفظ التعديلات</button>");
         }
+        public static MvcHtmlString SubmitDismissalRegistration(this UrlHelper urlHelper)
+        {
+            return new MvcHtmlString($"<button type='submit' class='btn btn-success  waves-effect waves-light px-3 m-1 col-12 col-md-auto'><i class='fas fa-save me-1'></i>تسجيل انصراف</button>");
+        }
+        public static MvcHtmlString StudentReceipt(this UrlHelper urlHelper, string action = "Create", string controller = "", object routeValues = null)
+        {
+            return new MvcHtmlString($"<a href='{(string.IsNullOrWhiteSpace(controller) ? urlHelper.Action(action, routeValues) : urlHelper.Action(action, controller, routeValues))}' class='btn btn-soft-primary  waves-effect waves-light px-4'><i class=\"fas fa-plus me-3\"></i> استلام الطالب </a>");
+        }
+        public static MvcHtmlString ExitPermission(this UrlHelper urlHelper, string action = "Create", string controller = "", object routeValues = null)
+        {
+            return new MvcHtmlString($"<a href='{(string.IsNullOrWhiteSpace(controller) ? urlHelper.Action(action, routeValues) : urlHelper.Action(action, controller, routeValues))}' class='btn btn-soft-primary  waves-effect waves-light px-4'><i class=\"fas fa-plus me-3\"></i> اذن خروج </a>");
+        }
     }
 }

@@ -17,12 +17,15 @@ namespace StudentAffairs.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public City()
         {
+            this.CityDepartments = new HashSet<CityDepartment>();
             this.SchoolInfoes = new HashSet<SchoolInfo>();
             this.Students = new HashSet<Student>();
         }
     
         public System.Guid Id { get; set; }
+        public string Code { get; set; }
         public string Name { get; set; }
+        public Nullable<int> SortNum { get; set; }
         public string Notes { get; set; }
         public Nullable<System.DateTime> CreatedOn { get; set; }
         public Nullable<System.Guid> CreatedBy { get; set; }
@@ -32,6 +35,8 @@ namespace StudentAffairs.Models
         public Nullable<System.DateTime> DeletedOn { get; set; }
         public Nullable<System.Guid> DeletedBy { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CityDepartment> CityDepartments { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SchoolInfo> SchoolInfoes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

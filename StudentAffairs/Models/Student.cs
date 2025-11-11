@@ -14,6 +14,14 @@ namespace StudentAffairs.Models
     
     public partial class Student
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Student()
+        {
+            this.ExitPermissions = new HashSet<ExitPermission>();
+            this.StudentAttachments = new HashSet<StudentAttachment>();
+            this.StudentReceipts = new HashSet<StudentReceipt>();
+        }
+    
         public System.Guid Id { get; set; }
         public string Code { get; set; }
         public string Name { get; set; }
@@ -54,7 +62,7 @@ namespace StudentAffairs.Models
         public string TabletSerialNumber { get; set; }
         public Nullable<System.Guid> ScienceDivisionId { get; set; }
         public string IM { get; set; }
-        public Nullable<System.Guid> SecondLanguageIId { get; set; }
+        public Nullable<System.Guid> SecondLanguageId { get; set; }
         public Nullable<System.DateTime> DateOfReceipt { get; set; }
         public string InsurancePolicyNumber { get; set; }
         public Nullable<System.DateTime> InsurancePolicyDate { get; set; }
@@ -67,6 +75,7 @@ namespace StudentAffairs.Models
         public string Talents { get; set; }
         public string Competitions { get; set; }
         public Nullable<int> StudentTypeId { get; set; }
+        public Nullable<System.Guid> SchoolId { get; set; }
         public string Notes { get; set; }
         public Nullable<System.DateTime> CreatedOn { get; set; }
         public Nullable<System.Guid> CreatedBy { get; set; }
@@ -80,15 +89,22 @@ namespace StudentAffairs.Models
         public virtual Class Class { get; set; }
         public virtual EndYearResult EndYearResult { get; set; }
         public virtual ExemptionReason ExemptionReason { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ExitPermission> ExitPermissions { get; set; }
         public virtual ExpenseType ExpenseType { get; set; }
         public virtual Level Level { get; set; }
         public virtual Nationality Nationality { get; set; }
         public virtual RegistrationStatu RegistrationStatu { get; set; }
         public virtual Religion Religion { get; set; }
+        public virtual SchoolInfo SchoolInfo { get; set; }
         public virtual ScienceDivision ScienceDivision { get; set; }
         public virtual SecondLanguage SecondLanguage { get; set; }
         public virtual SecondRoundResult SecondRoundResult { get; set; }
         public virtual SocialStatu SocialStatu { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<StudentAttachment> StudentAttachments { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<StudentReceipt> StudentReceipts { get; set; }
         public virtual Student Students1 { get; set; }
         public virtual Student Student1 { get; set; }
     }

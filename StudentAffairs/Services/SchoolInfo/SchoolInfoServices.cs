@@ -20,11 +20,15 @@ namespace StudentAffairs.Services.SchoolInfo
                         Name = x.Name,
                         CityId = x.CityId!=null? (Guid)x.CityId:Guid.Empty,
                         CityName= x.CityId != null ? x.City.Name:"",
+                        CityDepartmentId= x.DepartmentId != null ? (Guid)x.DepartmentId:Guid.Empty,
+                        CityDepartmentName= x.DepartmentId != null ? x.CityDepartment.Name:"",
+
                         Image=x.Image,
                         SchoolPrincipal = x.SchoolPrincipal,
                         Administration = x.Administration,
                         StudentAffairsOfficer=x.StudentAffairsOfficer,
                         StudyYear=x.StudyYear,
+                        SocialWorker = x.SocialWorker,
                         Notes=x.Notes
                     }).ToList();
                 return model;
@@ -41,10 +45,14 @@ namespace StudentAffairs.Services.SchoolInfo
                         Name = x.Name,
                         CityId = x.CityId != null ? (Guid)x.CityId : Guid.Empty,
                         CityName = x.CityId != null ? x.City.Name : "",
+                        CityDepartmentId = x.DepartmentId != null ? (Guid)x.DepartmentId : Guid.Empty,
+                        CityDepartmentName = x.DepartmentId != null ? x.CityDepartment.Name : "",
+
                         Image = x.Image,
                         SchoolPrincipal = x.SchoolPrincipal,
                         Administration = x.Administration,
                         StudentAffairsOfficer = x.StudentAffairsOfficer,
+                        SocialWorker = x.SocialWorker,
                         StudyYear = x.StudyYear,
                         Notes = x.Notes
                     }).FirstOrDefault();
@@ -69,12 +77,14 @@ namespace StudentAffairs.Services.SchoolInfo
                 var result1 = new StudentAffairs.Models.SchoolInfo();
                 result1.Id = model.Id;
                 result1.Name = model.Name;
-                result1.CityId = model.CityId != null ? (Guid)model.CityId : Guid.Empty;
+                result1.CityId = model.CityId;
+                result1.DepartmentId = model.CityDepartmentId ;
                 result1.Image = model.Image;
                 result1.SchoolPrincipal = model.SchoolPrincipal;
                 result1.Administration = model.Administration;
                 result1.StudentAffairsOfficer = model.StudentAffairsOfficer;
                 result1.StudyYear = model.StudyYear;
+                result1.SocialWorker = model.SocialWorker;
                 result1.Notes = model.Notes;
 
                 result1.CreatedOn = DateTime.UtcNow;
@@ -102,12 +112,15 @@ namespace StudentAffairs.Services.SchoolInfo
 
                 Oldmodel.Id = model.Id;
                 Oldmodel.Name = model.Name;
-                Oldmodel.CityId = model.CityId != null ? (Guid)model.CityId : Guid.Empty;
+                Oldmodel.CityId = model.CityId;
+                Oldmodel.DepartmentId = model.CityDepartmentId;
+
                 Oldmodel.Image = model.Image;
                 Oldmodel.SchoolPrincipal = model.SchoolPrincipal;
                 Oldmodel.Administration = model.Administration;
                 Oldmodel.StudentAffairsOfficer = model.StudentAffairsOfficer;
                 Oldmodel.StudyYear = model.StudyYear;
+                Oldmodel.SocialWorker = model.SocialWorker;
                 Oldmodel.Notes = model.Notes;
 
                 Oldmodel.ModifiedOn = DateTime.UtcNow;

@@ -22,6 +22,7 @@ namespace StudentAffairs.Models
     
         public System.Guid Id { get; set; }
         public string Name { get; set; }
+        public Nullable<System.Guid> SchoolId { get; set; }
         public string Notes { get; set; }
         public Nullable<System.DateTime> CreatedOn { get; set; }
         public Nullable<System.Guid> CreatedBy { get; set; }
@@ -33,5 +34,6 @@ namespace StudentAffairs.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Employee> Employees { get; set; }
+        public virtual SchoolInfo SchoolInfo { get; set; }
     }
 }

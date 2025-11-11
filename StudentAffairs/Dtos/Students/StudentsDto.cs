@@ -42,6 +42,7 @@ namespace StudentAffairs.Dtos.Students
         public Nullable<System.Guid> CityId { get; set; }
         public string CityName { get; set; }
         public Nullable<int> GenderId { get; set; }
+        public string GenderName { get; set; }
         public Nullable<System.Guid> RegistrationStateId { get; set; }
         public string RegistrationStateName { get; set; }
         public string RegistrationNum { get; set; }
@@ -72,6 +73,9 @@ namespace StudentAffairs.Dtos.Students
         public string ActionTaken { get; set; }
         public string Talents { get; set; }
         public string Competitions { get; set; }
+
+        public Nullable<System.Guid> SchoolId { get; set; }
+        public string SchoolName { get; set; }
         public string Notes { get; set; }
     }
 

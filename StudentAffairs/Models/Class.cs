@@ -22,6 +22,8 @@ namespace StudentAffairs.Models
     
         public System.Guid Id { get; set; }
         public string Name { get; set; }
+        public Nullable<System.Guid> LevelId { get; set; }
+        public Nullable<System.Guid> SchoolId { get; set; }
         public string Notes { get; set; }
         public Nullable<System.DateTime> CreatedOn { get; set; }
         public Nullable<System.Guid> CreatedBy { get; set; }
@@ -31,6 +33,8 @@ namespace StudentAffairs.Models
         public Nullable<System.DateTime> DeletedOn { get; set; }
         public Nullable<System.Guid> DeletedBy { get; set; }
     
+        public virtual Level Level { get; set; }
+        public virtual SchoolInfo SchoolInfo { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Student> Students { get; set; }
     }

@@ -16,6 +16,7 @@ namespace StudentAffairs.Authorization
         public Role Role { get; set; } = 0;
         public Guid UserId { get; set; }
         public Guid EmployeeId { get; set; }
+        public Guid SchoolId { get; set; }
 
         public string[] UserScreens = null;
         public string ScreenId = null;
@@ -36,29 +37,30 @@ namespace StudentAffairs.Authorization
                     filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new { controller = "Account", action = "SignIn", returnUrl = filterContext.HttpContext.Request.Url.ToString() }));
                     return;
                 }
-                //else if ((auth.CookieValues.RoleId & Role) == 0)
-                //{
-                //    filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new {  controller = "Account", action = "SignIn", returnUrl = filterContext.HttpContext.Request.Url.ToString() }));
+                else if ((auth.CookieValues.RoleId & Role) == 0)
+                {
+                    filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new { controller = "Account", action = "SignIn", returnUrl = filterContext.HttpContext.Request.Url.ToString() }));
 
-                //}
-                //else if (ScreenId == null)
-                //{
-                //    filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new { controller = "Account", action = "SignIn", returnUrl = filterContext.HttpContext.Request.Url.ToString() }));
+                }
+                else if (ScreenId == null)
+                {
+                    filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new { controller = "Account", action = "SignIn", returnUrl = filterContext.HttpContext.Request.Url.ToString() }));
 
-                //}
-                //else if (user.UserScreens == null)
-                //{
-                //    filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new { controller = "Account", action = "SignIn", returnUrl = filterContext.HttpContext.Request.Url.ToString() }));
+                }
+                else if (user.UserScreens == null)
+                {
+                    filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new { controller = "Account", action = "SignIn", returnUrl = filterContext.HttpContext.Request.Url.ToString() }));
 
-                //}
-                //else if (!user.UserScreens.Contains(search))
-                //{
-                //    filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new { controller = "Account", action = "SignIn", returnUrl = filterContext.HttpContext.Request.Url.ToString() }));
-                //}
+                }
+                else if (!user.UserScreens.Contains(search))
+                {
+                    filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new { controller = "Account", action = "SignIn", returnUrl = filterContext.HttpContext.Request.Url.ToString() }));
+                }
                 filterContext.Controller.TempData["UserInfo"] = auth.CookieValues;
                 filterContext.Controller.TempData["UserName"] = auth.CookieValues.UserName;
                 filterContext.Controller.TempData["UserId"] = auth.CookieValues.UserId;
                 filterContext.Controller.TempData["EmployeeId"] = auth.CookieValues.EmployeeId;
+                filterContext.Controller.TempData["SchoolId"] = auth.CookieValues.SchoolId;
                 filterContext.Controller.TempData["RoleId"] = auth.CookieValues.RoleId;
                 filterContext.Controller.ViewBag.EmployeeName = auth.CookieValues.EmployeeName;
 
@@ -87,6 +89,8 @@ namespace StudentAffairs.Authorization
         public Guid UserId { get; set; }
         public Guid EmployeeId { get; set; }
         public string EmployeeName { get; set; }
+        public Guid SchoolId { get; set; }
+        public string SchoolName { get; set; }
 
         public Role RoleId { get; set; }
 
