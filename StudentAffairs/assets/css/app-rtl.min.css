@@ -529,7 +529,7 @@ body[data-layout=horizontal] .navbar-brand-box {
   }
 }
 body[data-layout=horizontal] .page-content {
-  margin-top: 70px;
+  margin-top: 150px;
   padding: calc(55px + 20px) calc(20px / 2) 60px calc(20px / 2);
 }
 @media (min-width: 992px) {
@@ -1261,9 +1261,9 @@ body[data-sidebar=brand][data-sidebar-size=sm] .vertical-menu #sidebar-menu ul l
   padding: 0;
 }
 .topnav .navbar-nav .nav-link {
-  font-size: 14.4px;
+  font-size: 13px;
   position: relative;
-  padding: 1rem 1.3rem;
+  padding: 1rem 0.5rem;
   color: var(--bs-menu-item-color);
   font-weight: 500;
 }

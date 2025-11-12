@@ -1,5 +1,7 @@
 ﻿@model StudentAffairs.Models.Student
 @using StudentAffairs.Utilities
+@using StudentAffairs.Enums
+
 @{
     ViewBag.Title = (Model.Id == Guid.Empty ? "إضافة " : "تعديل ") + " طالب  ";
     string action = Model.Id == Guid.Empty ? "Create" : "Edit";
@@ -22,6 +24,21 @@
         <div class="card-body">
             @Html.HiddenFor(model => model.Id)
             <div class="row">
+                @if ((Role)TempData["RoleId"] == Role.Super_Admin)
+                {
+                    <div class="form-group mb-3 col-sm-6">
+                        @Html.Label("المدرسة ", htmlAttributes: new { @class = "control-label" })
+                        <div class="col-12">
+                            @Html.DropDownListFor(model => model.SchoolId, new SelectList(ViewBag.Schools, "Id", "Name"), "--اختر--", new { @class = "form-control", required = "required" })
+                            @Html.ValidationMessageFor(model => model.SchoolId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <input type="hidden" id="SchoolId" name="SchoolId" value="@TempData["SchoolId"]" />
+                }
+
                 <div class="form-group mb-3 col-sm-12">
                     @Html.Label("بيانات الطالب", htmlAttributes: new { @class = "control-label" })
 
@@ -59,7 +76,7 @@
                 <div class="form-group mb-3 col-sm-6">
                     @Html.Label("الفصل ", htmlAttributes: new { @class = "control-label" })
                     <div class="col-12">
-                        @Html.DropDownListFor(model => model.ClassId, null, "--اختر--", new { @class = "form-control"})
+                        @Html.DropDownListFor(model => model.ClassId, null, "--اختر--", new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.ClassId, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -201,7 +218,7 @@
                 <div class="form-group mb-3 col-sm-6">
                     @Html.Label("النوع ", htmlAttributes: new { @class = "control-label" })
                     <div class="col-12">
-                        @Html.DropDownListFor(model => model.GenderId, null, "--اختر--", new { @class = "form-control"})
+                        @Html.DropDownListFor(model => model.GenderId, null, "--اختر--", new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.GenderId, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -222,7 +239,7 @@
                 <div class="form-group mb-3 col-sm-6">
                     @Html.Label("تاريخ القيد", htmlAttributes: new { @class = "control-label" })
                     <div class="col-12">
-                        @Html.TextBoxFor(model => model.RegistrationDate, new { @class = "form-control",  type = "date" })
+                        @Html.TextBoxFor(model => model.RegistrationDate, new { @class = "form-control", type = "date" })
                         @Html.ValidationMessageFor(model => model.RegistrationDate, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -408,21 +425,21 @@
                 <div class="form-group mb-3 col-sm-6">
                     @Html.Label("الي تاريخ  ", htmlAttributes: new { @class = "control-label" })
                     <div class="col-12">
-                        @Html.TextBoxFor(model => model.ToDate, new { @class = "form-control", type = "date"})
+                        @Html.TextBoxFor(model => model.ToDate, new { @class = "form-control", type = "date" })
                         @Html.ValidationMessageFor(model => model.ToDate, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group mb-3 col-sm-12">
                     @Html.Label("المشكلة ", htmlAttributes: new { @class = "control-label" })
                     <div class="col-12">
-                        @Html.EditorFor(model => model.Problem, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.TextAreaFor(model => model.Problem, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.Problem, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group mb-3 col-sm-12">
                     @Html.Label("الاجراء المتخذ ", htmlAttributes: new { @class = "control-label" })
                     <div class="col-12">
-                        @Html.EditorFor(model => model.ActionTaken, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.TextAreaFor(model => model.ActionTaken, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.ActionTaken, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -438,19 +455,19 @@
                 <div class="form-group mb-3 col-sm-12">
                     @Html.Label("المواهب ", htmlAttributes: new { @class = "control-label" })
                     <div class="col-12">
-                        @Html.EditorFor(model => model.Talents, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.TextAreaFor(model => model.Talents, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.Talents, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group mb-3 col-sm-12">
                     @Html.Label("المسابقات ", htmlAttributes: new { @class = "control-label" })
                     <div class="col-12">
-                        @Html.EditorFor(model => model.Competitions, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.TextAreaFor(model => model.Competitions, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.Competitions, "", new { @class = "text-danger" })
                     </div>
                 </div>
             </div>
-            
+
         </div>
         <div class="card-footer">
             <div class="row justify-content-end">
@@ -468,8 +485,19 @@
 }
 
 @section scripts{
+    <script>
+        $("#LevelId").change(function () {
+            $.get('/SchoolInfo/getClasses', { Id: $("#LevelId").val() }, function (data) {
+                $("#ClasstId").empty();
+                $("#ClassId").append("<option value=''>--اختر--</option>")
+                $.each(data, function (key, value) {
+                    $("#ClassId").append("<option value=" + value["Id"] + ">" + value["Name"] + "</option>")
+                });
+            });
+        });
+    </script>
     <script type="text/javascript">
-       
+
 
         //var now = new Date();
         //now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
@@ -499,7 +527,7 @@
 
                 var city = spl[7].toString() + spl[8].toString();
 
-               
+
                 $.get('/Students/getCities', { Id: $("#CityId").val() }, function (data) {
                     $("#CityId").empty();
                     $("#CityId").append("<option value=''>--اختر--</option>")

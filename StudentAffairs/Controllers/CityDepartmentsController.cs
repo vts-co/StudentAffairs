@@ -1,6 +1,7 @@
 ﻿using StudentAffairs.Authorization;
 using StudentAffairs.Enums;
 using StudentAffairs.Models;
+using StudentAffairs.Services.Cities;
 using StudentAffairs.Services.CityDepartments;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ namespace StudentAffairs.Controllers
 
     public class CityDepartmentsController : Controller
     {
+        CitiesServices citiesServices = new CitiesServices();
         CityDepartmentsServices cityDepartmentsServices = new CityDepartmentsServices();
         // GET: Cities
         public ActionResult Index()
@@ -23,6 +25,8 @@ namespace StudentAffairs.Controllers
         }
         public ActionResult Create()
         {
+            var cities = citiesServices.GetAll().Select(x=>new { x.Id,x.Name}).ToList();
+            ViewBag.CityId = new SelectList(cities, "Id", "Name");
             return View("Upsert", new CityDepartment());
         }
         [HttpPost, ValidateInput(false)]
@@ -40,7 +44,8 @@ namespace StudentAffairs.Controllers
             else
             {
                 model.Id = Guid.Empty;
-
+                var cities = citiesServices.GetAll().Select(x => new { x.Id, x.Name }).ToList();
+                ViewBag.CityId = new SelectList(cities, "Id", "Name", model.CityId);
                 TempData["warning"] = result.Message;
                 return View("Upsert", model);
             }
@@ -48,6 +53,9 @@ namespace StudentAffairs.Controllers
         public ActionResult Edit(Guid Id)
         {
             var city = cityDepartmentsServices.GetAll((Guid)TempData["UserId"], (Guid)TempData["SchoolId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]).Where(x => x.Id == Id).FirstOrDefault();
+
+            var cities = citiesServices.GetAll().Select(x => new { x.Id, x.Name }).ToList();
+            ViewBag.CityId = new SelectList(cities, "Id", "Name", city.CityId);
             return View("Upsert", city);
         }
         [HttpPost, ValidateInput(false)]
@@ -62,6 +70,9 @@ namespace StudentAffairs.Controllers
             }
             else
             {
+                var cities = citiesServices.GetAll().Select(x => new { x.Id, x.Name }).ToList();
+                ViewBag.CityId = new SelectList(cities, "Id", "Name", model.CityId);
+
                 TempData["warning"] = result.Message;
                 return View("Upsert", model);
             }

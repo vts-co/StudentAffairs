@@ -10,5 +10,6 @@ namespace StudentAffairs.Enums
         InSchool,
         Graduates,
         TransferFromSchool,
+        TrackConverters,
     }
 }

@@ -1,19 +1,47 @@
 ﻿@model IEnumerable<StudentAffairs.Models.SecondLanguage>
 @using StudentAffairs.Utilities
+@using StudentAffairs.Enums
+
 @{
     ViewBag.Title = "ادارة اللغة التانية ";
 
 }
-<div class="card" >
+<div class="card">
     <div class="card-header">
 
         <div class="row">
-            <h2 class="col">  </h2>
+            <h2 class="col"> @ViewBag.Title </h2>
             <p class="col-auto">
                 @Url.Create()
             </p>
         </div>
     </div>
+    @using (Html.BeginForm("Index", "SecondLanguage", FormMethod.Get, new { enctype = "multipart/form-data" }))
+    {
+        <div class="card-body">
+            <div class="row mt-3">
+                @if ((Role)TempData["RoleId"] == Role.Super_Admin)
+                {
+                    <div class="form-group mb-3 col-sm-6">
+                        @Html.Label("المدرسة ", htmlAttributes: new { @class = "control-label" })
+                        <div class="col-12">
+                            @Html.DropDownList("SchoolId", new SelectList(ViewBag.Schools, "Id", "Name"), "--اختر--", new { @class = "form-control" })
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <input type="hidden" id="SchoolId" name="SchoolId" value="@TempData["SchoolId"]" />
+                }
+
+            </div>
+            <div class="row justify-content-end">
+                <button type='submit' class='btn btn-primary  waves-effect waves-light px-3 m-1 col-12 col-md-auto'><i class='fas fa-search me-1'></i>عرض</button>
+            </div>
+        </div>
+
+    }
+
     <div class="card-body">
         <table id="datatable" class="table table-striped dt-responsive  nowrap w-100 table-bordered">
             <thead class="bg-soft-primary">
@@ -53,5 +81,5 @@
     </div>
 </div>
 @section Scripts{
-    
+
 }

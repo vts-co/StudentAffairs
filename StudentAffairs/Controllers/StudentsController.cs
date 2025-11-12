@@ -1,4 +1,5 @@
 ﻿using StudentAffairs.Authorization;
+using StudentAffairs.Dtos.Students;
 using StudentAffairs.Enums;
 using StudentAffairs.Models;
 using StudentAffairs.Services.Cities;
@@ -48,16 +49,23 @@ namespace StudentAffairs.Controllers
         StudentsServices studentsServices = new StudentsServices();
         [Authorized(ScreenId = "12")]
 
-        public ActionResult Index(string code)
+        public ActionResult Index(string code,Guid? SchoolId)
         {
-            if(code==null)
+            if ((Role)TempData["RoleId"] == Role.Super_Admin && SchoolId == null)
             {
-                var model = studentsServices.GetAll((Guid)TempData["UserId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]);
+                return View(new List<StudentsDto>());
+            }
+            if (code==null)
+            {
+                var model = studentsServices.GetAll((Guid)TempData["UserId"], (Guid)TempData["SchoolId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]);
+                if (SchoolId != null)
+                    model = model.Where(x => x.SchoolId == SchoolId).ToList();
                 return View(model);
             }
             else
             {
-                var model = studentsServices.GetByCodeOrNameOrNumberId((Guid)TempData["UserId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"],code);
+                var model = studentsServices.GetByCodeOrNameOrNumberId((Guid)TempData["UserId"], (Guid)TempData["SchoolId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"],code,SchoolId);
+               
                 return View(model);
             }
         }
@@ -68,8 +76,8 @@ namespace StudentAffairs.Controllers
             var Levels = levelsServices.GetAll((Guid)TempData["UserId"], (Guid)TempData["SchoolId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]);
             ViewBag.LevelId = new SelectList(Levels, "Id", "Name");
 
-            var Classes = classesServices.GetAll((Guid)TempData["UserId"], (Guid)TempData["SchoolId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]);
-            ViewBag.ClassId = new SelectList(Classes, "Id", "Name");
+            //var Classes = classesServices.GetAll((Guid)TempData["UserId"], (Guid)TempData["SchoolId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]);
+            ViewBag.ClassId = new SelectList("");
 
             var Religion = religionServices.GetAll();
             ViewBag.ReligionId = new SelectList(Religion, "Id", "Name");
@@ -120,7 +128,7 @@ namespace StudentAffairs.Controllers
             ViewBag.ToDate = DateTime.Now.ToString("yyyy-MM-dd");
 
 
-            var studentsCount = studentsServices.GetAll((Guid)TempData["UserId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]).Count();
+            var studentsCount = studentsServices.GetAll((Guid)TempData["UserId"], (Guid)TempData["SchoolId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]).Count();
             studentsCount += 100;
             return View("Upsert", new Student() { Code = studentsCount.ToString() });
         }
@@ -151,7 +159,7 @@ namespace StudentAffairs.Controllers
                 var Levels = levelsServices.GetAll((Guid)TempData["UserId"], (Guid)TempData["SchoolId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]);
                 ViewBag.LevelId = new SelectList(Levels, "Id", "Name", student.LevelId);
 
-                var Classes = classesServices.GetAll((Guid)TempData["UserId"], (Guid)TempData["SchoolId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]);
+                var Classes = classesServices.GetAll((Guid)TempData["UserId"], (Guid)TempData["SchoolId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]).Where(x=>x.LevelId== student.LevelId).ToList();
                 ViewBag.ClassId = new SelectList(Classes, "Id", "Name", student.ClassId);
 
                 var Religion = religionServices.GetAll();
@@ -234,7 +242,7 @@ namespace StudentAffairs.Controllers
             var Levels = levelsServices.GetAll((Guid)TempData["UserId"], (Guid)TempData["SchoolId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]);
             ViewBag.LevelId = new SelectList(Levels, "Id", "Name", student.LevelId);
 
-            var Classes = classesServices.GetAll((Guid)TempData["UserId"], (Guid)TempData["SchoolId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]);
+            var Classes = classesServices.GetAll((Guid)TempData["UserId"], (Guid)TempData["SchoolId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]).Where(x => x.LevelId == student.LevelId).ToList();
             ViewBag.ClassId = new SelectList(Classes, "Id", "Name", student.ClassId);
 
             var Religion = religionServices.GetAll();
@@ -329,7 +337,7 @@ namespace StudentAffairs.Controllers
                 var Levels = levelsServices.GetAll((Guid)TempData["UserId"], (Guid)TempData["SchoolId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]);
                 ViewBag.LevelId = new SelectList(Levels, "Id", "Name", student.LevelId);
 
-                var Classes = classesServices.GetAll((Guid)TempData["UserId"], (Guid)TempData["SchoolId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]);
+                var Classes = classesServices.GetAll((Guid)TempData["UserId"], (Guid)TempData["SchoolId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]).Where(x => x.LevelId == student.LevelId).ToList();
                 ViewBag.ClassId = new SelectList(Classes, "Id", "Name", student.ClassId);
 
                 var Religion = religionServices.GetAll();
@@ -417,11 +425,25 @@ namespace StudentAffairs.Controllers
             }
         }
 
+        public ActionResult getClasses(Guid? Id)
+        {
+            var result = classesServices.GetAll((Guid)TempData["UserId"], (Guid)TempData["SchoolId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]).Where(x=>x.LevelId==Id).Select(x => new { x.Id, x.Name }).ToList();
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+
+        }
+
         [Authorized(ScreenId = "13")]
 
-        public ActionResult Graduates()
+        public ActionResult Graduates(Guid? SchoolId)
         {
-            var model = studentsServices.GetAllGraduates((Guid)TempData["UserId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]);
+            if ((Role)TempData["RoleId"] == Role.Super_Admin && SchoolId == null)
+            {
+                return View(new List<StudentsDto>());
+            }
+            var model = studentsServices.GetAllGraduates((Guid)TempData["UserId"], (Guid)TempData["SchoolId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]);
+            if (SchoolId != null)
+                model = model.Where(x => x.SchoolId == SchoolId).ToList();
             return View(model);
         }
         public ActionResult Graduated(Guid Id)
@@ -441,14 +463,48 @@ namespace StudentAffairs.Controllers
 
         [Authorized(ScreenId = "14")]
 
-        public ActionResult TransferFromSchool()
+        public ActionResult TransferFromSchool(Guid? SchoolId)
         {
-            var model = studentsServices.GetAllTransferFromSchool((Guid)TempData["UserId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]);
+            if ((Role)TempData["RoleId"] == Role.Super_Admin && SchoolId == null)
+            {
+                return View(new List<StudentsDto>());
+            }
+            var model = studentsServices.GetAllTransferFromSchool((Guid)TempData["UserId"], (Guid)TempData["SchoolId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]);
+            if (SchoolId != null)
+                model = model.Where(x => x.SchoolId == SchoolId).ToList();
             return View(model);
         }
         public ActionResult Transfered(Guid Id)
         {
             var result = studentsServices.Transfered(Id, (Guid)TempData["UserId"]);
+            if (result.IsSuccess)
+            {
+                TempData["success"] = result.Message;
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                TempData["warning"] = result.Message;
+                return RedirectToAction("Index");
+            }
+        }
+
+        [Authorized(ScreenId = "18")]
+
+        public ActionResult TrackConverters(Guid? SchoolId)
+        {
+            if ((Role)TempData["RoleId"] == Role.Super_Admin && SchoolId == null)
+            {
+                return View(new List<StudentsDto>());
+            }
+            var model = studentsServices.GetAllTrackConverters((Guid)TempData["UserId"], (Guid)TempData["SchoolId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]);
+            if (SchoolId != null)
+                model = model.Where(x => x.SchoolId == SchoolId).ToList();
+            return View(model);
+        }
+        public ActionResult TrackConverterd(Guid Id)
+        {
+            var result = studentsServices.TrackConverterd(Id, (Guid)TempData["UserId"]);
             if (result.IsSuccess)
             {
                 TempData["success"] = result.Message;

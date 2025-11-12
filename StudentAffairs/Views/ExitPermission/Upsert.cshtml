@@ -1,8 +1,10 @@
 ﻿@model StudentAffairs.Models.ExitPermission
 @using StudentAffairs.Utilities
+@using StudentAffairs.Enums
+
 @{
-    ViewBag.Title =  " اذن خروج  ";
-    string action =  "Create";
+    ViewBag.Title = " اذن خروج  ";
+    string action = "Create";
     ViewBag.MainPage = "اذونات الخروج";
 
 }
@@ -19,6 +21,20 @@
         <div class="card-body">
             @Html.HiddenFor(model => model.Id)
             <div class="row">
+                @if ((Role)TempData["RoleId"] == Role.Super_Admin)
+                {
+                    <div class="form-group mb-3 col-sm-6">
+                        @Html.Label("المدرسة ", htmlAttributes: new { @class = "control-label" })
+                        <div class="col-12">
+                            @Html.DropDownListFor(model => model.SchoolId, new SelectList(ViewBag.Schools, "Id", "Name"), "--اختر--", new { @class = "form-control", required = "required" })
+                            @Html.ValidationMessageFor(model => model.SchoolId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <input type="hidden" id="SchoolId" name="SchoolId" value="@TempData["SchoolId"]" />
+                }
                 <div class="form-group mb-3 col-sm-6">
                     @Html.Label("الكود", htmlAttributes: new { @class = "control-label" })
                     <div class="col-12">
@@ -49,14 +65,14 @@
                         @Html.ValidationMessageFor(model => model.ExitDate, "", new { @class = "text-danger" })
                     </div>
                 </div>
-                
+
             </div>
         </div>
         <div class="card-footer">
             <div class="row justify-content-end">
-                
-                    @Url.SubmitDismissalRegistration()
-               
+
+                @Url.SubmitDismissalRegistration()
+
             </div>
         </div>
     </div>
@@ -64,24 +80,24 @@
 
 @section scripts{
     @Scripts.Render("~/bundles/jqueryval")
-<script>
-    $("#Code").keypress(function () {
-        $.get('/ExitPermission/getStudent', { code: $("#Code").val() }, function (data) {
-            if (data != null) {
-                document.getElementById("StudentId").value = data.Id;
-                document.getElementById("Name").value = data.Name;
-                document.getElementById("LevelName").value = data.LevelName;
-                
-            }
-            else {
-                document.getElementById("Name").value = "";
-                document.getElementById("LevelName").value = "";
-               
-            }
-            var now = new Date();
-            now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
-            document.getElementById('ExitDate').value = now.getFullYear() + "-" + (now.getMonth() + 1).toString().padStart(2, "0") + "-" + now.getDate().toString().padStart(2, "0") + " " + now.getHours() + ":" + now.getMinutes();
+    <script>
+        $("#Code").keypress(function () {
+            $.get('/ExitPermission/getStudent', { code: $("#Code").val(), SchoolId: $("#SchoolId").val() }, function (data) {
+                if (data != null) {
+                    document.getElementById("StudentId").value = data.Id;
+                    document.getElementById("Name").value = data.Name;
+                    document.getElementById("LevelName").value = data.LevelName;
+
+                }
+                else {
+                    document.getElementById("Name").value = "";
+                    document.getElementById("LevelName").value = "";
+
+                }
+                var now = new Date();
+                now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+                document.getElementById('ExitDate').value = now.getFullYear() + "-" + (now.getMonth() + 1).toString().padStart(2, "0") + "-" + now.getDate().toString().padStart(2, "0") + " " + now.getHours() + ":" + now.getMinutes();
+            });
         });
-    });
     </script>
 }

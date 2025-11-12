@@ -16,9 +16,15 @@ namespace StudentAffairs.Enums
         StudentReceiptServices studentReceiptServices = new StudentReceiptServices();
         StudentsServices studentsServices = new StudentsServices();
         // GET: Cities
-        public ActionResult Index()
+        public ActionResult Index(Guid? SchoolId)
         {
-            var model = studentReceiptServices.GetAll();
+            if ((Role)TempData["RoleId"] == Role.Super_Admin && SchoolId == null)
+            {
+                return View(new List<StudentReceipt>());
+            }
+            var model = studentReceiptServices.GetAll((Guid)TempData["UserId"], (Guid)TempData["SchoolId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]);
+            if (SchoolId != null)
+                model = model.Where(x => x.SchoolId == SchoolId).ToList();
             return View(model);
         }
         public ActionResult Create()
@@ -29,7 +35,7 @@ namespace StudentAffairs.Enums
         public ActionResult Create(StudentReceipt city)
         {
             city.Id = Guid.NewGuid();
-            city.SchoolId = (Guid)TempData["SchoolId"];
+            //city.SchoolId = (Guid)TempData["SchoolId"];
             var result = studentReceiptServices.Create(city, (Guid)TempData["UserId"]);
             if (result.IsSuccess)
             {
@@ -60,14 +66,13 @@ namespace StudentAffairs.Enums
             }
         }
 
-        public ActionResult getStudent(string code)
-        
+        public ActionResult getStudent(string code,Guid? SchoolId)
         {
             if (code == null)
             {
                 return Json(new Student(), JsonRequestBehavior.AllowGet);
             }
-            var model = studentsServices.GetByCode(code);
+            var model = studentsServices.GetByCode(code, SchoolId);
             return Json(model, JsonRequestBehavior.AllowGet);
         }
     }

@@ -20,7 +20,7 @@ namespace StudentAffairs.Controllers
 
             TempData["SettingLogo"] = "/Uploads/Logo/ProgramLogo.PNG";
             TempData["SettingTitle"] = "Vision Tech";
-            var pass = Security.Encrypt("StudentAffairs@123");
+            //var pass = Security.Encrypt("StudentAffairs@123");
 
             
             return View(new SignInDto());

@@ -15,9 +15,15 @@ namespace StudentAffairs.Controllers
     {
         SocialStatusServices socialStatusServices = new SocialStatusServices();
         // GET: Cities
-        public ActionResult Index()
+        public ActionResult Index(Guid? SchoolId)
         {
+            if ((Role)TempData["RoleId"] == Role.Super_Admin && SchoolId == null)
+            {
+                return View(new List<ExemptionReason>());
+            }
             var model = socialStatusServices.GetAll((Guid)TempData["UserId"], (Guid)TempData["SchoolId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]);
+            if (SchoolId != null)
+                model = model.Where(x => x.SchoolId == SchoolId).ToList();
             return View(model);
         }
         public ActionResult Create()
@@ -28,7 +34,7 @@ namespace StudentAffairs.Controllers
         public ActionResult Create(SocialStatu model)
         {
             model.Id = Guid.NewGuid();
-            model.SchoolId = (Guid)TempData["SchoolId"];
+            //model.SchoolId = (Guid)TempData["SchoolId"];
 
             var result = socialStatusServices.Create(model, (Guid)TempData["UserId"]);
             if (result.IsSuccess)

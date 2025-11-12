@@ -2,7 +2,7 @@
 @using StudentAffairs.Utilities
 @using StudentAffairs.Enums
 @{
-    ViewBag.Title = "ادارة السجلات ";
+    ViewBag.Title = "محولي المسار  ";
 
 }
 <div class="card">
@@ -10,15 +10,11 @@
 
         <div class="row">
             <h2 class="col">@ViewBag.Title  </h2>
-            @if (ViewBag.userscreens.ToString().Contains(",11,"))
-            {
-                <p class="col-auto">
-                    <a href='/Students/Create' class='btn btn-soft-primary  waves-effect waves-light px-4'><i class="fas fa-plus me-3"></i> اضافة طالب جديد</a>
-                </p>
-            }
+
+
         </div>
     </div>
-    @using (Html.BeginForm("Index", "Students", FormMethod.Get, new { enctype = "multipart/form-data" }))
+    @using (Html.BeginForm("TrackConverters", "Students", FormMethod.Get, new { enctype = "multipart/form-data" }))
     {
         <div class="card-body">
             <div class="row mt-3">
@@ -35,13 +31,6 @@
                 {
                     <input type="hidden" id="SchoolId" name="SchoolId" value="@TempData["SchoolId"]" />
                 }
-                <div class="form-group mb-3 col-sm-12">
-                    @Html.Label(" كود/ الاسم /الرقم القومي للطالب", htmlAttributes: new { @class = "control-label" })
-                    <div class="col-12">
-                        @Html.Editor("Code", new { htmlAttributes = new { @class = "form-control", type = "number" } })
-                        @*@Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger" })*@
-                    </div>
-                </div>
 
             </div>
             <div class="row justify-content-end">
@@ -50,6 +39,7 @@
         </div>
 
     }
+
 
     <div class="card-body">
         <table id="datatable" class="table table-striped dt-responsive  nowrap w-100 table-bordered ">
@@ -75,9 +65,6 @@
                         @Html.DisplayName("النوع")
                     </th>
 
-                    <th>
-                        @Html.DisplayName("عمليات")
-                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -101,15 +88,9 @@
                             @Html.DisplayFor(modelItem => item.BirthDate)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.GenderName)
+                            @Html.DisplayFor(modelItem => ((Gender)item.GenderId).ToString())
                         </td>
 
-                        <td>
-                            <a href='/Students/Graduated?Id=@item.Id' title='تخرج من المدرسة' class='btn btn-soft-warning  waves-effect waves-light p-2'><i class="fas fa-graduation-cap"></i></a>
-                            <a href='/Students/Transfered?Id=@item.Id' title='محول من المدرسة' class='btn btn-soft-secondary  waves-effect waves-light p-2'><i class="fas fa-user-slash"></i></a>
-                            @Url.Edit(routeValues: new { id = item.Id })
-                            @Url.Delete(routeValues: new { id = item.Id })
-                        </td>
                     </tr>
                 }
             </tbody>

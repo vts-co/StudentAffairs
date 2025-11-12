@@ -1,5 +1,7 @@
 ﻿@model StudentAffairs.Models.SecondLanguage
 @using StudentAffairs.Utilities
+@using StudentAffairs.Enums
+
 @{
     ViewBag.Title = (Model.Id == Guid.Empty ? "إضافة " : "تعديل ") + " اللغة التانية  ";
     string action = Model.Id == Guid.Empty ? "Create" : "Edit";
@@ -19,6 +21,20 @@
         <div class="card-body">
             @Html.HiddenFor(model => model.Id)
             <div class="row">
+                @if ((Role)TempData["RoleId"] == Role.Super_Admin)
+                {
+                    <div class="form-group mb-3 col-sm-6">
+                        @Html.Label("المدرسة ", htmlAttributes: new { @class = "control-label" })
+                        <div class="col-12">
+                            @Html.DropDownListFor(model => model.SchoolId, new SelectList(ViewBag.Schools, "Id", "Name"), "--اختر--", new { @class = "form-control", required = "required" })
+                            @Html.ValidationMessageFor(model => model.SchoolId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <input type="hidden" id="SchoolId" name="SchoolId" value="@TempData["SchoolId"]" />
+                }
                 <div class="form-group mb-3 col-sm-6">
                     @Html.Label("اللغة التانية", htmlAttributes: new { @class = "control-label" })
                     <div class="col-12">

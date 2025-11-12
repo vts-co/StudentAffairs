@@ -10,11 +10,11 @@ namespace StudentAffairs.Services.Students
 {
     public class StudentsServices
     {
-        public List<StudentsDto> GetAll(Guid UserId, Guid EmployeeId, Role RoleId)
+        public List<StudentsDto> GetAll(Guid UserId, Guid SchoolId, Guid EmployeeId, Role RoleId)
         {
             using (var dbContext = new StudentAffairsEntities())
             {
-                var model = dbContext.Students.Where(x => x.IsDeleted == false && x.StudentTypeId == (int)StudentTypes.InSchool && (x.CreatedBy == UserId || RoleId == Role.Super_Admin)).OrderBy(x => x.CreatedOn).Select(x => new StudentsDto
+                var model = dbContext.Students.Where(x => x.IsDeleted == false && x.StudentTypeId == (int)StudentTypes.InSchool && (x.CreatedBy == UserId ||x.SchoolId==SchoolId || RoleId == Role.Super_Admin)).OrderBy(x => x.CreatedOn).Select(x => new StudentsDto
                 {
                     //بيانات الطالب
                     Id = x.Id,
@@ -103,11 +103,11 @@ namespace StudentAffairs.Services.Students
             }
         }
 
-        public List<StudentsDto> GetAllGraduates(Guid UserId, Guid EmployeeId, Role RoleId)
+        public List<StudentsDto> GetAllGraduates(Guid UserId, Guid SchoolId, Guid EmployeeId, Role RoleId)
         {
             using (var dbContext = new StudentAffairsEntities())
             {
-                var model = dbContext.Students.Where(x => x.IsDeleted == false && x.StudentTypeId == (int)StudentTypes.Graduates && (x.CreatedBy == UserId || RoleId == Role.Super_Admin)).OrderBy(x => x.CreatedOn).Select(x => new StudentsDto
+                var model = dbContext.Students.Where(x => x.IsDeleted == false && x.StudentTypeId == (int)StudentTypes.Graduates && (x.CreatedBy == UserId || x.SchoolId==SchoolId || RoleId == Role.Super_Admin)).OrderBy(x => x.CreatedOn).Select(x => new StudentsDto
                 {
                     //بيانات الطالب
                     Id = x.Id,
@@ -196,11 +196,103 @@ namespace StudentAffairs.Services.Students
             }
         }
 
-        public List<StudentsDto> GetAllTransferFromSchool(Guid UserId, Guid EmployeeId, Role RoleId)
+        public List<StudentsDto> GetAllTransferFromSchool(Guid UserId, Guid SchoolId, Guid EmployeeId, Role RoleId)
         {
             using (var dbContext = new StudentAffairsEntities())
             {
-                var model = dbContext.Students.Where(x => x.IsDeleted == false && x.StudentTypeId == (int)StudentTypes.TransferFromSchool && (x.CreatedBy == UserId || RoleId == Role.Super_Admin)).OrderBy(x => x.CreatedOn).Select(x => new StudentsDto
+                var model = dbContext.Students.Where(x => x.IsDeleted == false && x.StudentTypeId == (int)StudentTypes.TransferFromSchool && (x.CreatedBy == UserId||x.SchoolId== SchoolId || RoleId == Role.Super_Admin)).OrderBy(x => x.CreatedOn).Select(x => new StudentsDto
+                {
+                    //بيانات الطالب
+                    Id = x.Id,
+                    Code = x.Code,
+                    Name = x.Name,
+                    Image = x.Image,
+                    Phone = x.Phone,
+                    LevelId = x.LevelId != null ? x.LevelId : Guid.Empty,
+                    LevelName = x.LevelId != null ? x.Level.Name : "",
+                    ClassId = x.ClassId != null ? x.ClassId : Guid.Empty,
+                    ClassName = x.ClassId != null ? x.Class.Name : "",
+                    SeatNumber = x.SeatNumber,
+                    ReligionId = x.ReligionId != null ? x.ReligionId : Guid.Empty,
+                    ReligionName = x.ReligionId != null ? x.Religion.Name : "",
+                    NationalityId = x.NationalityId != null ? x.NationalityId : Guid.Empty,
+                    NationalityName = x.NationalityId != null ? x.Nationality.Name : "",
+                    ExpenseTypeId = x.ExpenseTypeId != null ? x.ExpenseTypeId : Guid.Empty,
+                    ExpenseTypeName = x.ExpenseTypeId != null ? x.ExpenseType.Name : "",
+                    ExemptionReasonId = x.ExemptionReasonId != null ? x.ExemptionReasonId : Guid.Empty,
+                    ExemptionReasonName = x.ExemptionReasonId != null ? x.ExemptionReason.Name : "",
+                    EndYearResultId = x.EndYearResultId != null ? x.EndYearResultId : Guid.Empty,
+                    EndYearResultName = x.EndYearResultId != null ? x.EndYearResult.Name : "",
+                    SecondRoundResultId = x.SecondRoundResultId != null ? x.SecondRoundResultId : Guid.Empty,
+                    SecondRoundResultName = x.SecondRoundResultId != null ? x.SecondRoundResult.Name : "",
+                    HealthCondition = x.HealthCondition,
+                    FirstSemesterResult = x.FirstSemesterResult,
+                    EducationalIntegration = x.EducationalIntegration,
+                    TransferredToTheSchool = x.TransferredToTheSchool,
+                    Address = x.Address,
+
+                    //بيانات الرقم القومي والقيد
+                    NumberId = x.NumberId,
+                    BirthDate = x.BirthDate.ToString(),
+                    Day = x.Day,
+                    Month = x.Month,
+                    Year = x.Year,
+                    CityId = x.CityId != null ? x.CityId : Guid.Empty,
+                    CityName = x.CityId != null ? x.City.Name : "",
+                    GenderId = x.GenderId != null ? (int)x.GenderId : 0,
+                    RegistrationStateId = x.RegistrationStateId != null ? x.RegistrationStateId : Guid.Empty,
+                    RegistrationStateName = x.RegistrationStateId != null ? x.RegistrationStatu.Name : "",
+                    RegistrationNum = x.RegistrationNum,
+                    RegistrationDate = x.RegistrationDate,
+
+                    //بيانات ولي الامر
+                    ParentName = x.ParentName,
+                    ParentAddress = x.ParentAddress,
+                    ParentJob = x.ParentJob,
+                    ParentPhone = x.ParentPhone,
+                    ParentWhatsApp = x.ParentWhatsApp,
+                    MotherName = x.MotherName,
+                    MotherPhone = x.MotherPhone,
+                    SocialStateId = x.SocialStateId != null ? x.SocialStateId : Guid.Empty,
+                    SocialStateName = x.SocialStateId != null ? x.SocialStatu.Name : "",
+
+                    //بيانات خاصة بالثانوي
+                    TabletSerialNumber = x.TabletSerialNumber,
+                    ScienceDivisionId = x.ScienceDivisionId != null ? x.ScienceDivisionId : Guid.Empty,
+                    ScienceDivisionName = x.ScienceDivisionId != null ? x.ScienceDivision.Name : "",
+                    IM = x.IM,
+                    SecondLanguageIId = x.SecondLanguageId != null ? x.SecondLanguageId : Guid.Empty,
+                    SecondLanguageIName = x.SecondLanguageId != null ? x.SecondRoundResult.Name : "",
+                    DateOfReceipt = x.DateOfReceipt,
+                    InsurancePolicyNumber = x.InsurancePolicyNumber,
+                    InsurancePolicyDate = x.InsurancePolicyDate,
+
+                    //لائحة التحفيز والانضباط
+                    ProtectionCommittee = x.ProtectionCommittee,
+                    FromDate = x.FromDate,
+                    ToDate = x.ToDate,
+                    Duration = x.Duration,
+                    Problem = x.Problem,
+                    ActionTaken = x.ActionTaken,
+
+                    //المواهب والمسابقات
+                    Competitions = x.Competitions,
+                    Talents = x.Talents,
+
+                    SchoolId = x.SchoolId,
+                    SchoolName = x.SchoolId != null ? x.SchoolInfo.Name : "",
+
+                    Notes = x.Notes
+                }).ToList();
+
+                return model;
+            }
+        }
+        public List<StudentsDto> GetAllTrackConverters(Guid UserId, Guid SchoolId, Guid EmployeeId, Role RoleId)
+        {
+            using (var dbContext = new StudentAffairsEntities())
+            {
+                var model = dbContext.Students.Where(x => x.IsDeleted == false && x.StudentTypeId == (int)StudentTypes.TrackConverters && (x.CreatedBy == UserId || x.SchoolId == SchoolId || RoleId == Role.Super_Admin)).OrderBy(x => x.CreatedOn).Select(x => new StudentsDto
                 {
                     //بيانات الطالب
                     Id = x.Id,
@@ -298,11 +390,11 @@ namespace StudentAffairs.Services.Students
             }
         }
       
-        public StudentsDto GetByCode(string code)
+        public StudentsDto GetByCode(string code,Guid? SchoolId)
         {
             using (var dbContext = new StudentAffairsEntities())
             {
-                var model = dbContext.Students.Where(x => x.IsDeleted == false && x.Code == code).OrderBy(x => x.CreatedOn).Select(x => new StudentsDto
+                var model = dbContext.Students.Where(x => x.IsDeleted == false && x.Code == code&&x.SchoolId== SchoolId).OrderBy(x => x.CreatedOn).Select(x => new StudentsDto
                 {
                     //بيانات الطالب
                     Id = x.Id,
@@ -392,11 +484,11 @@ namespace StudentAffairs.Services.Students
             }
         }
 
-        public StudentsDto GetByCodeOrNameOrNumberId(Guid UserId, Guid EmployeeId, Role RoleId, string code)
+        public StudentsDto GetByCodeOrNameOrNumberId(Guid UserId, Guid? SchoolId, Guid EmployeeId, Role RoleId, string code,Guid? SchoolId1)
         {
             using (var dbContext = new StudentAffairsEntities())
             {
-                var model = dbContext.Students.Where(x => x.IsDeleted == false && (x.CreatedBy == UserId || RoleId == Role.Super_Admin) && (x.Code == code || x.Name.Contains(code) || x.NumberId == code)).OrderBy(x => x.CreatedOn).Select(x => new StudentsDto
+                var model = dbContext.Students.Where(x => x.IsDeleted == false && (x.CreatedBy == UserId ||x.SchoolId==SchoolId || RoleId == Role.Super_Admin) && (x.Code == code || x.Name.Contains(code) || x.NumberId == code)&&x.SchoolId==SchoolId1).OrderBy(x => x.CreatedOn).Select(x => new StudentsDto
                 {
                     //بيانات الطالب
                     Id = x.Id,
@@ -656,6 +748,28 @@ namespace StudentAffairs.Services.Students
                 }
 
                 Oldmodel.StudentTypeId = (int)StudentTypes.TransferFromSchool;
+                Oldmodel.ModifiedOn = DateTime.UtcNow;
+                Oldmodel.ModifiedBy = UserId;
+                dbContext.SaveChanges();
+                result.IsSuccess = true;
+                result.Message = "تم حذف البيانات بنجاح";
+                return result;
+            }
+        }
+        public ResultDto<Student> TrackConverterd(Guid Id, Guid UserId)
+        {
+            using (var dbContext = new StudentAffairsEntities())
+            {
+                var result = new ResultDto<Student>();
+                var Oldmodel = dbContext.Students.Find(Id);
+                if (Oldmodel == null)
+                {
+                    result.IsSuccess = false;
+                    result.Message = "هذا الطالب غير موجود ";
+                    return result;
+                }
+
+                Oldmodel.StudentTypeId = (int)StudentTypes.TrackConverters;
                 Oldmodel.ModifiedOn = DateTime.UtcNow;
                 Oldmodel.ModifiedBy = UserId;
                 dbContext.SaveChanges();

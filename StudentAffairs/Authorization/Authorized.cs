@@ -1,5 +1,6 @@
 ﻿using StudentAffairs.Enums;
 using StudentAffairs.Models;
+using StudentAffairs.Services.SchoolInfo;
 using StudentAffairs.Services.Users;
 using StudentAffairs.Utilities;
 using System;
@@ -25,6 +26,8 @@ namespace StudentAffairs.Authorization
         {
             string search = "," + ScreenId + ",";
             UsersServices usersServices = new UsersServices();
+            SchoolInfoServices schoolInfoServices = new SchoolInfoServices();
+
             var controller = filterContext.Controller as Controller;
             if (controller != null)
             {
@@ -37,7 +40,7 @@ namespace StudentAffairs.Authorization
                     filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new { controller = "Account", action = "SignIn", returnUrl = filterContext.HttpContext.Request.Url.ToString() }));
                     return;
                 }
-                else if ((auth.CookieValues.RoleId & Role) == 0)
+                else if ((auth.CookieValues.RoleId ) == 0)
                 {
                     filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new { controller = "Account", action = "SignIn", returnUrl = filterContext.HttpContext.Request.Url.ToString() }));
 
@@ -63,6 +66,7 @@ namespace StudentAffairs.Authorization
                 filterContext.Controller.TempData["SchoolId"] = auth.CookieValues.SchoolId;
                 filterContext.Controller.TempData["RoleId"] = auth.CookieValues.RoleId;
                 filterContext.Controller.ViewBag.EmployeeName = auth.CookieValues.EmployeeName;
+                filterContext.Controller.ViewBag.Schools = schoolInfoServices.GetAll();
 
                 filterContext.Controller.ViewBag.UserScreens = user.UserScreens;
                 filterContext.Controller.ViewBag.UserName = user.Username;

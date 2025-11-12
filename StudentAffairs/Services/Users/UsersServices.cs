@@ -30,7 +30,7 @@ namespace StudentAffairs.Services.Users
         {
             using (var dbContext = new StudentAffairsEntities())
             {
-                var model = dbContext.Users.Where(x => x.IsDeleted == false && (x.CreatedBy == UserId || x.SchoolId == SchoolId || x.SchoolInfo.Employees.Any(y => !y.IsDeleted && y.Id == EmployeeId) || RoleId == Role.Super_Admin)).OrderBy(x => x.CreatedOn).ToList();
+                var model = dbContext.Users.Where(x => x.IsDeleted == false&&x.Id!=UserId && (x.CreatedBy == UserId || x.SchoolId == SchoolId || x.SchoolInfo.Employees.Any(y => !y.IsDeleted && y.Id == EmployeeId) || RoleId == Role.Super_Admin)).OrderBy(x => x.CreatedOn).ToList();
                 return model;
             }
         }

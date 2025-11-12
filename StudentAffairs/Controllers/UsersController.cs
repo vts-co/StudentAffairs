@@ -18,9 +18,15 @@ namespace StudentAffairs.Controllers
         UsersServices usersServices = new UsersServices();
         //EmployeesServices employeesServices = new EmployeesServices();
         // GET: Users
-        public ActionResult Index()
+        public ActionResult Index(Guid? SchoolId)
         {
+            if ((Role)TempData["RoleId"] == Role.Super_Admin && SchoolId == null)
+            {
+                return View(new List<User>());
+            }
             var users = usersServices.GetAll((Guid)TempData["UserId"], (Guid)TempData["SchoolId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]);
+            if (SchoolId != null)
+                users = users.Where(x => x.SchoolId == SchoolId).ToList();
             return View(users);
         }
         public ActionResult Create()
@@ -75,8 +81,8 @@ namespace StudentAffairs.Controllers
         public ActionResult Edit(Guid Id)
         {
             var user = usersServices.Get(Id);
-            if (user.RoleId == 1)
-                ViewBag.IsAdmin = "checked";
+            //if (user.RoleId == 1)
+            //    ViewBag.IsAdmin = "checked";
 
             user.Password = Security.Decrypt(user.Password);
             //ViewBag.Employees = employeesServices.GetAll((Guid)TempData["UserId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]);
