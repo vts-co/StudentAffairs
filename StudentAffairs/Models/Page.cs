@@ -20,11 +20,11 @@ namespace StudentAffairs.Models
             this.Pages1 = new HashSet<Page>();
         }
     
-        public System.Guid Id { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Link { get; set; }
         public Nullable<int> Num { get; set; }
-        public Nullable<System.Guid> ParentId { get; set; }
+        public Nullable<int> ParentId { get; set; }
         public string Notes { get; set; }
         public Nullable<System.DateTime> CreatedOn { get; set; }
         public Nullable<System.Guid> CreatedBy { get; set; }

@@ -1261,11 +1261,11 @@ body[data-sidebar=brand][data-sidebar-size=sm] .vertical-menu #sidebar-menu ul l
   padding: 0;
 }
 .topnav .navbar-nav .nav-link {
-  font-size: 13px;
-  position: relative;
-  padding: 1rem 0.5rem;
-  color: var(--bs-menu-item-color);
-  font-weight: 500;
+    font-size: 13px;
+    position: relative;
+    padding: 0.5rem 0.5rem;
+    color: var(--bs-menu-item-color);
+    font-weight: 500;
 }
 .topnav .navbar-nav .nav-link i {
   font-size: 15px;

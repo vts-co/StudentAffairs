@@ -10,7 +10,7 @@ using System.Web.Mvc;
 
 namespace StudentAffairs.Enums
 {
-    [Authorized(ScreenId = "15")]
+    [Authorized(ScreenId = "18")]
     public class StudentReceiptController : Controller
     {
         StudentReceiptServices studentReceiptServices = new StudentReceiptServices();

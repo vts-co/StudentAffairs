@@ -47,6 +47,7 @@ namespace StudentAffairs.Models
         public virtual DbSet<StudentAttachment> StudentAttachments { get; set; }
         public virtual DbSet<StudentReceipt> StudentReceipts { get; set; }
         public virtual DbSet<Student> Students { get; set; }
+        public virtual DbSet<StudentsAttendance> StudentsAttendances { get; set; }
         public virtual DbSet<User> Users { get; set; }
     }
 }

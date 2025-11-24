@@ -5,29 +5,30 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="e8ace0635f344a5ab250e1a848f8eea1" Name="Diagram1" ZoomLevel="43">
-        <EntityTypeShape EntityType="StudentAffairsModel.City" Width="1.5" PointX="0.75" PointY="29.875" />
-        <EntityTypeShape EntityType="StudentAffairsModel.CityDepartment" Width="1.5" PointX="3" PointY="29.875" />
-        <EntityTypeShape EntityType="StudentAffairsModel.Class" Width="1.5" PointX="9.75" PointY="39.125" />
-        <EntityTypeShape EntityType="StudentAffairsModel.Employee" Width="1.5" PointX="9.75" PointY="44.125" />
-        <EntityTypeShape EntityType="StudentAffairsModel.EndYearResult" Width="1.5" PointX="9.75" PointY="22.375" />
-        <EntityTypeShape EntityType="StudentAffairsModel.ExemptionReason" Width="1.5" PointX="7.5" PointY="19.375" />
-        <EntityTypeShape EntityType="StudentAffairsModel.ExitPermission" Width="1.5" PointX="17.25" PointY="33.375" />
-        <EntityTypeShape EntityType="StudentAffairsModel.ExpenseType" Width="1.5" PointX="7.5" PointY="41.125" />
-        <EntityTypeShape EntityType="StudentAffairsModel.Job" Width="1.5" PointX="7.5" PointY="54.875" />
-        <EntityTypeShape EntityType="StudentAffairsModel.Level" Width="1.5" PointX="7.5" PointY="50.25" />
-        <EntityTypeShape EntityType="StudentAffairsModel.Nationality" Width="1.5" PointX="9.75" PointY="31.375" />
+        <EntityTypeShape EntityType="StudentAffairsModel.City" Width="1.5" PointX="0.75" PointY="31.125" />
+        <EntityTypeShape EntityType="StudentAffairsModel.CityDepartment" Width="1.5" PointX="3" PointY="31.125" />
+        <EntityTypeShape EntityType="StudentAffairsModel.Class" Width="1.5" PointX="9.75" PointY="40.375" />
+        <EntityTypeShape EntityType="StudentAffairsModel.Employee" Width="1.5" PointX="9.75" PointY="26.375" />
+        <EntityTypeShape EntityType="StudentAffairsModel.EndYearResult" Width="1.5" PointX="9.75" PointY="53.25" />
+        <EntityTypeShape EntityType="StudentAffairsModel.ExemptionReason" Width="1.5" PointX="7.5" PointY="37.75" />
+        <EntityTypeShape EntityType="StudentAffairsModel.ExitPermission" Width="1.5" PointX="17.25" PointY="34.625" />
+        <EntityTypeShape EntityType="StudentAffairsModel.ExpenseType" Width="1.5" PointX="7.5" PointY="15.875" />
+        <EntityTypeShape EntityType="StudentAffairsModel.Job" Width="1.5" PointX="7.5" PointY="20.125" />
+        <EntityTypeShape EntityType="StudentAffairsModel.Level" Width="1.5" PointX="7.5" PointY="51.5" />
+        <EntityTypeShape EntityType="StudentAffairsModel.Nationality" Width="1.5" PointX="9.75" PointY="35.25" />
         <EntityTypeShape EntityType="StudentAffairsModel.Page" Width="1.5" PointX="0.75" PointY="0.75" />
-        <EntityTypeShape EntityType="StudentAffairsModel.RegistrationStatu" Width="1.5" PointX="9.75" PointY="49.25" />
-        <EntityTypeShape EntityType="StudentAffairsModel.Religion" Width="1.5" PointX="9.75" PointY="27.25" />
-        <EntityTypeShape EntityType="StudentAffairsModel.SchoolInfo" Width="1.5" PointX="5.25" PointY="28" />
-        <EntityTypeShape EntityType="StudentAffairsModel.ScienceDivision" Width="1.5" PointX="7.5" PointY="32.25" />
-        <EntityTypeShape EntityType="StudentAffairsModel.SecondLanguage" Width="1.5" PointX="7.5" PointY="23.625" />
-        <EntityTypeShape EntityType="StudentAffairsModel.SecondRoundResult" Width="1.5" PointX="9.75" PointY="53.125" />
-        <EntityTypeShape EntityType="StudentAffairsModel.SocialStatu" Width="1.5" PointX="7.5" PointY="27.875" />
-        <EntityTypeShape EntityType="StudentAffairsModel.StudentAttachment" Width="1.5" PointX="14.25" PointY="45.375" />
-        <EntityTypeShape EntityType="StudentAffairsModel.StudentReceipt" Width="1.5" PointX="14.25" PointY="34.375" />
-        <EntityTypeShape EntityType="StudentAffairsModel.Student" Width="1.5" PointX="12" PointY="28.5" />
-        <EntityTypeShape EntityType="StudentAffairsModel.User" Width="1.5" PointX="7.5" PointY="14.75" />
+        <EntityTypeShape EntityType="StudentAffairsModel.RegistrationStatu" Width="1.5" PointX="9.75" PointY="49.375" />
+        <EntityTypeShape EntityType="StudentAffairsModel.Religion" Width="1.5" PointX="9.75" PointY="45.375" />
+        <EntityTypeShape EntityType="StudentAffairsModel.SchoolInfo" Width="1.5" PointX="5.25" PointY="29.25" />
+        <EntityTypeShape EntityType="StudentAffairsModel.ScienceDivision" Width="1.5" PointX="7.5" PointY="24.375" />
+        <EntityTypeShape EntityType="StudentAffairsModel.SecondLanguage" Width="1.5" PointX="7.5" PointY="33.5" />
+        <EntityTypeShape EntityType="StudentAffairsModel.SecondRoundResult" Width="1.5" PointX="9.75" PointY="31.375" />
+        <EntityTypeShape EntityType="StudentAffairsModel.SocialStatu" Width="1.5" PointX="7.5" PointY="56.375" />
+        <EntityTypeShape EntityType="StudentAffairsModel.StudentAttachment" Width="1.5" PointX="14.25" PointY="46.5" />
+        <EntityTypeShape EntityType="StudentAffairsModel.StudentReceipt" Width="1.5" PointX="14.25" PointY="35.625" />
+        <EntityTypeShape EntityType="StudentAffairsModel.Student" Width="1.5" PointX="12" PointY="29.375" />
+        <EntityTypeShape EntityType="StudentAffairsModel.StudentsAttendance" Width="1.5" PointX="14.25" PointY="41.375" />
+        <EntityTypeShape EntityType="StudentAffairsModel.User" Width="1.5" PointX="7.5" PointY="46.875" />
         <AssociationConnector Association="StudentAffairsModel.FK_CityDepartments_Cities" />
         <AssociationConnector Association="StudentAffairsModel.FK_SchoolInfo_Cities" />
         <AssociationConnector Association="StudentAffairsModel.FK_Students_Cities" />
@@ -36,6 +37,7 @@
         <AssociationConnector Association="StudentAffairsModel.FK_Classes_Levels" />
         <AssociationConnector Association="StudentAffairsModel.FK_Classes_SchoolInfo" />
         <AssociationConnector Association="StudentAffairsModel.FK_Students_Classes" />
+        <AssociationConnector Association="StudentAffairsModel.FK_StudentsAttendances_Classes" />
         <AssociationConnector Association="StudentAffairsModel.FK_Employees_Jobs" />
         <AssociationConnector Association="StudentAffairsModel.FK_Employees_SchoolInfo" />
         <AssociationConnector Association="StudentAffairsModel.FK_Students_EndYearResults" />
@@ -48,8 +50,9 @@
         <AssociationConnector Association="StudentAffairsModel.FK_Jobs_SchoolInfo" />
         <AssociationConnector Association="StudentAffairsModel.FK_Levels_SchoolInfo" />
         <AssociationConnector Association="StudentAffairsModel.FK_Students_Levels" />
+        <AssociationConnector Association="StudentAffairsModel.FK_StudentsAttendances_Levels" />
         <AssociationConnector Association="StudentAffairsModel.FK_Students_Nationalities" />
-        <AssociationConnector Association="StudentAffairsModel.FK_Pages_Pages1" />
+        <AssociationConnector Association="StudentAffairsModel.FK_Pages_Pages" />
         <AssociationConnector Association="StudentAffairsModel.FK_Students_RegistrationStatus" />
         <AssociationConnector Association="StudentAffairsModel.FK_Students_Religion" />
         <AssociationConnector Association="StudentAffairsModel.FK_ScienceDivision_SchoolInfo" />
@@ -65,6 +68,7 @@
         <AssociationConnector Association="StudentAffairsModel.FK_StudentAttachments_Students" />
         <AssociationConnector Association="StudentAffairsModel.FK_StudentReceipt_Students" />
         <AssociationConnector Association="StudentAffairsModel.FK_Students_Students" />
+        <AssociationConnector Association="StudentAffairsModel.FK_StudentsAttendances_Students" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -12,7 +12,7 @@ using System.Web.Script.Serialization;
 
 namespace StudentAffairs.Controllers
 {
-    [Authorized(ScreenId = "17")]
+    [Authorized(ScreenId = "24")]
     public class UsersController : Controller
     {
         UsersServices usersServices = new UsersServices();
@@ -40,19 +40,17 @@ namespace StudentAffairs.Controllers
         {
             string pages = ",0,";
             user.Id = Guid.NewGuid();
+            user.RoleId = (int)Role.School_Admin;
 
             List<TreeViewNode> items = (new JavaScriptSerializer()).Deserialize<List<TreeViewNode>>(selectedItems);
             if (items != null)
             {
                 foreach (var item in items)
                 {
-                    var id = Guid.Parse(item.id);
-                    var pagesChilds = usersServices.GetAllChilds().Where(x => x.Id == id).ToList();
+                    var id = int.Parse(item.id);
 
-                    if (pagesChilds.Count() != 0)
-                    {
-                        pages += item.id + ",";
-                    }
+                    pages += item.id + ",";
+
                 }
             }
 
@@ -71,6 +69,7 @@ namespace StudentAffairs.Controllers
             else
             {
                 user.Id = Guid.Empty;
+                ViewBag.SchoolId = user.SchoolId;
                 //ViewBag.Employees = employeesServices.GetAll((Guid)TempData["UserId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]);
                 TreeFunction();
                 TempData["warning"] = result.Message;
@@ -85,12 +84,14 @@ namespace StudentAffairs.Controllers
             //    ViewBag.IsAdmin = "checked";
 
             user.Password = Security.Decrypt(user.Password);
+            ViewBag.SchoolId = user.SchoolId;
+
             //ViewBag.Employees = employeesServices.GetAll((Guid)TempData["UserId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]);
             SelectedTreeFunction(user.UserScreens);
             return View("Upsert", user);
         }
         [HttpPost, ValidateInput(false)]
-        public ActionResult Edit(User user, string selectedItems, string IsAdmin )
+        public ActionResult Edit(User user, string selectedItems, string IsAdmin)
         {
             string pages = ",0,";
 
@@ -99,17 +100,16 @@ namespace StudentAffairs.Controllers
             {
                 foreach (var item in items)
                 {
-                    var id = Guid.Parse(item.id);
-                    var pagesChilds = usersServices.GetAllChilds().Where(x => x.Id == id).ToList();
-
-                    if (pagesChilds.Count() != 0)
-                    {
+                    var id = int.Parse(item.id);
+                    
                         pages += item.id + ",";
-                    }
+                    
                 }
             }
 
             user.UserScreens = pages;
+            user.RoleId = (int)Role.School_Admin;
+
             //if (IsAdmin=="on")
             //    user.RoleId = (int)Role.SystemAdmin;
             //else
@@ -122,6 +122,8 @@ namespace StudentAffairs.Controllers
             }
             else
             {
+                ViewBag.SchoolId = user.SchoolId;
+
                 //user.Password = Security.Decrypt(user.Password);
                 //ViewBag.Employees = employeesServices.GetAll((Guid)TempData["UserId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]);
                 SelectedTreeFunction(user.UserScreens);
@@ -149,7 +151,11 @@ namespace StudentAffairs.Controllers
             List<TreeViewNode> nodes = new List<TreeViewNode>();
             var pagesPerants = usersServices.GetAllPerants();
             var pagesChilds = usersServices.GetAllChilds();
-
+            if ((Guid)TempData["SchoolId"] != null && (Guid)TempData["SchoolId"] != Guid.Empty)
+            {
+                pagesPerants=pagesPerants.Where(x => x.Id != 24).ToList();
+                pagesChilds=pagesChilds.Where(x => x.Id != 24).ToList();
+            }
             //Loop and add the Parent Nodes.
             foreach (var item in pagesPerants)
             {
@@ -173,11 +179,25 @@ namespace StudentAffairs.Controllers
 
             var pagesPerants = usersServices.GetAllPerants();
             var pagesChilds = usersServices.GetAllChilds();
+            if((Guid)TempData["SchoolId"]!=null&& (Guid)TempData["SchoolId"] !=Guid.Empty)
+            {
+                pagesPerants = pagesPerants.Where(x => x.Id != 24).ToList();
+                pagesChilds = pagesChilds.Where(x => x.Id != 24).ToList();
 
+            }
             //Loop and add the Parent Nodes.
             foreach (var item in pagesPerants)
             {
-                nodes.Add(new TreeViewNode { id = item.Id.ToString(), parent = "#", text = item.Name, state = new { opened = false, selected = false } });
+                if (user.Contains("," + item.Id + ","))
+                {
+                    nodes.Add(new TreeViewNode { id = item.Id.ToString(), parent = "#", text = item.Name, state = new { opened = true, selected = true } });
+                    Selectednodes.Add(new TreeViewNode { id = item.Id.ToString(), parent = "#", text = item.Name, state = new { opened = false, selected = false } });
+
+                }
+                else
+                {
+                    nodes.Add(new TreeViewNode { id = item.Id.ToString(), parent = "#", text = item.Name, state = new { opened = false, selected = false } });
+                }
             }
 
             //Loop and add the Child Nodes.

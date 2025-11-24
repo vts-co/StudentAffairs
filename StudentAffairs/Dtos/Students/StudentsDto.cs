@@ -9,6 +9,7 @@ namespace StudentAffairs.Dtos.Students
     {
         public System.Guid Id { get; set; }
         public string Code { get; set; }
+        public string SerialNumber { get; set; }
         public string Name { get; set; }
         public string Image { get; set; }
         public string Phone { get; set; }

@@ -11,7 +11,7 @@ using System.Web.Mvc;
 
 namespace StudentAffairs.Controllers
 {
-    [Authorized(ScreenId = "16")]
+    [Authorized(ScreenId = "19")]
     public class ExitPermissionController : Controller
     {
         ExitPermissionServices exitPermissionServices = new ExitPermissionServices();
@@ -21,7 +21,7 @@ namespace StudentAffairs.Controllers
         {
             if ((Role)TempData["RoleId"] == Role.Super_Admin && SchoolId == null)
             {
-                return View(new List<ExemptionReason>());
+                return View(new List<ExitPermission>());
             }
             var model = exitPermissionServices.GetAll((Guid)TempData["UserId"], (Guid)TempData["SchoolId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]);
             if (SchoolId != null)

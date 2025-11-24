@@ -195,11 +195,11 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="Name" Type="nvarchar(max)" />
           <Property Name="Link" Type="nvarchar(max)" />
           <Property Name="Num" Type="int" />
-          <Property Name="ParentId" Type="uniqueidentifier" />
+          <Property Name="ParentId" Type="int" />
           <Property Name="Notes" Type="nvarchar(max)" />
           <Property Name="CreatedOn" Type="datetime" />
           <Property Name="CreatedBy" Type="uniqueidentifier" />
@@ -368,7 +368,8 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="Code" Type="nvarchar" MaxLength="50" />
+          <Property Name="Code" Type="nvarchar(max)" />
+          <Property Name="SerialNumber" Type="nvarchar" MaxLength="50" />
           <Property Name="Name" Type="nvarchar(max)" />
           <Property Name="Image" Type="nvarchar(max)" />
           <Property Name="Phone" Type="nvarchar" MaxLength="50" />
@@ -421,6 +422,25 @@
           <Property Name="Competitions" Type="nvarchar(max)" />
           <Property Name="StudentTypeId" Type="int" />
           <Property Name="SchoolId" Type="uniqueidentifier" />
+          <Property Name="Notes" Type="nvarchar(max)" />
+          <Property Name="CreatedOn" Type="datetime" />
+          <Property Name="CreatedBy" Type="uniqueidentifier" />
+          <Property Name="ModifiedOn" Type="datetime" />
+          <Property Name="ModifiedBy" Type="uniqueidentifier" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="DeletedOn" Type="datetime" />
+          <Property Name="DeletedBy" Type="uniqueidentifier" />
+        </EntityType>
+        <EntityType Name="StudentsAttendances">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="StudentId" Type="uniqueidentifier" />
+          <Property Name="LevelId" Type="uniqueidentifier" />
+          <Property Name="ClassId" Type="uniqueidentifier" />
+          <Property Name="AttendDate" Type="datetime" />
+          <Property Name="AttendOrNo" Type="bit" />
           <Property Name="Notes" Type="nvarchar(max)" />
           <Property Name="CreatedOn" Type="datetime" />
           <Property Name="CreatedBy" Type="uniqueidentifier" />
@@ -593,7 +613,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Pages_Pages1">
+        <Association Name="FK_Pages_Pages">
           <End Role="Pages" Type="Self.Pages" Multiplicity="0..1" />
           <End Role="Pages1" Type="Self.Pages" Multiplicity="*" />
           <ReferentialConstraint>
@@ -881,6 +901,42 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_StudentsAttendances_Classes">
+          <End Role="Classes" Type="Self.Classes" Multiplicity="0..1" />
+          <End Role="StudentsAttendances" Type="Self.StudentsAttendances" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Classes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StudentsAttendances">
+              <PropertyRef Name="ClassId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StudentsAttendances_Levels">
+          <End Role="Levels" Type="Self.Levels" Multiplicity="0..1" />
+          <End Role="StudentsAttendances" Type="Self.StudentsAttendances" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Levels">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StudentsAttendances">
+              <PropertyRef Name="LevelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StudentsAttendances_Students">
+          <End Role="Students" Type="Self.Students" Multiplicity="0..1" />
+          <End Role="StudentsAttendances" Type="Self.StudentsAttendances" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Students">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StudentsAttendances">
+              <PropertyRef Name="StudentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Users_SchoolInfo">
           <End Role="SchoolInfo" Type="Self.SchoolInfo" Multiplicity="0..1" />
           <End Role="Users" Type="Self.Users" Multiplicity="*" />
@@ -916,6 +972,7 @@
           <EntitySet Name="StudentAttachments" EntityType="Self.StudentAttachments" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StudentReceipt" EntityType="Self.StudentReceipt" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Students" EntityType="Self.Students" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StudentsAttendances" EntityType="Self.StudentsAttendances" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_CityDepartments_Cities" Association="Self.FK_CityDepartments_Cities">
             <End Role="Cities" EntitySet="Cities" />
@@ -965,7 +1022,7 @@
             <End Role="SchoolInfo" EntitySet="SchoolInfo" />
             <End Role="Levels" EntitySet="Levels" />
           </AssociationSet>
-          <AssociationSet Name="FK_Pages_Pages1" Association="Self.FK_Pages_Pages1">
+          <AssociationSet Name="FK_Pages_Pages" Association="Self.FK_Pages_Pages">
             <End Role="Pages" EntitySet="Pages" />
             <End Role="Pages1" EntitySet="Pages" />
           </AssociationSet>
@@ -1061,6 +1118,18 @@
             <End Role="Students" EntitySet="Students" />
             <End Role="Students1" EntitySet="Students" />
           </AssociationSet>
+          <AssociationSet Name="FK_StudentsAttendances_Classes" Association="Self.FK_StudentsAttendances_Classes">
+            <End Role="Classes" EntitySet="Classes" />
+            <End Role="StudentsAttendances" EntitySet="StudentsAttendances" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StudentsAttendances_Levels" Association="Self.FK_StudentsAttendances_Levels">
+            <End Role="Levels" EntitySet="Levels" />
+            <End Role="StudentsAttendances" EntitySet="StudentsAttendances" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StudentsAttendances_Students" Association="Self.FK_StudentsAttendances_Students">
+            <End Role="Students" EntitySet="Students" />
+            <End Role="StudentsAttendances" EntitySet="StudentsAttendances" />
+          </AssociationSet>
           <AssociationSet Name="FK_Users_SchoolInfo" Association="Self.FK_Users_SchoolInfo">
             <End Role="SchoolInfo" EntitySet="SchoolInfo" />
             <End Role="Users" EntitySet="Users" />
@@ -1093,6 +1162,7 @@
           <EntitySet Name="StudentAttachments" EntityType="StudentAffairsModel.StudentAttachment" />
           <EntitySet Name="StudentReceipts" EntityType="StudentAffairsModel.StudentReceipt" />
           <EntitySet Name="Students" EntityType="StudentAffairsModel.Student" />
+          <EntitySet Name="StudentsAttendances" EntityType="StudentAffairsModel.StudentsAttendance" />
           <EntitySet Name="Users" EntityType="StudentAffairsModel.User" />
           <AssociationSet Name="FK_CityDepartments_Cities" Association="StudentAffairsModel.FK_CityDepartments_Cities">
             <End Role="City" EntitySet="Cities" />
@@ -1125,6 +1195,10 @@
           <AssociationSet Name="FK_Students_Classes" Association="StudentAffairsModel.FK_Students_Classes">
             <End Role="Class" EntitySet="Classes" />
             <End Role="Student" EntitySet="Students" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StudentsAttendances_Classes" Association="StudentAffairsModel.FK_StudentsAttendances_Classes">
+            <End Role="Class" EntitySet="Classes" />
+            <End Role="StudentsAttendance" EntitySet="StudentsAttendances" />
           </AssociationSet>
           <AssociationSet Name="FK_Employees_Jobs" Association="StudentAffairsModel.FK_Employees_Jobs">
             <End Role="Job" EntitySet="Jobs" />
@@ -1174,11 +1248,15 @@
             <End Role="Level" EntitySet="Levels" />
             <End Role="Student" EntitySet="Students" />
           </AssociationSet>
+          <AssociationSet Name="FK_StudentsAttendances_Levels" Association="StudentAffairsModel.FK_StudentsAttendances_Levels">
+            <End Role="Level" EntitySet="Levels" />
+            <End Role="StudentsAttendance" EntitySet="StudentsAttendances" />
+          </AssociationSet>
           <AssociationSet Name="FK_Students_Nationalities" Association="StudentAffairsModel.FK_Students_Nationalities">
             <End Role="Nationality" EntitySet="Nationalities" />
             <End Role="Student" EntitySet="Students" />
           </AssociationSet>
-          <AssociationSet Name="FK_Pages_Pages1" Association="StudentAffairsModel.FK_Pages_Pages1">
+          <AssociationSet Name="FK_Pages_Pages" Association="StudentAffairsModel.FK_Pages_Pages">
             <End Role="Page" EntitySet="Pages" />
             <End Role="Page1" EntitySet="Pages" />
           </AssociationSet>
@@ -1242,6 +1320,10 @@
             <End Role="Student" EntitySet="Students" />
             <End Role="Student1" EntitySet="Students" />
           </AssociationSet>
+          <AssociationSet Name="FK_StudentsAttendances_Students" Association="StudentAffairsModel.FK_StudentsAttendances_Students">
+            <End Role="Student" EntitySet="Students" />
+            <End Role="StudentsAttendance" EntitySet="StudentsAttendances" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="City">
           <Key>
@@ -1302,6 +1384,7 @@
           <NavigationProperty Name="Level" Relationship="StudentAffairsModel.FK_Classes_Levels" FromRole="Class" ToRole="Level" />
           <NavigationProperty Name="SchoolInfo" Relationship="StudentAffairsModel.FK_Classes_SchoolInfo" FromRole="Class" ToRole="SchoolInfo" />
           <NavigationProperty Name="Students" Relationship="StudentAffairsModel.FK_Students_Classes" FromRole="Class" ToRole="Student" />
+          <NavigationProperty Name="StudentsAttendances" Relationship="StudentAffairsModel.FK_StudentsAttendances_Classes" FromRole="Class" ToRole="StudentsAttendance" />
         </EntityType>
         <EntityType Name="Employee">
           <Key>
@@ -1435,6 +1518,7 @@
           <NavigationProperty Name="Classes" Relationship="StudentAffairsModel.FK_Classes_Levels" FromRole="Level" ToRole="Class" />
           <NavigationProperty Name="SchoolInfo" Relationship="StudentAffairsModel.FK_Levels_SchoolInfo" FromRole="Level" ToRole="SchoolInfo" />
           <NavigationProperty Name="Students" Relationship="StudentAffairsModel.FK_Students_Levels" FromRole="Level" ToRole="Student" />
+          <NavigationProperty Name="StudentsAttendances" Relationship="StudentAffairsModel.FK_StudentsAttendances_Levels" FromRole="Level" ToRole="StudentsAttendance" />
         </EntityType>
         <EntityType Name="Nationality">
           <Key>
@@ -1457,11 +1541,11 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Link" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Num" Type="Int32" />
-          <Property Name="ParentId" Type="Guid" />
+          <Property Name="ParentId" Type="Int32" />
           <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="CreatedOn" Type="DateTime" Precision="3" />
           <Property Name="CreatedBy" Type="Guid" />
@@ -1470,8 +1554,8 @@
           <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
           <Property Name="DeletedOn" Type="DateTime" Precision="3" />
           <Property Name="DeletedBy" Type="Guid" />
-          <NavigationProperty Name="Pages1" Relationship="StudentAffairsModel.FK_Pages_Pages1" FromRole="Page" ToRole="Page1" />
-          <NavigationProperty Name="Page1" Relationship="StudentAffairsModel.FK_Pages_Pages1" FromRole="Page1" ToRole="Page" />
+          <NavigationProperty Name="Pages1" Relationship="StudentAffairsModel.FK_Pages_Pages" FromRole="Page" ToRole="Page1" />
+          <NavigationProperty Name="Page1" Relationship="StudentAffairsModel.FK_Pages_Pages" FromRole="Page1" ToRole="Page" />
         </EntityType>
         <EntityType Name="RegistrationStatu">
           <Key>
@@ -1660,7 +1744,8 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Guid" Nullable="false" />
-          <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Code" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SerialNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -1740,6 +1825,29 @@
           <NavigationProperty Name="StudentReceipts" Relationship="StudentAffairsModel.FK_StudentReceipt_Students" FromRole="Student" ToRole="StudentReceipt" />
           <NavigationProperty Name="Students1" Relationship="StudentAffairsModel.FK_Students_Students" FromRole="Student" ToRole="Student1" />
           <NavigationProperty Name="Student1" Relationship="StudentAffairsModel.FK_Students_Students" FromRole="Student1" ToRole="Student" />
+          <NavigationProperty Name="StudentsAttendances" Relationship="StudentAffairsModel.FK_StudentsAttendances_Students" FromRole="Student" ToRole="StudentsAttendance" />
+        </EntityType>
+        <EntityType Name="StudentsAttendance">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="StudentId" Type="Guid" />
+          <Property Name="LevelId" Type="Guid" />
+          <Property Name="ClassId" Type="Guid" />
+          <Property Name="AttendDate" Type="DateTime" Precision="3" />
+          <Property Name="AttendOrNo" Type="Boolean" />
+          <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="Guid" />
+          <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="Guid" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="DeletedOn" Type="DateTime" Precision="3" />
+          <Property Name="DeletedBy" Type="Guid" />
+          <NavigationProperty Name="Class" Relationship="StudentAffairsModel.FK_StudentsAttendances_Classes" FromRole="StudentsAttendance" ToRole="Class" />
+          <NavigationProperty Name="Level" Relationship="StudentAffairsModel.FK_StudentsAttendances_Levels" FromRole="StudentsAttendance" ToRole="Level" />
+          <NavigationProperty Name="Student" Relationship="StudentAffairsModel.FK_StudentsAttendances_Students" FromRole="StudentsAttendance" ToRole="Student" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -1853,6 +1961,18 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Student">
+              <PropertyRef Name="ClassId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StudentsAttendances_Classes">
+          <End Type="StudentAffairsModel.Class" Role="Class" Multiplicity="0..1" />
+          <End Type="StudentAffairsModel.StudentsAttendance" Role="StudentsAttendance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Class">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StudentsAttendance">
               <PropertyRef Name="ClassId" />
             </Dependent>
           </ReferentialConstraint>
@@ -2001,6 +2121,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_StudentsAttendances_Levels">
+          <End Type="StudentAffairsModel.Level" Role="Level" Multiplicity="0..1" />
+          <End Type="StudentAffairsModel.StudentsAttendance" Role="StudentsAttendance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Level">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StudentsAttendance">
+              <PropertyRef Name="LevelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Students_Nationalities">
           <End Type="StudentAffairsModel.Nationality" Role="Nationality" Multiplicity="0..1" />
           <End Type="StudentAffairsModel.Student" Role="Student" Multiplicity="*" />
@@ -2013,7 +2145,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Pages_Pages1">
+        <Association Name="FK_Pages_Pages">
           <End Type="StudentAffairsModel.Page" Role="Page" Multiplicity="0..1" />
           <End Type="StudentAffairsModel.Page" Role="Page1" Multiplicity="*" />
           <ReferentialConstraint>
@@ -2202,6 +2334,18 @@
             </Principal>
             <Dependent Role="Student1">
               <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StudentsAttendances_Students">
+          <End Type="StudentAffairsModel.Student" Role="Student" Multiplicity="0..1" />
+          <End Type="StudentAffairsModel.StudentsAttendance" Role="StudentsAttendance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StudentsAttendance">
+              <PropertyRef Name="StudentId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2653,7 +2797,28 @@
                 <ScalarProperty Name="Phone" ColumnName="Phone" />
                 <ScalarProperty Name="Image" ColumnName="Image" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="SerialNumber" ColumnName="SerialNumber" />
                 <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StudentsAttendances">
+            <EntityTypeMapping TypeName="StudentAffairsModel.StudentsAttendance">
+              <MappingFragment StoreEntitySet="StudentsAttendances">
+                <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+                <ScalarProperty Name="DeletedOn" ColumnName="DeletedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="AttendOrNo" ColumnName="AttendOrNo" />
+                <ScalarProperty Name="AttendDate" ColumnName="AttendDate" />
+                <ScalarProperty Name="ClassId" ColumnName="ClassId" />
+                <ScalarProperty Name="LevelId" ColumnName="LevelId" />
+                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

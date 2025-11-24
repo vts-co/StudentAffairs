@@ -25,7 +25,7 @@
                     <div class="form-group mb-3 col-sm-6">
                         @Html.Label("اسم المدرسة", htmlAttributes: new { @class = "control-label" })
                         <div class="col-12">
-                            @Html.DropDownListFor(model => model.SchoolId, null, "--اختر--", new { @class = "form-control searchable", required = "required" })
+                            @Html.DropDownList("SchoolId", new SelectList(ViewBag.Schools, "Id", "Name"), "--اختر--", new { @class = "form-control" })
                             @Html.ValidationMessageFor(model => model.SchoolId, "", new { @class = "text-danger" })
                         </div>
                     </div>

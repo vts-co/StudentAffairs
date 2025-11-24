@@ -2,6 +2,7 @@
 using StudentAffairs.Dtos.SchoolInfo;
 using StudentAffairs.Enums;
 using StudentAffairs.Services.Cities;
+using StudentAffairs.Services.CityDepartments;
 using StudentAffairs.Services.SchoolInfo;
 using System;
 using System.Collections.Generic;
@@ -12,10 +13,11 @@ using System.Web.Mvc;
 
 namespace StudentAffairs.Controllers
 {
-    [Authorized(ScreenId = "10")]
+    [Authorized(ScreenId = "12")]
     public class SchoolInfoController : Controller
     {
         CitiesServices citiesServices = new CitiesServices();
+        CityDepartmentsServices cityDepartmentsServices = new CityDepartmentsServices();
         SchoolInfoServices schoolInfoServices = new SchoolInfoServices();
         // GET: Cities
         public ActionResult Index()
@@ -37,6 +39,8 @@ namespace StudentAffairs.Controllers
             }
             var cities = citiesServices.GetAll();
             ViewBag.CityId = new SelectList(cities, "Id", "Name");
+
+            ViewBag.CityDepartmentId = new SelectList("");
 
             return View("Upsert", new SchoolInfoDto());
         }
@@ -71,6 +75,9 @@ namespace StudentAffairs.Controllers
                 var cities = citiesServices.GetAll();
                 ViewBag.CityId = new SelectList(cities, "Id", "Name", schoolInfo.CityId);
 
+                var CityDepartments = cityDepartmentsServices.GetAll((Guid)TempData["UserId"], (Guid)TempData["SchoolId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]).Where(x => x.CityId == schoolInfo.CityId).ToList();
+                ViewBag.CityDepartmentId = new SelectList(CityDepartments, "Id", "Name", schoolInfo.CityDepartmentId);
+
                 TempData["warning"] = result.Message;
                 return View("Upsert", schoolInfo);
             }
@@ -85,15 +92,21 @@ namespace StudentAffairs.Controllers
             }
             var cities = citiesServices.GetAll();
 
-            var schoolInfo = schoolInfoServices.Get();
+            var schoolInfo = schoolInfoServices.Get(Id);
             if (schoolInfo != null)
             {
                 ViewBag.CityId = new SelectList(cities, "Id", "Name", schoolInfo.CityId);
+
+                var CityDepartments = cityDepartmentsServices.GetAll((Guid)TempData["UserId"], (Guid)TempData["SchoolId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]).Where(x => x.CityId == schoolInfo.CityId).ToList();
+                ViewBag.CityDepartmentId = new SelectList(CityDepartments, "Id", "Name", schoolInfo.CityDepartmentId);
+
                 return View("Upsert", schoolInfo);
             }
             else
             {
                 ViewBag.CityId = new SelectList(cities, "Id", "Name");
+                ViewBag.CityDepartmentId = new SelectList("");
+
                 return View("Upsert", new SchoolInfoDto() { Id = Guid.Empty });
             }
         }
@@ -105,11 +118,6 @@ namespace StudentAffairs.Controllers
                 TempData["warning"] = "لا يوجد لديك صلاحية لهذه الصفحة";
                 return RedirectToAction("SignIn", "Account");
             }
-
-            var cities = citiesServices.GetAll();
-            ViewBag.CityId = new SelectList(cities, "Id", "Name", schoolInfo.CityId);
-
-
             if (Image1 != null)
             {
                 schoolInfo.Image = "/Uploads/SchoolInfo/";
@@ -120,14 +128,21 @@ namespace StudentAffairs.Controllers
                 Image1.SaveAs(Server.MapPath("~" + schoolInfo.Image));
             }
 
+           
             var result = schoolInfoServices.Edit(schoolInfo, (Guid)TempData["UserId"]);
             if (result.IsSuccess)
             {
                 TempData["success"] = result.Message;
-                return View("Upsert", schoolInfo);
+                return RedirectToAction("Index");
             }
             else
             {
+                var cities = citiesServices.GetAll();
+                ViewBag.CityId = new SelectList(cities, "Id", "Name", schoolInfo.CityId);
+
+                var CityDepartments = cityDepartmentsServices.GetAll((Guid)TempData["UserId"], (Guid)TempData["SchoolId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]).Where(x => x.CityId == schoolInfo.CityId).ToList();
+                ViewBag.CityDepartmentId = new SelectList(CityDepartments, "Id", "Name", schoolInfo.CityDepartmentId);
+
                 TempData["warning"] = result.Message;
                 return View("Upsert", schoolInfo);
             }
@@ -157,7 +172,7 @@ namespace StudentAffairs.Controllers
         }
         public ActionResult getCityDepartments(Guid? Id)
         {
-            var result = citiesServices.GetAll().Select(x => new { x.Id, x.Name, x.Code }).ToList();
+            var result = cityDepartmentsServices.GetAll((Guid)TempData["UserId"], (Guid)TempData["SchoolId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]).Where(x=>x.CityId==Id).Select(x => new { x.Id, x.Name }).ToList();
 
             return Json(result, JsonRequestBehavior.AllowGet);
 

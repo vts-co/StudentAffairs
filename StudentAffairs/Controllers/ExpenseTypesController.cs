@@ -10,7 +10,7 @@ using System.Web.Mvc;
 
 namespace StudentAffairs.Controllers
 {
-    [Authorized(ScreenId = "5")]
+    [Authorized(ScreenId = "7")]
 
     public class ExpenseTypesController : Controller
     {
@@ -20,7 +20,7 @@ namespace StudentAffairs.Controllers
         {
             if ((Role)TempData["RoleId"] == Role.Super_Admin && SchoolId == null)
             {
-                return View(new List<ExemptionReason>());
+                return View(new List<ExpenseType>());
             }
             var model = expenseTypesServices.GetAll((Guid)TempData["UserId"], (Guid)TempData["SchoolId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]);
             if (SchoolId != null)

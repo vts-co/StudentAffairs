@@ -1,0 +1,403 @@
+﻿@model StudentAffairs.Models.StudentsAttendance
+@using StudentAffairs.Utilities
+@using StudentAffairs.Enums
+@{
+    ViewBag.Title = " تسجيل الحضور   ";
+    string action = "Create";
+    ViewBag.MainPage = "الطلاب  ";
+
+}
+
+
+<div class="card">
+    <div class="card-header">
+        <div class="row justify-content-between">
+            <h4 class="col-auto">@ViewBag.Title</h4>
+            @Url.BackToList()
+        </div>
+    </div>
+    <div class="card-body" id="stud">
+        @Html.HiddenFor(model => model.Id)
+
+
+        <div class="row">
+            @if ((Role)TempData["RoleId"] == Role.Super_Admin)
+            {
+                <div class="form-group mb-3 col-sm-12">
+                    @Html.Label("المدرسة ", htmlAttributes: new { @class = "control-label" })
+                    <div class="col-12">
+                        @Html.DropDownList("SchoolId", new SelectList(ViewBag.Schools, "Id", "Name"), "--اختر--", new { @class = "form-control", required = "required" })
+                        @Html.ValidationMessage("SchoolId", "", new { @class = "text-danger" })
+
+                    </div>
+                </div>
+            }
+            else
+            {
+                <input type="hidden" id="SchoolId" name="SchoolId" value="@TempData["SchoolId"]" />
+            }
+
+
+            @*<div class="form-group mb-3 col-sm-6">
+            @Html.Label("الصف ", htmlAttributes: new { @class = "control-label" })
+            <div class="col-12">
+                @Html.DropDownList("LevelId", null, "--اختر--", new { @class = "form-control", required = "required" })
+                @Html.ValidationMessage("LevelId", "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group mb-3 col-sm-6">
+            @Html.Label("الفصل", htmlAttributes: new { @class = "control-label" })
+            <div class="col-12">
+                @Html.DropDownListFor(model => model.ClassId, null, "--اختر--", new { @class = "form-control", required = "required" })
+                @Html.ValidationMessageFor(model => model.ClassId, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+
+            <div class="form-group mb-3 col-sm-4">
+                @Html.Label("التاريخ ", htmlAttributes: new { @class = "control-label" })
+                <div class="col-12">
+                    @Html.EditorFor(model => model.AttendDate, new { htmlAttributes = new { @class = "form-control", type = "date", @Value = ViewBag.Date, required = "required" } })
+                    @Html.ValidationMessageFor(model => model.AttendDate, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group mb-3 col-sm-4">
+                @Html.Label("تسجيل حسب ", htmlAttributes: new { @class = "control-label" })
+                <div class="col-12">
+                    @if (ViewBag.AttendOrNo != null)
+                    {
+                        <select class="form-control" id="AttendOrNo" name="AttendOrNo" required>
+                            <option value="0">--اختر--</option>
+                            @if (ViewBag.AttendOrNo == "true")
+                            {
+                                <option value="true" selected>حاضر</option>
+                            }
+                            else
+                            {
+                                <option value="true">حاضر</option>
+                            }
+                            @if (ViewBag.AttendOrNo == "false")
+                            {
+                                <option value="false" selected>غائب</option>
+                            }
+                            else
+                            {
+                                <option value="false">غائب</option>
+                            }
+                        </select>
+
+                    }
+                    else
+                    {
+                        <select class="form-control" id="AttendOrNo" name="AttendOrNo" required>
+                            <option value="0">--اختر--</option>
+                            <option value="true">حاضر</option>
+                            <option value="false">غائب</option>
+                        </select>
+                    }
+                </div>
+            </div>
+
+            <div class="form-group mt-4 p-1 col-sm-2">
+                <div class="col-12">
+                    <button type='button' onclick="AttendDisabled()" id="AttendDisBtn" class='btn btn-primary  waves-effect waves-light px-3 m-1 col-12 col-md-auto'><i class='fas fa-check me-1'></i>بدأ الجلسة</button>
+                </div>
+            </div>
+            <div class="form-group mb-3 col-sm-4">
+                @Html.Label("الرقم التسلسلي ", htmlAttributes: new { @class = "control-label" })
+                <div class="col-12">
+                    @Html.Editor("SerialNumber", new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                    @Html.ValidationMessage("SerialNumber", "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group mt-4 p-1 col-sm-2">
+                <div class="col-12">
+                    <button type='button' onclick="Attend()" id="AttendBtn" class='btn btn-primary  waves-effect waves-light px-3 m-1 col-12 col-md-auto'><i class='fas fa-check me-1'></i>تحضير</button>
+                </div>
+            </div>
+            <div class="form-group mt-4 p-1 col-sm-3">
+                <div class="col-12">
+                    <video id="video" hidden autoplay playsinline style="width:100%;"></video>
+
+                    @*<canvas id="canvas" style="display:none;"></canvas>
+                <img id="photo" style="width:300px; margin-top:10px;" />*@
+
+                    <button onclick="openCamera()" class='btn btn-primary  waves-effect waves-light px-3 m-1 col-12 col-md-auto'><i class='fas fa-camera me-1'></i>تحضير عن طريق Qr Code</button>
+                </div>
+            </div>
+            <hr />
+
+            <div class="form-group mb-3 col-sm-9">
+                <div class="card-header">
+                    <label>بيانات الطالب </label>
+                </div>
+
+                <div class="card-body">
+                    <div class="row">
+                        <div class="form-group mb-3 col-sm-4" id="divImage">
+                            <label>لا توجد صورة للطالب </label>
+                        </div>
+                        <div class="form-group mb-3 col-sm-8">
+                            <div class="row">
+                                <div class="form-group mb-3 col-sm-4">
+                                    @Html.Label("الاسم ", htmlAttributes: new { @class = "control-label" })
+                                    <div class="col-12">
+                                        @Html.Editor("Name", new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                    </div>
+                                </div>
+                                <div class="form-group mb-3 col-sm-4">
+                                    @Html.Label("الصف ", htmlAttributes: new { @class = "control-label" })
+                                    <div class="col-12">
+                                        @Html.Editor("LevelName", new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                    </div>
+                                </div>
+                                <div class="form-group mb-3 col-sm-4">
+                                    @Html.Label("الفصل ", htmlAttributes: new { @class = "control-label" })
+                                    <div class="col-12">
+                                        @Html.Editor("ClassName", new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                    </div>
+                                </div>
+                                <div class="form-group mb-3 col-sm-12" id="divMessage">
+
+                                </div>
+                                <input id="galsa" name="galsa" value="0" hidden />
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="form-group col-sm-10 ">
+               
+            </div>
+            <div class="form-group col-sm-2 d-flex justify-content-end ">
+                <div class="col-12">
+                    <button type='button' onclick="return AttendAll()" class='btn btn-primary  waves-effect waves-light px-3 m-1 col-12 col-md-auto'><i class='fas fa-check-double me-1'></i>انهاء الجلسة</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div id="reader" style="width: 350px"></div>
+@*<input type="text" id="qrResult" class="form-control" placeholder="QR Result" />*@
+
+@section scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        
+        $("#SerialNumber").keyup(function (event) {
+            if (event.keyCode == 13) {
+
+                Attend();
+            }
+        });
+        function AttendDisabled() {
+            if ($("#SchoolId").val() == "") {
+                invokeAlert('اختر المدرسة اولا', '', 'warning', 2000);
+                return;
+
+            }
+            else if (document.getElementById("AttendDate").value == "") {
+                invokeAlert('اختر التاريخ اولا', '', 'warning', 2000);
+                return;
+
+            }
+            else if ($("#AttendOrNo").val() == "0") {
+                invokeAlert('اختر تسجيل حسب اولا', '', 'warning', 2000);
+                return;
+
+            }
+            document.getElementById("galsa").value = "1";
+            document.getElementById("AttendDate").disabled = true;
+            document.getElementById("AttendOrNo").disabled = true;
+            document.getElementById("SchoolId").disabled = true;
+            invokeAlert('تم بدا الجلسة', '', 'success', 2000);
+
+        }
+       
+        function Attend() {
+            if ($("#SchoolId").val() == "") {
+                invokeAlert('اختر المدرسة اولا', '', 'warning', 2000);
+                return;
+
+            }
+            else if (document.getElementById("AttendDate").value == "") {
+                invokeAlert('اختر التاريخ اولا', '', 'warning', 2000);
+                return;
+
+            }
+            else if ($("#AttendOrNo").val() == "0") {
+                invokeAlert('اختر تسجيل حسب اولا', '', 'warning', 2000);
+                return;
+
+            }
+            else if (document.getElementById("SerialNumber").value == "") {
+                invokeAlert('ادخل الرقم التسلسلي', '', 'warning', 2000);
+                return;
+            }
+            else if (document.getElementById("galsa").value == "0") {
+                invokeAlert('ابدأ الجلسة الان اولا', '', 'warning', 2000);
+                return;
+            }
+            $.get('/StudentsAttendance/getStudent', { SchoolId: $("#SchoolId").val(), SerialNumber: $("#SerialNumber").val(), AttendDate: $("#AttendDate").val(), AttendOrNo: $("#AttendOrNo").val() }, function (data) {
+
+                if (data.data.Name === "") {
+                    document.getElementById("LevelName").value = "";
+                    document.getElementById("ClassName").value = "";
+                    document.getElementById("Name").value = "";
+                    $("#divImage").empty();
+                    $("#divImage").append("<label>لا توجد صورة للطالب</label>");
+                    $("#divMessage").empty();
+                    invokeAlert('لا يوجد طالب بهذا الرقم التسلسلي', '', 'danger', 2000);
+                    return;
+                }
+                if (data.data.Name === "جلسة قديمة") {
+                    document.getElementById("LevelName").value = "";
+                    document.getElementById("ClassName").value = "";
+                    document.getElementById("Name").value = "";
+                    $("#divImage").empty();
+                    $("#divImage").append("<label>لا توجد صورة للطالب</label>");
+                    $("#divMessage").empty();
+                    invokeAlert('جلسة قديمة', data.message , 'danger', 2000);
+                    return;
+                }
+                document.getElementById("LevelName").value = data.data.LevelName;
+                document.getElementById("ClassName").value = data.data.ClassName;
+                document.getElementById("Name").value = data.data.Name;
+                $("#divImage").empty();
+                if (data.data.Image == "") {
+                    $("#divImage").append("<label>لا توجد صورة للطالب</label>");
+                }
+                else {
+                    $("#divImage").append("<img src='" + data.data.Image + "' width='100' />");
+                }
+                $("#divMessage").empty();
+                $("#divMessage").append(data.message);
+            });
+        }
+
+
+        function AttendAll(btn) {
+            if ($("#SchoolId").val() == "") {
+                invokeAlert('اختر المدرسة اولا', '', 'warning', 2000);
+                return;
+
+            }
+            else if (document.getElementById("AttendDate").value == "") {
+                invokeAlert('اختر التاريخ اولا', '', 'warning', 2000);
+                return;
+
+            }
+            else if ($("#AttendOrNo").val() == "0") {
+                invokeAlert('اختر تسجيل حسب اولا', '', 'warning', 2000);
+                return;
+
+            }
+            else if (document.getElementById("galsa").value == "0") {
+                invokeAlert('ابدأ الجلسة الان اولا', '', 'warning', 2000);
+                return;
+            }
+            var att = "حضور";
+            if ($("#AttendOrNo").val() == "true")
+                att = "غياب";
+
+            Swal.fire({
+                title: 'هل تريد انهاء الجلسة بالفعل؟  ' ,
+                html: 'يتم ' + att +'  باقي الطلاب عند انهاء الجلسة ',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                cancelButtonText: "لا",
+                confirmButtonText: 'نعم',
+                customClass: {
+                    title: 'din-bold',
+                    content: 'din-bold',
+                    confirmButton: 'din-bold',
+                    cancelButton: 'din-bold'
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.get('/StudentsAttendance/StudentAllAttend', { SchoolId: $("#SchoolId").val(), AttendDate: $("#AttendDate").val(), AttendOrNo: $("#AttendOrNo").val() }, function (data) {
+                        invokeAlert(data.message, '', data.flag, 2000);
+                    });
+
+                }
+            });
+        }
+       
+        function openCamera() {
+            if ($("#SchoolId").val() == "") {
+                invokeAlert('اختر المدرسة اولا', '', 'warning', 2000);
+                return;
+
+            }
+            else if (document.getElementById("AttendDate").value == "") {
+                invokeAlert('اختر التاريخ اولا', '', 'warning', 2000);
+                return;
+
+            }
+            else if ($("#AttendOrNo").val() == "0") {
+                invokeAlert('اختر تسجيل حسب اولا', '', 'warning', 2000);
+                return;
+            }
+            //else if (document.getElementById("galsa").value == "0") {
+            //    invokeAlert('ابدأ الجلسة الان اولا', '', 'warning', 2000);
+            //    return;
+            //}
+            window.location.href = '/StudentsAttendance/Create2?SchoolId=' + $("#SchoolId").val() + '&AttendDate=' + document.getElementById("AttendDate").value + '&AttendOrNo=' + $("#AttendOrNo").val()
+        }
+
+        $("#LevelId").change(function () {
+            $.get('/StudentsAttendance/getClasses', { Id: $("#LevelId").val() }, function (data) {
+                $("#ClassId").empty();
+                $("#ClassId").append("<option value=''>--اختر--</option>")
+                $.each(data, function (key, value) {
+                    $("#ClassId").append("<option value=" + value["Id"] + ">" + value["Name"] + "</option>")
+                });
+            });
+
+        });
+
+
+    </script>
+    <script src="https://unpkg.com/html5-qrcode"></script>
+
+    <script>
+        function startScanner() {
+            const html5QrCode = new Html5Qrcode("reader");
+
+            html5QrCode.start(
+                { facingMode: "environment" },  // back camera for mobile
+                {
+                    fps: 10,
+                    qrbox: 250
+                },
+                qrCodeMessage => {
+                    document.getElementById("SerialNumber").value = qrCodeMessage;
+                    document.getElementById("AttendBtn").click();
+                    // stop camera after reading
+                    html5QrCode.stop().then(() => {
+                        console.log("Camera stopped");
+                    });
+                },
+                errorMessage => {
+                    // optional: console.log(errorMessage);
+                }
+            );
+        }
+        if ($("#SchoolId").val() != "" && document.getElementById("AttendDate").value != "" && $("#AttendOrNo").val() != "0") {
+            startScanner();
+            document.getElementById("galsa").value = "1";
+            document.getElementById("AttendDate").disabled = true;
+            document.getElementById("AttendOrNo").disabled = true;
+            document.getElementById("SchoolId").disabled = true;
+        }
+            // Auto start when page loads
+            //$(document).ready(function () {
+            //});
+    </script>
+}

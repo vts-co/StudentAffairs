@@ -20,10 +20,12 @@ namespace StudentAffairs.Models
             this.ExitPermissions = new HashSet<ExitPermission>();
             this.StudentAttachments = new HashSet<StudentAttachment>();
             this.StudentReceipts = new HashSet<StudentReceipt>();
+            this.StudentsAttendances = new HashSet<StudentsAttendance>();
         }
     
         public System.Guid Id { get; set; }
         public string Code { get; set; }
+        public string SerialNumber { get; set; }
         public string Name { get; set; }
         public string Image { get; set; }
         public string Phone { get; set; }
@@ -107,5 +109,7 @@ namespace StudentAffairs.Models
         public virtual ICollection<StudentReceipt> StudentReceipts { get; set; }
         public virtual Student Students1 { get; set; }
         public virtual Student Student1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<StudentsAttendance> StudentsAttendances { get; set; }
     }
 }

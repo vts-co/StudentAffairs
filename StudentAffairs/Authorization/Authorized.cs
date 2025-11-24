@@ -40,7 +40,7 @@ namespace StudentAffairs.Authorization
                     filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new { controller = "Account", action = "SignIn", returnUrl = filterContext.HttpContext.Request.Url.ToString() }));
                     return;
                 }
-                else if ((auth.CookieValues.RoleId ) == 0)
+                else if ((auth.CookieValues.RoleId) == 0)
                 {
                     filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new { controller = "Account", action = "SignIn", returnUrl = filterContext.HttpContext.Request.Url.ToString() }));
 
@@ -70,10 +70,24 @@ namespace StudentAffairs.Authorization
 
                 filterContext.Controller.ViewBag.UserScreens = user.UserScreens;
                 filterContext.Controller.ViewBag.UserName = user.Username;
-                
-                filterContext.Controller.TempData["SettingLogo"] = "/Uploads/Logo/ProgramLogo.PNG";
+                if ((auth.CookieValues.RoleId) == Role.Super_Admin)
+                {
+                    filterContext.Controller.TempData["SettingLogo"] = "/Uploads/Logo/ProgramLogo.PNG";
+                }
+                else if ((auth.CookieValues.RoleId) == Role.School_Admin)
+                {
+                    var Logo = schoolInfoServices.Get(auth.CookieValues.SchoolId);
+                    if (Logo.Image == null || Logo.Image == "")
+                        filterContext.Controller.TempData["SettingLogo"] = "/Uploads/Logo/ProgramLogo.PNG";
+                    else
+                        filterContext.Controller.TempData["SettingLogo"] = Logo.Image;
+                }
+                else
+                {
+                    filterContext.Controller.TempData["SettingLogo"] = "/Uploads/Logo/ProgramLogo.PNG";
+                }
                 filterContext.Controller.TempData["SettingTitle"] = "Vision Tech";
-                
+
 
             }
             else
@@ -85,7 +99,7 @@ namespace StudentAffairs.Authorization
 
         public void OnException(ExceptionContext filterContext)
         {
-            filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new {  controller = "Account", action = "SignIn", returnUrl = filterContext.HttpContext.Request.Url.ToString() }));
+            filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new { controller = "Account", action = "SignIn", returnUrl = filterContext.HttpContext.Request.Url.ToString() }));
         }
     }
     public class UserInfo

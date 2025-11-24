@@ -1,0 +1,259 @@
+﻿@model IEnumerable<StudentAffairs.Dtos.StudentsAttendance.StudentsAttendanceDto>
+@using StudentAffairs.Utilities
+@using StudentAffairs.Enums
+@{
+    ViewBag.Title = "استعلام الغياب   ";
+}
+<div class="card">
+    <div class="card-header">
+
+        <div class="row">
+            <h4 class="col"> @ViewBag.Title </h4>
+            <p class="col-auto">
+                @Url.Create()
+            </p>
+        </div>
+    </div>
+    <div class="card-body">
+        @using (Html.BeginForm("Index", "StudentsAttendance", FormMethod.Get, new { enctype = "multipart/form-data" }))
+        {
+
+            <div class="row">
+                @if ((Role)TempData["RoleId"] == Role.Super_Admin)
+                {
+                    <div class="form-group mb-3 col-sm-12">
+                        @Html.Label("المدرسة ", htmlAttributes: new { @class = "control-label" })
+                        <div class="col-12">
+                            @Html.DropDownList("SchoolId", new SelectList(ViewBag.Schools, "Id", "Name"), "--اختر--", new { @class = "form-control" })
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <input type="hidden" id="SchoolId" name="SchoolId" value="@TempData["SchoolId"]" />
+                }
+
+
+                <div class="form-group mb-3 col-sm-6">
+                    @Html.Label("الصف ", htmlAttributes: new { @class = "control-label" })
+                    <div class="col-12">
+                        @Html.DropDownList("LevelId", null, "--اختر--", new { @class = "form-control" })
+                        @Html.ValidationMessage("LevelId", "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group mb-3 col-sm-6">
+                    @Html.Label("الفصل", htmlAttributes: new { @class = "control-label" })
+                    <div class="col-12">
+                        @Html.DropDownList("ClassId", null, "--اختر--", new { @class = "form-control" })
+                        @Html.ValidationMessage("ClassId", "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group mb-3 col-sm-6">
+                    @Html.Label("من تاريخ ", htmlAttributes: new { @class = "control-label" })
+                    <div class="col-12">
+                        @Html.Editor("DateFrom", new { htmlAttributes = new { @class = "form-control", type = "date", @Value = ViewBag.DateFrom, required = "required" } })
+                        @Html.ValidationMessage("DateFrom", "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group mb-3 col-sm-6">
+                    @Html.Label("الي التاريخ ", htmlAttributes: new { @class = "control-label" })
+                    <div class="col-12">
+                        @Html.Editor("DateTo", new { htmlAttributes = new { @class = "form-control", type = "date", @Value = ViewBag.DateTo, required = "required" } })
+                        @Html.ValidationMessage("DateTo", "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group mb-3 col-sm-6">
+                    @Html.Label("بحث عن طالب", htmlAttributes: new { @class = "control-label" })
+                    <div class="col-12">
+                        @Html.Editor("Search", new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                </div>
+                <div class="form-group mb-3 col-sm-3">
+                    @Html.Label("الحالة  ", htmlAttributes: new { @class = "control-label" })
+                    <div class="col-12">
+                        <select class="form-control" id="AttendOrNo" name="AttendOrNo">
+                            <option value="0">--اختر--</option>
+                            <option value="true">حاضر</option>
+                            <option value="false">غائب</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group mt-4 p-1 col-sm-3">
+                    <div class="col-12">
+                        <button type='submit' class='btn btn-primary  waves-effect waves-light px-3 m-1 col-12 col-md-auto'><i class='fas fa-search me-1'></i>عرض</button>
+                    </div>
+                </div>
+
+
+            </div>
+        }
+        <div class="form-group mt-4 p-1 col-sm-12">
+            <div class="col-12">
+                <button type='button' onclick="return CheckDeleteAll(this)" class='btn btn-danger  waves-effect waves-light px-3 m-1 col-12 col-md-auto'><i class='fas fa-trash me-1'></i>حذف جميع السجلات</button>
+            </div>
+        </div>
+        <table id="datatable" class="table table-striped dt-responsive  nowrap w-100 table-bordered">
+            <thead class="bg-soft-primary">
+                <tr>
+                    <th>
+                        @Html.DisplayName("الرقم التسلسلي")
+                    </th>
+                    <th>
+                        @Html.DisplayName("اسم الطالب ")
+                    </th>
+                    <th>
+                        @Html.DisplayName("الصف  ")
+                    </th>
+                    <th>
+                        @Html.DisplayName("الفصل ")
+                    </th>
+                    <th>
+                        @Html.DisplayName("تاريخ ")
+                    </th>
+                    <th>
+                        @Html.DisplayName("الحالة ")
+                    </th>
+                    <th>
+                        @Html.DisplayName("عمليات")
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SerialNumber)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.StudentName)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.LevelName)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ClassName)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Date)
+                        </td>
+                        @if (item.IsAttend)
+                        {
+                            <td>
+                                <label>حاضر</label>
+                            </td>
+                        }
+                        else
+                        {
+                            <td>
+                                <label>غائب</label>
+                            </td>
+                        }
+                        <td>
+                            <a href="/StudentsAttendance/Edit?@item.Id" type="تعديل حالة" onclick="return CheckState(this)" class='btn btn-danger  waves-effect waves-light px-3 m-1 col-12 col-md-auto'><i class='fas fa-edit me-1'></i></a>
+                            @Url.Delete(routeValues: new { id = item.Id })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+@section scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $("#SchoolId").change(function () {
+            $.get('/StudentsAttendance/getLevels', { Id: $("#SchoolId").val() }, function (data) {
+                $("#LevelId").empty();
+                $("#LevelId").append("<option value=''>--اختر--</option>")
+                $.each(data, function (key, value) {
+                    $("#LevelId").append("<option value=" + value["Id"] + ">" + value["Name"] + "</option>")
+                });
+            });
+
+        });
+
+        $("#LevelId").change(function () {
+            $.get('/StudentsAttendance/getClasses', { Id: $("#LevelId").val() }, function (data) {
+                $("#ClassId").empty();
+                $("#ClassId").append("<option value=''>--اختر--</option>")
+                $.each(data, function (key, value) {
+                    $("#ClassId").append("<option value=" + value["Id"] + ">" + value["Name"] + "</option>")
+                });
+            });
+
+        });
+        function CheckState(btn) {
+            Swal.fire({
+                title: 'تعديل الحالة',
+                html: 'هل تريد تعديل الحالة؟',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                cancelButtonText: "لا",
+                confirmButtonText: 'نعم',
+                customClass: {
+                    title: 'din-bold',
+                    content: 'din-bold',
+                    confirmButton: 'din-bold',
+                    cancelButton: 'din-bold'
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = btn.href;
+                }
+            });
+            return false;
+        }
+        function CheckDeleteAll(btn) {
+            Swal.fire({
+                title: 'حذف جميع السجلات',
+                html: 'هل تريد حذف جميع السجلات؟',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                cancelButtonText: "لا",
+                confirmButtonText: 'نعم',
+                customClass: {
+                    title: 'din-bold',
+                    content: 'din-bold',
+                    confirmButton: 'din-bold',
+                    cancelButton: 'din-bold'
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    if ($("#SchoolId").val() == "") {
+                        invokeAlert('اختر المدرسة اولا', '', 'warning', 2000);
+                        return;
+
+                    }
+                   
+                    else if (document.getElementById("DateFrom").value == "") {
+                        invokeAlert('اختر تاريخ من اولا', '', 'warning', 2000);
+                        return;
+
+                    }
+                    else if (document.getElementById("DateTo").value == "") {
+                        invokeAlert('اختر تاريخ الي اولا', '', 'warning', 2000);
+                        return;
+
+                    }
+                   
+                    window.location.href = '/StudentsAttendance/DeleteAll?SchoolId=' + $("#SchoolId").val() + '&DateFrom=' + document.getElementById("DateFrom").value + '&DateTo=' + document.getElementById("DateTo").value;
+                }
+            });
+            return false;
+        }
+
+    </script>
+}

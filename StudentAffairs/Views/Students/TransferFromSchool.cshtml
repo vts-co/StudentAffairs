@@ -16,28 +16,32 @@
     </div>
     @using (Html.BeginForm("TransferFromSchool", "Students", FormMethod.Get, new { enctype = "multipart/form-data" }))
     {
-        <div class="card-body">
-            <div class="row mt-3">
-                @if ((Role)TempData["RoleId"] == Role.Super_Admin)
-                {
+        if ((Role)TempData["RoleId"] == Role.Super_Admin)
+        {
+            <div class="card-body">
+                <div class="row mt-3">
+
                     <div class="form-group mb-3 col-sm-6">
                         @Html.Label("المدرسة ", htmlAttributes: new { @class = "control-label" })
                         <div class="col-12">
                             @Html.DropDownList("SchoolId", new SelectList(ViewBag.Schools, "Id", "Name"), "--اختر--", new { @class = "form-control" })
                         </div>
                     </div>
-                }
-                else
-                {
-                    <input type="hidden" id="SchoolId" name="SchoolId" value="@TempData["SchoolId"]" />
-                }
 
-            </div>
-            <div class="row justify-content-end">
-                <button type='submit' class='btn btn-primary  waves-effect waves-light px-3 m-1 col-12 col-md-auto'><i class='fas fa-search me-1'></i>عرض</button>
-            </div>
-        </div>
 
+
+                </div>
+                <div class="row justify-content-end">
+                    <button type='submit' class='btn btn-primary  waves-effect waves-light px-3 m-1 col-12 col-md-auto'><i class='fas fa-search me-1'></i>عرض</button>
+                </div>
+            </div>
+
+        }
+        else
+        {
+            <input type="hidden" id="SchoolId" name="SchoolId" value="@TempData["SchoolId"]" />
+
+        }
     }
 
     <div class="card-body">

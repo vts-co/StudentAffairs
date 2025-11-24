@@ -11,7 +11,7 @@ using System.Web.Mvc;
 
 namespace StudentAffairs.Controllers
 {
-    [Authorized(ScreenId = "2")]
+    [Authorized(ScreenId = "4")]
 
     public class CityDepartmentsController : Controller
     {

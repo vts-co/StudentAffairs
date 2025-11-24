@@ -64,7 +64,7 @@
                 <div class="form-group mb-3 col-sm-6">
                     @Html.Label("مدير المدرسة", htmlAttributes: new { @class = "control-label" })
                     <div class="col-12">
-                        @Html.EditorFor(model => model.SchoolPrincipal, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                        @Html.EditorFor(model => model.SchoolPrincipal, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.SchoolPrincipal, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -85,21 +85,21 @@
                 <div class="form-group mb-3 col-sm-6">
                     @Html.Label("وكيل شؤون الطلبة ", htmlAttributes: new { @class = "control-label" })
                     <div class="col-12">
-                        @Html.EditorFor(model => model.StudentAffairsOfficer, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                        @Html.EditorFor(model => model.StudentAffairsOfficer, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.StudentAffairsOfficer, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group mb-3 col-sm-6">
                     @Html.Label("الاخصائي الاجتماعي ", htmlAttributes: new { @class = "control-label" })
                     <div class="col-12">
-                        @Html.EditorFor(model => model.SocialWorker, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                        @Html.EditorFor(model => model.SocialWorker, new { htmlAttributes = new { @class = "form-control"} })
                         @Html.ValidationMessageFor(model => model.SocialWorker, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group mb-3 col-sm-6">
                     @Html.Label("العام الدراسي ", htmlAttributes: new { @class = "control-label" })
                     <div class="col-12">
-                        @Html.EditorFor(model => model.StudyYear, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                        @Html.EditorFor(model => model.StudyYear, new { htmlAttributes = new { @class = "form-control"} })
                         @Html.ValidationMessageFor(model => model.StudyYear, "", new { @class = "text-danger" })
                     </div>
                 </div>

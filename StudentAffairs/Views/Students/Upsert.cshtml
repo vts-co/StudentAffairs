@@ -15,7 +15,7 @@
         <div class="card-header">
             <div class="row justify-content-between">
                 <h4 class="col-auto">@ViewBag.Title</h4>
-                @if (ViewBag.userscreens.ToString().Contains(",12,"))
+                @if (ViewBag.userscreens.ToString().Contains(",14,"))
                 {
                     @Url.BackToList()
                 }
@@ -48,9 +48,11 @@
                 <div class="form-group mb-3 col-sm-4">
                     @Html.Label("كود الطالب", htmlAttributes: new { @class = "control-label" })
                     <div class="col-12">
-                        @Html.EditorFor(model => model.Code, new { htmlAttributes = new { @class = "form-control", type = "number", required = "required" } })
+                        @Html.EditorFor(model => model.Code, new { htmlAttributes = new { @class = "form-control", type = "number" } })
                         @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger" })
                     </div>
+                    <input type="hidden" id="SerialNumber" name="SerialNumber" value="@Model.SerialNumber" />
+
                 </div>
                 <div class="form-group mb-3 col-sm-4">
                     @Html.Label("اسم الطالب", htmlAttributes: new { @class = "control-label" })
@@ -62,7 +64,7 @@
                 <div class="form-group mb-3 col-sm-4">
                     @Html.Label("هاتف الطالب", htmlAttributes: new { @class = "control-label" })
                     <div class="col-12">
-                        @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                        @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -108,7 +110,7 @@
                         @Html.ValidationMessageFor(model => model.ExpenseTypeId, "", new { @class = "text-danger" })
                     </div>
                 </div>
-                <div class="form-group mb-3 col-sm-4">
+                <div class="form-group mb-3 col-sm-4" style="display:none" id="ExemptionReasonDiv">
                     @Html.Label("سبب الاعفاء ", htmlAttributes: new { @class = "control-label" })
                     <div class="col-12">
                         @Html.DropDownListFor(model => model.ExemptionReasonId, null, "--اختر--", new { @class = "form-control" })
@@ -133,17 +135,17 @@
                 <div class="form-group mb-3 col-sm-4">
                     @Html.Label("الحالة الصحية", htmlAttributes: new { @class = "control-label" })
                     <div class="col-12">
-                        @Html.EditorFor(model => model.MotherName, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.MotherName, "", new { @class = "text-danger" })
+                        @Html.EditorFor(model => model.HealthCondition, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.HealthCondition, "", new { @class = "text-danger" })
                     </div>
                 </div>
-                <div class="form-group mb-3 col-sm-4">
+                @*<div class="form-group mb-3 col-sm-4">
                     @Html.Label("نتيجة ترم اول", htmlAttributes: new { @class = "control-label" })
                     <div class="col-12">
                         @Html.EditorFor(model => model.FirstSemesterResult, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.FirstSemesterResult, "", new { @class = "text-danger" })
                     </div>
-                </div>
+                </div>*@
                 <div class="form-group mb-3 col-sm-4">
                     @Html.Label("دمج تعليمي", htmlAttributes: new { @class = "control-label" })
                     <div class="col-12">
@@ -183,28 +185,28 @@
                 <div class="form-group mb-3 col-sm-6">
                     @Html.Label("تاريخ الميلاد", htmlAttributes: new { @class = "control-label" })
                     <div class="col-12">
-                        @Html.TextBoxFor(model => model.BirthDate, new { @class = "form-control", type = "date", required = "required" })
+                        @Html.TextBoxFor(model => model.BirthDate, new { @class = "form-control", type = "date" })
                         @Html.ValidationMessageFor(model => model.BirthDate, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group mb-3 col-sm-4">
                     @Html.Label("يوم ", htmlAttributes: new { @class = "control-label" })
                     <div class="col-12">
-                        @Html.EditorFor(model => model.Day, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                        @Html.EditorFor(model => model.Day, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.Day, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group mb-3 col-sm-4">
                     @Html.Label("شهر ", htmlAttributes: new { @class = "control-label" })
                     <div class="col-12">
-                        @Html.EditorFor(model => model.Month, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                        @Html.EditorFor(model => model.Month, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.Month, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group mb-3 col-sm-4">
                     @Html.Label("سنة ", htmlAttributes: new { @class = "control-label" })
                     <div class="col-12">
-                        @Html.EditorFor(model => model.Year, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                        @Html.EditorFor(model => model.Year, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.Year, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -283,8 +285,8 @@
                 <div class="form-group mb-3 col-sm-4">
                     @Html.Label("واتساب", htmlAttributes: new { @class = "control-label" })
                     <div class="col-12">
-                        @Html.EditorFor(model => model.ParentJob, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.ParentJob, "", new { @class = "text-danger" })
+                        @Html.EditorFor(model => model.ParentWhatsApp, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.ParentWhatsApp, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group mb-3 col-sm-4">
@@ -432,14 +434,14 @@
                 <div class="form-group mb-3 col-sm-12">
                     @Html.Label("المشكلة ", htmlAttributes: new { @class = "control-label" })
                     <div class="col-12">
-                        @Html.TextAreaFor(model => model.Problem, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.TextAreaFor(model => model.Problem,  new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.Problem, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group mb-3 col-sm-12">
                     @Html.Label("الاجراء المتخذ ", htmlAttributes: new { @class = "control-label" })
                     <div class="col-12">
-                        @Html.TextAreaFor(model => model.ActionTaken, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.TextAreaFor(model => model.ActionTaken,  new { @class = "form-control"  })
                         @Html.ValidationMessageFor(model => model.ActionTaken, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -455,14 +457,14 @@
                 <div class="form-group mb-3 col-sm-12">
                     @Html.Label("المواهب ", htmlAttributes: new { @class = "control-label" })
                     <div class="col-12">
-                        @Html.TextAreaFor(model => model.Talents, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.TextAreaFor(model => model.Talents,  new { @class = "form-control"  })
                         @Html.ValidationMessageFor(model => model.Talents, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group mb-3 col-sm-12">
                     @Html.Label("المسابقات ", htmlAttributes: new { @class = "control-label" })
                     <div class="col-12">
-                        @Html.TextAreaFor(model => model.Competitions, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.TextAreaFor(model => model.Competitions,  new { @class = "form-control"  })
                         @Html.ValidationMessageFor(model => model.Competitions, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -486,14 +488,75 @@
 
 @section scripts{
     <script>
+        $("#SchoolId").change(function () {
+            $.get('/Students/getLevels', { Id: $("#SchoolId").val() }, function (data) {
+                $("#LevelId").empty();
+                $("#LevelId").append("<option value=''>--اختر--</option>")
+                $.each(data, function (key, value) {
+                    $("#LevelId").append("<option value=" + value["Id"] + ">" + value["Name"] + "</option>")
+                });
+            });
+
+            //$.get('/Students/getExpenseTypes', { Id: $("#SchoolId").val() }, function (data) {
+            //    $("#ExpenseTypeId").empty();
+            //    $("#ExpenseTypeId").append("<option value=''>--اختر--</option>")
+            //    $.each(data, function (key, value) {
+            //        $("#ExpenseTypeId").append("<option value=" + value["Id"] + ">" + value["Name"] + "</option>")
+            //    });
+            //});
+
+            $.get('/Students/getExemptionReasons', { Id: $("#SchoolId").val() }, function (data) {
+                $("#ExemptionReasonId").empty();
+                $("#ExemptionReasonId").append("<option value=''>--اختر--</option>")
+                $.each(data, function (key, value) {
+                    $("#ExemptionReasonId").append("<option value=" + value["Id"] + ">" + value["Name"] + "</option>")
+                });
+            });
+
+            $.get('/Students/getSocialStates', { Id: $("#SchoolId").val() }, function (data) {
+                $("#SocialStateId").empty();
+                $("#SocialStateId").append("<option value=''>--اختر--</option>")
+                $.each(data, function (key, value) {
+                    $("#SocialStateId").append("<option value=" + value["Id"] + ">" + value["Name"] + "</option>")
+                });
+            });
+
+            $.get('/Students/getScienceDivision', { Id: $("#SchoolId").val() }, function (data) {
+                $("#ScienceDivisionId").empty();
+                $("#ScienceDivisionId").append("<option value=''>--اختر--</option>")
+                $.each(data, function (key, value) {
+                    $("#ScienceDivisionId").append("<option value=" + value["Id"] + ">" + value["Name"] + "</option>")
+                });
+            });
+
+            $.get('/Students/getSecondLanguage', { Id: $("#SchoolId").val() }, function (data) {
+                $("#SecondLanguageId").empty();
+                $("#SecondLanguageId").append("<option value=''>--اختر--</option>")
+                $.each(data, function (key, value) {
+                    $("#SecondLanguageId").append("<option value=" + value["Id"] + ">" + value["Name"] + "</option>")
+                });
+            });
+        });
         $("#LevelId").change(function () {
-            $.get('/SchoolInfo/getClasses', { Id: $("#LevelId").val() }, function (data) {
-                $("#ClasstId").empty();
+            $.get('/Students/getClasses', { Id: $("#LevelId").val() }, function (data) {
+                $("#ClassId").empty();
                 $("#ClassId").append("<option value=''>--اختر--</option>")
                 $.each(data, function (key, value) {
                     $("#ClassId").append("<option value=" + value["Id"] + ">" + value["Name"] + "</option>")
                 });
             });
+        });
+
+        $("#ExpenseTypeId").change(function () {
+            const selectElement = document.getElementById('ExpenseTypeId');
+            const selectedOption = selectElement.options[selectElement.selectedIndex];
+            const displayName = selectedOption.text;
+            if (displayName == "معفي") {
+                document.getElementById('ExemptionReasonDiv').style.display = "block";
+            }
+            else {
+                document.getElementById('ExemptionReasonDiv').style.display = "none";
+            }
         });
     </script>
     <script type="text/javascript">
@@ -504,6 +567,27 @@
         //if (document.getElementById('BirthDate').value == "") {
         //    document.getElementById('BirthDate').value = now.toISOString().slice(0, 10);
         //}
+
+        $("#Name").change(function () {
+            var val = document.getElementById("Name").value.split(' ');
+            document.getElementById("ParentName").value = "";
+            for (var i = 1; i < val.length; i++) {
+                if (i == 1)
+                    document.getElementById("ParentName").value += val[i];
+                else
+                    document.getElementById("ParentName").value += " " + val[i];
+            }
+        });
+        $("#ParentPhone").change(function () {
+            var val = document.getElementById("ParentPhone").value;
+            document.getElementById("ParentWhatsApp").value = val;
+           
+        });
+        $("#Address").change(function () {
+            var val = document.getElementById("Address").value;
+            document.getElementById("ParentAddress").value = val;
+
+        });
 
         $("#NumberId").keypress(function () {
             var NumberId = document.getElementById("NumberId").value;
@@ -752,35 +836,40 @@
 
         });
 
+
+
         function calcDate(date1, date2) {
 
-            //new date instance
-            const dt_date1 = new Date(date1);
-            const dt_date2 = new Date(date2);
+            let d1 = new Date(date1);
+            let d2 = new Date(date2);
 
-            //Get the Timestamp
-            const date1_time_stamp = dt_date1.getTime();
-            const date2_time_stamp = dt_date2.getTime();
-
-            let calc;
-
-            //Check which timestamp is greater
-            if (date1_time_stamp > date2_time_stamp) {
-                calc = new Date(date1_time_stamp - date2_time_stamp);
-            } else {
-                calc = new Date(date2_time_stamp - date1_time_stamp);
+            // لو d1 أكبر من d2 اقلب للتأكد إن الحساب موجب
+            if (d1 > d2) {
+                let temp = d1;
+                d1 = d2;
+                d2 = temp;
             }
-            //Retrieve the date, month and year
-            const calcFormatTmp = calc.getDate() + '-' + (calc.getMonth() + 1) + '-' + calc.getFullYear();
-            //Convert to an array and store
-            const calcFormat = calcFormatTmp.split("-");
-            //Subtract each member of our array from the default date
-            const days_passed = Number(Math.abs(calcFormat[0]) - 1);
-            const months_passed = Number(Math.abs(calcFormat[1]) - 1);
-            const years_passed = Number(Math.abs(calcFormat[2]) - 1970);
-            document.getElementById("Year").value = years_passed;
-            document.getElementById("Month").value = months_passed;
-            document.getElementById("Day").value = days_passed;
+
+            let years = d2.getFullYear() - d1.getFullYear();
+            let months = d2.getMonth() - d1.getMonth();
+            let days = d2.getDate() - d1.getDate();
+
+            // تعديل الأيام
+            if (days < 0) {
+                months--;
+                let prevMonth = new Date(d2.getFullYear(), d2.getMonth(), 0).getDate();
+                days += prevMonth ;
+            }
+
+            // تعديل الشهور
+            if (months < 0) {
+                years--;
+                months += 12;
+            }
+
+            document.getElementById("Year").value = years;
+            document.getElementById("Month").value = months;
+            document.getElementById("Day").value = days;
 
             //Set up custom text
             //    const yrsTxt = ["year", "years"];

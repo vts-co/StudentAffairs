@@ -18,6 +18,7 @@ namespace StudentAffairs.Models
         public Class()
         {
             this.Students = new HashSet<Student>();
+            this.StudentsAttendances = new HashSet<StudentsAttendance>();
         }
     
         public System.Guid Id { get; set; }
@@ -37,5 +38,7 @@ namespace StudentAffairs.Models
         public virtual SchoolInfo SchoolInfo { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Student> Students { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<StudentsAttendance> StudentsAttendances { get; set; }
     }
 }

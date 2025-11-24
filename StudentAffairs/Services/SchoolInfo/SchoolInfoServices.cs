@@ -34,11 +34,11 @@ namespace StudentAffairs.Services.SchoolInfo
                 return model;
             }
         }
-        public SchoolInfoDto Get()
+        public SchoolInfoDto Get(Guid Id)
         {
             using (var dbContext = new StudentAffairsEntities())
             {
-                var model = dbContext.SchoolInfoes.Where(x => x.IsDeleted == false)
+                var model = dbContext.SchoolInfoes.Where(x => x.IsDeleted == false&&x.Id==Id)
                     .OrderBy(x => x.CreatedOn).Select(x => new SchoolInfoDto
                     {
                         Id = x.Id,
@@ -65,7 +65,7 @@ namespace StudentAffairs.Services.SchoolInfo
             using (var dbContext = new StudentAffairsEntities())
             {
                 var result = new ResultDto<SchoolInfoDto>();
-                var Oldmodel = dbContext.SchoolInfoes.Where(x => x.IsDeleted == false).FirstOrDefault();
+                var Oldmodel = dbContext.SchoolInfoes.Where(x =>x.Name==model.Name&& x.IsDeleted == false).FirstOrDefault();
                 if (Oldmodel != null)
                 {
                     result.Result = model;
