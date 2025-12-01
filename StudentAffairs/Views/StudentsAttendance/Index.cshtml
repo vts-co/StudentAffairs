@@ -156,7 +156,7 @@
                             </td>
                         }
                         <td>
-                            <a href="/StudentsAttendance/Edit?@item.Id" type="تعديل حالة" onclick="return CheckState(this)" class='btn btn-danger  waves-effect waves-light px-3 m-1 col-12 col-md-auto'><i class='fas fa-edit me-1'></i></a>
+                            <a href="/StudentsAttendance/Edit?Id=@item.Id" type="تعديل حالة" onclick="return CheckState(this)" class='btn btn-danger  waves-effect waves-light px-3 m-1 col-12 col-md-auto'><i class='fas fa-edit me-1'></i></a>
                             @Url.Delete(routeValues: new { id = item.Id })
                         </td>
                     </tr>
@@ -249,7 +249,7 @@
 
                     }
                    
-                    window.location.href = '/StudentsAttendance/DeleteAll?SchoolId=' + $("#SchoolId").val() + '&DateFrom=' + document.getElementById("DateFrom").value + '&DateTo=' + document.getElementById("DateTo").value;
+                    window.location.href = '/StudentsAttendance/DeleteAll?SchoolId=' + $("#SchoolId").val() + '&DateFrom=' + document.getElementById("DateFrom").value + '&DateTo=' + document.getElementById("DateTo").value + '&LevelId=' + $("#LevelId").val() + '&ClassId=' + $("#ClassId").val();
                 }
             });
             return false;

@@ -157,6 +157,8 @@
                             <button type="button" onclick="QrCode('@item.Id')" title='طباعة كيو ار كود' class='btn btn-soft-primary  waves-effect waves-light p-2'><i class="fas fa-print"></i></button>
                             <a href='/Students/Graduated?Id=@item.Id' title='تخرج من المدرسة' class='btn btn-soft-warning  waves-effect waves-light p-2'><i class="fas fa-graduation-cap"></i></a>
                             <a href='/Students/Transfered?Id=@item.Id' title='محول من المدرسة' class='btn btn-soft-secondary  waves-effect waves-light p-2'><i class="fas fa-user-slash"></i></a>
+                            <a href='/Students/Details?Id=@item.Id' title='تفاصيل الطالب' class='btn btn-soft-info  waves-effect waves-light p-2'><i class="fas fa-list-alt"></i></a>
+
                             @Url.Edit(routeValues: new { id = item.Id })
                             @Url.Delete(routeValues: new { id = item.Id })
                         </td>
@@ -178,17 +180,14 @@
                     <img class="form-control" id="StudentImage" height="100" width="100" />
                 </div>
                 <div class="form-group mb-3 col-sm-12 d-flex justify-content-center" id="StudentName">
-                    <input class="form-control"  />
+                    <input class="form-control" />
 
                 </div>
                 <div class="form-group mb-3 col-sm-12 d-flex justify-content-center" id="LevelName">
-                    <input class="form-control"  />
+                    <input class="form-control" />
 
                 </div>
-                @*<div class="form-group mb-3 col-sm-12 d-flex justify-content-center" id="ClassName">
-            <input class="form-control" id="ClassName" />
-
-        </div>*@
+                
                 <div class="form-group mb-3 col-sm-10 d-flex justify-content-center">
 
                 </div>
@@ -202,7 +201,7 @@
 </div>
 
 @section scripts{
-<script>
+    <script>
         $("#StudyTypeId").change(function () {
             $.get('/Students/getLevels', { Id: $("#StudyTypeId").val() }, function (data) {
                 $("#LevelId").empty();
@@ -242,11 +241,32 @@
 
                 var QrCodeUri = document.getElementById("QrCodeUri");
                 QrCodeUri.src = data.QrCodeUri;
-
+              
                 document.getElementById("QrDiv").style.display = "block";
 
-                var printContents = document.getElementById("QrDiv").innerHTML;
+                let loaded = 0;
 
+                function checkLoaded() {
+                    loaded++;
+                    if (loaded === 2) {  // both images ready
+                        openPrintWindow();
+                    }
+                }
+               
+                StudentImage.onload = checkLoaded;
+                QrCodeUri.onload = checkLoaded;
+
+                // If the image is already cached, `onload` doesn't fire, so force trigger:
+                if (StudentImage.complete) StudentImage.onload();
+                if (QrCodeUri.complete) QrCodeUri.onload();
+
+                return;
+            });
+            
+
+            function openPrintWindow() {
+                var printContents = document.getElementById("QrDiv").innerHTML;
+               
                 // Store the original body content
                 var originalContents = document.body.innerHTML;
 
@@ -259,54 +279,53 @@
                 // Restore the original body content
                 document.body.innerHTML = originalContents;
                 document.getElementById("QrDiv").style.display = "none";
-            });
-            
+            }
         }
         function printDiv() {
             //let divContents = document.getElementById("GFG").innerHTML;
             let printWindow = window.open('', '', 'height=500, width=500');
             printWindow.document.open();
             printWindow.document.write(`
-                <html>
-                <head>
-                    <title>Print Div Content</title>
-                    <style>
-                        body { font-family: Arial, sans-serif; }
-                        h1 { color: #333; }
-                    </style>
-                </head>
-                <body>
-                     <div class="card">
-        <div class="card-body">
-            <input id="StudentId" name="StudentId" value="`+StudentId+`" hidden />
-            <div class="row">
-                <div class="form-group mb-3 col-sm-12 d-flex justify-content-center" id="StudentImage">
-                    <img class="form-control" src="StudentImage" width="100" />
-                </div>
-                <div class="form-group mb-3 col-sm-12 d-flex justify-content-center" id="StudentName">
-                    <input class="form-control" value="StudentName" />
+                    <html>
+                    <head>
+                        <title>Print Div Content</title>
+                        <style>
+                            body { font-family: Arial, sans-serif; }
+                            h1 { color: #333; }
+                        </style>
+                    </head>
+                    <body>
+                         <div class="card">
+            <div class="card-body">
+                <input id="StudentId" name="StudentId" value="`+ StudentId + `" hidden />
+                <div class="row">
+                    <div class="form-group mb-3 col-sm-12 d-flex justify-content-center" id="StudentImage">
+                        <img class="form-control" src="StudentImage" width="100" />
+                    </div>
+                    <div class="form-group mb-3 col-sm-12 d-flex justify-content-center" id="StudentName">
+                        <input class="form-control" value="StudentName" />
 
-                </div>
-                <div class="form-group mb-3 col-sm-12 d-flex justify-content-center" id="LevelName">
-                    <input class="form-control" value="LevelName" />
+                    </div>
+                    <div class="form-group mb-3 col-sm-12 d-flex justify-content-center" id="LevelName">
+                        <input class="form-control" value="LevelName" />
 
-                </div>
-                <div class="form-group mb-3 col-sm-12 d-flex justify-content-center" id="ClassName">
-                    <input class="form-control" value="ClassName" />
+                    </div>
+                    <div class="form-group mb-3 col-sm-12 d-flex justify-content-center" id="ClassName">
+                        <input class="form-control" value="ClassName" />
 
-                </div>
-                <div class="form-group mb-3 col-sm-12 d-flex justify-content-center" id="QrCodeUri">
-                    <img class="form-control" src="QrCodeUri" width="100" />
+                    </div>
+                    <div class="form-group mb-3 col-sm-12 d-flex justify-content-center" id="QrCodeUri">
+                        <img class="form-control" src="QrCodeUri" width="100" />
 
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-                </body>
-                </html>
-            `);
+                    </body>
+                    </html>
+                `);
             printWindow.document.close();
             printWindow.print();
         }
-</script>
+    </script>
 }

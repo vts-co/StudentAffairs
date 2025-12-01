@@ -10,19 +10,14 @@ using System.Web.Mvc;
 
 namespace StudentAffairs.Controllers
 {
-    [Authorized(ScreenId = "0")]
+    [Authorized(ScreenId = "25")]
 
-    public class HomeController : Controller
+    public class StudentAssessmentsController : Controller
     {
         StudentsServices studentsServices = new StudentsServices();
 
-        public ActionResult Index()
-        {
-            return View();
-
-        }
-
-        public ActionResult About(Guid? SchoolId)
+        // GET: StudentAssessments
+        public ActionResult Index(Guid? SchoolId)
         {
             if ((Role)TempData["RoleId"] == Role.Super_Admin && SchoolId == null)
             {
@@ -32,13 +27,6 @@ namespace StudentAffairs.Controllers
             if (SchoolId != null)
                 model = model.Where(x => x.SchoolId == SchoolId).ToList();
             return View(model);
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
         }
     }
 }

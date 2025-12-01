@@ -48,11 +48,18 @@
                         @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
                     </div>
                 </div>
-                <div class="form-group mb-3 col-sm-6">
+                <div class="form-group mb-3 col-sm-5">
                     @Html.Label("كلمة المرور ", htmlAttributes: new { @class = "control-label" })
                     <div class="col-12">
                         @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", type = "password", required = "required" } })
                         @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                    </div>
+                   
+                </div>
+                <div class="form-group mt-4 col-sm-1">
+                  
+                    <div class="col-12">
+                        <button type='button' id="togglePassword" class='btn btn-info   waves-effect waves-light px-3 m-1 col-12 col-md-auto'><i class='fas fa-eye me-1'></i></button>
                     </div>
                 </div>
                 @*<div class="form-group mb-3 col-sm-6">
@@ -139,6 +146,25 @@
             });
 
 
+        });
+
+
+    </script>
+
+    <script>
+        document.getElementById("togglePassword").addEventListener("click", function () {
+            const input = document.getElementById("Password");
+            const icon = this.querySelector("i");
+
+            if (input.type === "password") {
+                input.type = "text";
+                icon.classList.remove("fa-eye");
+                icon.classList.add("fa-eye-slash");
+            } else {
+                input.type = "password";
+                icon.classList.remove("fa-eye-slash");
+                icon.classList.add("fa-eye");
+            }
         });
     </script>
 }

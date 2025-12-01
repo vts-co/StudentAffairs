@@ -1,4 +1,5 @@
 ﻿using StudentAffairs.Authorization;
+using StudentAffairs.Dtos.Classes;
 using StudentAffairs.Enums;
 using StudentAffairs.Models;
 using StudentAffairs.Services.Classes;
@@ -22,7 +23,7 @@ namespace StudentAffairs.Controllers
         {
             if ((Role)TempData["RoleId"] == Role.Super_Admin && SchoolId == null)
             {
-                return View(new List<Class>());
+                return View(new List<ClassesDto>());
             }
             var model = classesServices.GetAll((Guid)TempData["UserId"], (Guid)TempData["SchoolId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]);
             if (SchoolId != null)
@@ -31,8 +32,15 @@ namespace StudentAffairs.Controllers
         }
         public ActionResult Create()
         {
-            var levels = levelsServices.GetAll((Guid)TempData["UserId"], (Guid)TempData["SchoolId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]);
-            ViewBag.LevelId = new SelectList(levels, "Id", "Name");
+            if ((Role)TempData["RoleId"] == Role.Super_Admin)
+            {
+                ViewBag.LevelId = new SelectList("");
+            }
+            else
+            {
+                var levels = levelsServices.GetAll((Guid)TempData["UserId"], (Guid)TempData["SchoolId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]);
+                ViewBag.LevelId = new SelectList(levels, "Id", "Name");
+            }
 
             return View("Upsert", new Class());
         }
@@ -60,7 +68,7 @@ namespace StudentAffairs.Controllers
         }
         public ActionResult Edit(Guid Id)
         {
-            var model = classesServices.GetAll((Guid)TempData["UserId"], (Guid)TempData["SchoolId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]).Where(x => x.Id == Id).FirstOrDefault();
+            var model = classesServices.Get(Id);
 
             var levels = levelsServices.GetAll((Guid)TempData["UserId"], (Guid)TempData["SchoolId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]);
             ViewBag.LevelId = new SelectList(levels, "Id", "Name", model.Level);
@@ -98,6 +106,13 @@ namespace StudentAffairs.Controllers
                 TempData["warning"] = result.Message;
                 return RedirectToAction("Index");
             }
+        }
+        public ActionResult getLevels(Guid Id)
+        {
+            var result = levelsServices.GetAll((Guid)TempData["UserId"], (Guid)TempData["SchoolId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]).Where(x => x.SchoolId == Id).Select(x => new { x.Id, x.Name }).ToList();
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+
         }
     }
 }

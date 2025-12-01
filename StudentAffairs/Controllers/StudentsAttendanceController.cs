@@ -39,18 +39,19 @@ namespace StudentAffairs.Controllers
                 model = model.Where(x => x.StudentName.Contains(Search)).ToList();
 
 
-            if (SchoolId != null)
+            if (SchoolId != null&& SchoolId!=Guid.Empty)
             {
                 var levels = levelsServices.GetAll((Guid)TempData["UserId"], (Guid)TempData["SchoolId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]).Where(x => x.SchoolId == SchoolId).ToList();
                 ViewBag.LevelId = new SelectList(levels, "Id", "Name");
             }
-            else if ((Guid)TempData["SchoolId"] != null)
+            else if ((Guid)TempData["SchoolId"] != null&& (Guid)TempData["SchoolId"] != Guid.Empty)
             {
                 var levels = levelsServices.GetAll((Guid)TempData["UserId"], (Guid)TempData["SchoolId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]);
                 ViewBag.LevelId = new SelectList(levels, "Id", "Name");
             }
             else
                 ViewBag.LevelId = new SelectList("");
+
             if (dateFrom != null)
                 ViewBag.DateFrom = dateFrom.Value.ToString("yyyy-MM-dd");
             if (dateTo != null)
@@ -93,7 +94,8 @@ namespace StudentAffairs.Controllers
             if (result.IsSuccess)
             {
                 TempData["success"] = result.Message;
-                return RedirectToAction("Index");
+                var student = studentsServices.Get(result.Result.StudentId.Value);
+                return RedirectToAction("Index",new {SchoolId= student.SchoolId, dateFrom = result.Result.AttendDate, dateTo = result.Result.AttendDate });
             }
             else
             {
@@ -115,9 +117,9 @@ namespace StudentAffairs.Controllers
                 return RedirectToAction("Index");
             }
         }
-        public ActionResult DeleteAll(Guid SchoolId,DateTime DateFrom, DateTime DateTo)
+        public ActionResult DeleteAll(Guid SchoolId,DateTime DateFrom, DateTime DateTo,Guid? LevelId,Guid? ClassId)
         {
-            var result = studentsAttendanceServices.DeleteAll(SchoolId, DateFrom, DateTo, (Guid)TempData["UserId"]);
+            var result = studentsAttendanceServices.DeleteAll(SchoolId, DateFrom, DateTo, LevelId, ClassId, (Guid)TempData["UserId"]);
             if (result.IsSuccess)
             {
                 TempData["success"] = result.Message;
@@ -187,15 +189,46 @@ namespace StudentAffairs.Controllers
 
             return Json(new { data = model, message = mode.Message }, JsonRequestBehavior.AllowGet);
         }
-        public ActionResult StudentAllAttend(Guid SchoolId, string AttendDate, string AttendOrNo)
+
+
+        public ActionResult CheckGalsa(Guid SchoolId, string AttendDate)
         {
             var date = DateTime.Parse(AttendDate);
             var model1 = studentsAttendanceServices.GetBySchoolAndDate(SchoolId, date);
             if (model1)
             {
                 var model = new Dtos.Students.StudentsDto() { Name = "جلسة قديمة" };
-                return Json(new { data = model,flag="danger", message = "تم اخذ غياب هذا اليوم لا يمكن فتح جلسة جديدة" }, JsonRequestBehavior.AllowGet);
+                return Json(new { data = model, message = "تم اخذ غياب هذا اليوم لا يمكن فتح جلسة جديدة" }, JsonRequestBehavior.AllowGet);
             }
+            var model2 = new Dtos.Students.StudentsDto() { Name = "" };
+
+            return Json(new { data = model2, message = "" }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult CheckGalsa2(Guid SchoolId, string AttendDate)
+        {
+            var date = DateTime.Parse(AttendDate);
+            var model1 = studentsAttendanceServices.GetBySchoolAndDate(SchoolId, date);
+            if (!model1)
+            {
+                var model = new Dtos.Students.StudentsDto() { Name = "جلسة قديمة" };
+                return Json(new { data = model, message = "لا يوجد جلسة قديمة لهذا اليوم" }, JsonRequestBehavior.AllowGet);
+            }
+            var model2 = new Dtos.Students.StudentsDto() { Name = "" };
+
+            return Json(new { data = model2, message = "" }, JsonRequestBehavior.AllowGet);
+        }
+
+
+        public ActionResult StudentAllAttend(Guid SchoolId, string AttendDate, string AttendOrNo)
+        {
+            //var date = DateTime.Parse(AttendDate);
+            //var model1 = studentsAttendanceServices.GetBySchoolAndDate(SchoolId, date);
+            //if (model1)
+            //{
+            //    var model = new Dtos.Students.StudentsDto() { Name = "جلسة قديمة" };
+            //    return Json(new { data = model,flag="danger", message = "تم اخذ غياب هذا اليوم لا يمكن فتح جلسة جديدة" }, JsonRequestBehavior.AllowGet);
+            //}
             var mode = studentsAttendanceServices.CreateAll(SchoolId, AttendDate, AttendOrNo, (Guid)TempData["UserId"]);
             return Json(new { message = mode.Message,flag= "success" }, JsonRequestBehavior.AllowGet);
         }

@@ -161,11 +161,13 @@
     <Compile Include="Controllers\ScienceDivisionController.cs" />
     <Compile Include="Controllers\SecondLanguageController.cs" />
     <Compile Include="Controllers\SocialStatusController.cs" />
+    <Compile Include="Controllers\StudentAssessmentsController.cs" />
     <Compile Include="Controllers\StudentsAttendanceController.cs" />
     <Compile Include="Controllers\StudentsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Dtos\Account\SignInDto.cs" />
     <Compile Include="Dtos\Cities\CitiesDto.cs" />
+    <Compile Include="Dtos\Classes\ClassesDto.cs" />
     <Compile Include="Dtos\Employees\EmployeesDto.cs" />
     <Compile Include="Dtos\ResultDto.cs" />
     <Compile Include="Dtos\SchoolInfo\SchoolInfoDto.cs" />
@@ -1918,6 +1920,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Uploads\Logo\ProgramLogo.PNG" />
+    <Content Include="Uploads\Picture1.png" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -1969,6 +1972,8 @@
     <Content Include="Views\StudentsAttendance\Index.cshtml" />
     <Content Include="Views\StudentsAttendance\Upsert.cshtml" />
     <Content Include="Uploads\Excel\StudentsFormat.xlsx" />
+    <Content Include="Views\Students\Details.cshtml" />
+    <Content Include="Views\StudentAssessments\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

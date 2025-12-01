@@ -3,22 +3,18 @@
 @using StudentAffairs.Enums
 
 @{
-    ViewBag.Title = (Model.Id == Guid.Empty ? "إضافة " : "تعديل ") + " طالب  ";
+    ViewBag.Title =  " تفاصيل طالب  ";
     string action = Model.Id == Guid.Empty ? "Create" : "Edit";
     ViewBag.MainPage = "بيانات الطلاب";
 
 }
-@using (Html.BeginForm(action, "Students", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
 
-    <div class="card">
+
+    <div class="card" id="StudentDetailsDiv">
         <div class="card-header">
             <div class="row justify-content-between">
                 <h4 class="col-auto">@ViewBag.Title</h4>
-                @if (ViewBag.userscreens.ToString().Contains(",14,"))
-                {
-                    @Url.BackToList()
-                }
+                
             </div>
         </div>
         <div class="card-body">
@@ -471,23 +467,22 @@
             </div>
 
         </div>
-        <div class="card-footer">
-            <div class="row justify-content-end">
-                @if (Model.Id == Guid.Empty)
-                {
-                    @Url.SubmitAdd()
-                }
-                else
-                {
-                    @Url.SubmitSave()
-                }
-            </div>
-        </div>
+        
     </div>
-}
+
 
 @section scripts{
     <script>
+        $(document).ready(function () {
+            const div = document.getElementById("StudentDetailsDiv");
+            if (div) {
+                const interactiveElements = div.querySelectorAll('input, select, textarea, button');
+                interactiveElements.forEach(element => {
+                    element.setAttribute('disabled', 'true');
+                });
+            }
+        });
+
         $("#SchoolId").change(function () {
             $.get('/Students/getLevels', { Id: $("#SchoolId").val() }, function (data) {
                 $("#LevelId").empty();
@@ -857,15 +852,14 @@
             // تعديل الأيام
             if (days < 0) {
                 months--;
-                let prevMonth = new Date(d1.getFullYear(), d1.getMonth() + 1, 0).getDate() - 1;
+                let prevMonth = new Date(d2.getFullYear(), d2.getMonth(), 0).getDate();
                 days += prevMonth ;
             }
-           
 
             // تعديل الشهور
             if (months < 0) {
                 years--;
-                months+=12;
+                months += 12;
             }
 
             document.getElementById("Year").value = years;

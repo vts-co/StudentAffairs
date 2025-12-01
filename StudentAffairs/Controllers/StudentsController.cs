@@ -56,16 +56,16 @@ namespace StudentAffairs.Controllers
         StudentsServices studentsServices = new StudentsServices();
         [Authorized(ScreenId = "14")]
 
-        public ActionResult Index(string code, Guid? SchoolId,Guid? Id)
+        public ActionResult Index(string code, Guid? SchoolId, Guid? Id)
         {
-            if(Id!=null&&Id!=Guid.Empty)
+            if (Id != null && Id != Guid.Empty)
             {
                 var student = studentsServices.GetByDto(Id.Value);
-                TempData["StudentId"] = student.Id ;
+                TempData["StudentId"] = student.Id;
                 TempData["StudentImage"] = student.Image;
-                TempData["StudentName"] = "الاسم : "+ student.Name ;
-                TempData["LevelName"] ="الصف : " +student.LevelName;
-                TempData["ClassName"] ="الفصل : "+ student.ClassName;
+                TempData["StudentName"] = "الاسم : " + student.Name;
+                TempData["LevelName"] = "الصف : " + student.LevelName;
+                TempData["ClassName"] = "الفصل : " + student.ClassName;
                 TempData["QrCodeUri"] = QrPage(Id.Value);
             }
 
@@ -130,7 +130,7 @@ namespace StudentAffairs.Controllers
             var ExpenseTypes = expenseTypesServices.GetAll((Guid)TempData["UserId"], (Guid)TempData["SchoolId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]);
             ViewBag.ExpenseTypeId = new SelectList(ExpenseTypes, "Id", "Name");
 
-           
+
             var EndYearResults = endYearResultsServices.GetAll();
             ViewBag.EndYearResultId = new SelectList(EndYearResults, "Id", "Name");
 
@@ -151,7 +151,7 @@ namespace StudentAffairs.Controllers
 
             ViewBag.RegistrationDate = DateTime.Now.ToString("yyyy-MM-dd");
 
-            
+
             ViewBag.InsurancePolicyDate = DateTime.Now.ToString("yyyy-MM-dd");
 
             ViewBag.ProtectionCommittee = new SelectList(ProtectionCommittee(), "Value", "Text");
@@ -340,7 +340,7 @@ namespace StudentAffairs.Controllers
 
                     reader.Close();
                     reader.Dispose();
-                    var j = studentsServices.GetAllBySchool(SchoolId).Count()+100;
+                    var j = studentsServices.GetAllBySchool(SchoolId).Count() + 100;
                     for (int i = 0; i < model.Rows.Count; i++)
                     {
                         Student student = new Student();
@@ -365,6 +365,125 @@ namespace StudentAffairs.Controllers
                             student.TransferredToTheSchool = (int)Enums.TransferredToTheSchool.لا;
 
                         student.NumberId = model.Rows[i][4].ToString();
+
+                        var num = student.NumberId.Select(digit => int.Parse(digit.ToString())).ToList();
+
+                        if (num.Count == 14 && num[0].ToString() == "2")
+                        {
+                            var year = "19" + num[1].ToString() + num[2].ToString();
+                            var month = num[3].ToString() + num[4].ToString();
+                            var day = num[5].ToString() + num[6].ToString();
+
+                            var yearnow = DateTime.Now.Year;
+                            var date1 = DateTime.Parse(year + "-" + month + "-" + day);
+                            var date2 = DateTime.Parse(yearnow + "-" + "10" + "-" + "01");
+
+                            if (date1 > date2)
+                            {
+                                var temp = date1;
+                                date1 = date2;
+                                date2 = temp;
+                            }
+
+                            var years = date2.Year - date1.Year;
+                            var months = date2.Month - date1.Month;
+                            var days = date2.Day - date1.Day;
+
+                            // تعديل الأيام
+                            if (days < 0)
+                            {
+                                months--;
+                                var prevMonth = DateTime.DaysInMonth(date1.Year, date1.Month) - 1;
+                                days += prevMonth;
+                            }
+
+                            // تعديل الشهور
+                            if (months < 0)
+                            {
+                                years--;
+                                months += 12;
+                            }
+                            if (model.Rows[i][13].ToString() == null || model.Rows[i][13].ToString() == "")
+                                model.Rows[i][13] = days.ToString();
+                            if (model.Rows[i][14].ToString() == null || model.Rows[i][14].ToString() == "")
+                                model.Rows[i][14] = months.ToString();
+                            if (model.Rows[i][15].ToString() == null || model.Rows[i][15].ToString() == "")
+                                model.Rows[i][15] = years.ToString();
+
+                            var gender = int.Parse(num[12].ToString());
+                            if (gender % 2 == 0)
+                            {
+                                model.Rows[i][16] = "ذكر";
+                            }
+                            else
+                            {
+                                model.Rows[i][16] = "انثي";
+                            }
+
+                            var cityCode = num[7].ToString() + num[8].ToString();
+                            var city = citiesServices.GetByCode(cityCode);
+                            if (city != null)
+                                model.Rows[i][36] = city.Id.ToString();
+
+
+                        }
+                        else if (num.Count == 14 && num[0].ToString() == "3")
+                        {
+                            var year = "20" + num[1].ToString() + num[2].ToString();
+                            var month = num[3].ToString() + num[4].ToString();
+                            var day = num[5].ToString() + num[6].ToString();
+
+                            var yearnow = DateTime.Now.Year;
+                            var date1 = DateTime.Parse(year + "-" + month + "-" + day);
+                            var date2 = DateTime.Parse(yearnow + "-" + "10" + "-" + "01");
+
+                            if (date1 > date2)
+                            {
+                                var temp = date1;
+                                date1 = date2;
+                                date2 = temp;
+                            }
+
+                            var years = date2.Year - date1.Year;
+                            var months = date2.Month - date1.Month;
+                            var days = date2.Day - date1.Day;
+
+                            // تعديل الأيام
+                            if (days < 0)
+                            {
+                                months--;
+                                var prevMonth = DateTime.DaysInMonth(date1.Year, date1.Month) - 1;
+                                days += prevMonth;
+                            }
+
+                            // تعديل الشهور
+                            if (months < 0)
+                            {
+                                years--;
+                                months += 12;
+                            }
+                            if (model.Rows[i][13].ToString() == null || model.Rows[i][13].ToString() == "")
+                                model.Rows[i][13] = days.ToString();
+                            if (model.Rows[i][14].ToString() == null || model.Rows[i][14].ToString() == "")
+                                model.Rows[i][14] = months.ToString();
+                            if (model.Rows[i][15].ToString() == null || model.Rows[i][15].ToString() == "")
+                                model.Rows[i][15] = years.ToString();
+
+                            var gender = int.Parse(num[12].ToString());
+                            if (gender % 2 == 0)
+                            {
+                                model.Rows[i][16] = "ذكر";
+                            }
+                            else
+                            {
+                                model.Rows[i][16] = "انثي";
+                            }
+
+                            var cityCode = num[7].ToString() + num[8].ToString();
+                            var city = citiesServices.GetByCode(cityCode);
+                            if (city != null)
+                                model.Rows[i][36] = city.Id.ToString();
+                        }
 
                         if (model.Rows[i][5].ToString() == "" || model.Rows[i][5].ToString() == null)
                             student.LevelId = null;
@@ -468,12 +587,17 @@ namespace StudentAffairs.Controllers
                         else
                             student.NationalityId = null;
 
-                        if (model.Rows[i][37].ToString() == null || model.Rows[i][37].ToString() == "")
+                        if (model.Rows[i][36].ToString() == null || model.Rows[i][36].ToString() == "")
                             student.CityId = null;
                         else
                             student.CityId = Guid.Parse(model.Rows[i][36].ToString());
 
-                        student.ProtectionCommittee = model.Rows[i][37].ToString();
+                        if (model.Rows[i][37].ToString() == "يوجد")
+                            student.ProtectionCommittee = Enums.ProtectionCommittee.يوجد.ToString();
+                        else if (model.Rows[i][37].ToString() == "لا يوجد")
+                            student.ProtectionCommittee = Enums.ProtectionCommittee.لا_يوجد.ToString();
+                        else
+                            student.ProtectionCommittee = model.Rows[i][37].ToString();
 
                         if (model.Rows[i][38].ToString() == "دمج")
                             student.EducationalIntegration = (int)Enums.EducationalIntegration.دمج;
@@ -533,7 +657,24 @@ namespace StudentAffairs.Controllers
 
                         if (student.Name != null && student.Name != "" && student.LevelId != null && student.NumberId != "" && student.NumberId != null)
                             studentsServices.Create(student, (Guid)TempData["UserId"]);
-
+                        else
+                        {
+                            if (student.Name == null || student.Name == "")
+                            {
+                                TempData["warning"] = "ادخل اسماء الطلاب الفارغة";
+                                return RedirectToAction("Index");
+                            }
+                            else if (student.LevelId != null)
+                            {
+                                TempData["warning"] = "ادخل الصفوف الفارغة";
+                                return RedirectToAction("Index");
+                            }
+                            else if (student.NumberId == "" || student.NumberId == null)
+                            {
+                                TempData["warning"] = "ادخل الرقم القومي الفارغ";
+                                return RedirectToAction("Index");
+                            }
+                        }
                         j++;
                     }
                     TempData["success"] = "تم حفظ البيانات بنجاح";
@@ -762,6 +903,93 @@ namespace StudentAffairs.Controllers
             }
         }
 
+        public ActionResult Details(Guid Id)
+        {
+            var student = studentsServices.Get(Id);
+
+            var Levels = levelsServices.GetAll((Guid)TempData["UserId"], (Guid)TempData["SchoolId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]);
+            Levels = Levels.Where(x => x.SchoolId == student.SchoolId).ToList();
+            ViewBag.LevelId = new SelectList(Levels, "Id", "Name", student.LevelId);
+
+            var Classes = classesServices.GetAll((Guid)TempData["UserId"], (Guid)TempData["SchoolId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]).Where(x => x.LevelId == student.LevelId).ToList();
+            Classes = Classes.Where(x => x.SchoolId == student.SchoolId).ToList();
+            ViewBag.ClassId = new SelectList(Classes, "Id", "Name", student.ClassId);
+
+            var Religion = religionServices.GetAll();
+            ViewBag.ReligionId = new SelectList(Religion, "Id", "Name", student.ReligionId);
+
+            var Nationalities = nationalitiesServices.GetAll();
+            ViewBag.NationalityId = new SelectList(Nationalities, "Id", "Name", student.NationalityId);
+
+            var ExpenseTypes = expenseTypesServices.GetAll((Guid)TempData["UserId"], (Guid)TempData["SchoolId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]);
+            ViewBag.ExpenseTypeId = new SelectList(ExpenseTypes, "Id", "Name", student.ExpenseTypeId);
+
+            var ExemptionReasons = exemptionReasonsServices.GetAll((Guid)TempData["UserId"], (Guid)TempData["SchoolId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]);
+            ExemptionReasons = ExemptionReasons.Where(x => x.SchoolId == student.SchoolId).ToList();
+            ViewBag.ExemptionReasonId = new SelectList(ExemptionReasons, "Id", "Name", student.ExemptionReasonId);
+
+            var EndYearResults = endYearResultsServices.GetAll();
+            ViewBag.EndYearResultId = new SelectList(EndYearResults, "Id", "Name", student.EndYearResultId);
+
+            var SecondRoundResults = secondRoundResultsServices.GetAll();
+            ViewBag.SecondRoundResultId = new SelectList(SecondRoundResults, "Id", "Name", student.SecondRoundResultId);
+
+            ViewBag.TransferredToTheSchool = new SelectList(TransferredToTheSchool(), "Value", "Text", student.TransferredToTheSchool);
+            ViewBag.EducationalIntegration = new SelectList(EducationalIntegration(), "Value", "Text", student.EducationalIntegration);
+            if (student.BirthDate != null)
+                ViewBag.BirthDate = student.BirthDate;
+            else
+                ViewBag.BirthDate = DateTime.Now.ToString("yyyy-MM-dd");
+
+            var Cities = citiesServices.GetAll();
+            ViewBag.CityId = new SelectList(Cities, "Id", "Name", student.CityId);
+
+            ViewBag.GenderId = new SelectList(Genders(), "Value", "Text", student.GenderId);
+
+            var RegistrationStatus = registrationStatusServices.GetAll((Guid)TempData["UserId"], (Guid)TempData["SchoolId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]);
+            ViewBag.RegistrationStateId = new SelectList(RegistrationStatus, "Id", "Name", student.RegistrationStateId);
+
+            if (student.RegistrationDate != null)
+                ViewBag.RegistrationDate = student.RegistrationDate.Value.ToString("yyyy-MM-dd");
+            else
+                ViewBag.RegistrationDate = DateTime.Now.ToString("yyyy-MM-dd");
+
+
+            var SocialStatus = socialStatusServices.GetAll((Guid)TempData["UserId"], (Guid)TempData["SchoolId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]);
+            SocialStatus = SocialStatus.Where(x => x.SchoolId == student.SchoolId).ToList();
+            ViewBag.SocialStateId = new SelectList(SocialStatus, "Id", "Name", student.SocialStateId);
+
+            var ScienceDivision = scienceDivisionServices.GetAll((Guid)TempData["UserId"], (Guid)TempData["SchoolId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]);
+            ScienceDivision = ScienceDivision.Where(x => x.SchoolId == student.SchoolId).ToList();
+            ViewBag.ScienceDivisionId = new SelectList(ScienceDivision, "Id", "Name", student.ScienceDivisionId);
+
+            var SecondLanguage = secondLanguageServices.GetAll((Guid)TempData["UserId"], (Guid)TempData["SchoolId"], (Guid)TempData["EmployeeId"], (Role)TempData["RoleId"]);
+            SecondLanguage = SecondLanguage.Where(x => x.SchoolId == student.SchoolId).ToList();
+
+            ViewBag.SecondLanguageId = new SelectList(SecondLanguage, "Id", "Name", student.SecondLanguageId);
+
+            if (student.InsurancePolicyDate != null)
+                ViewBag.InsurancePolicyDate = student.InsurancePolicyDate.Value.ToString("yyyy-MM-dd");
+            else
+                ViewBag.InsurancePolicyDate = DateTime.Now.ToString("yyyy-MM-dd");
+
+
+            ViewBag.ProtectionCommittee = new SelectList(ProtectionCommittee(), "Value", "Text", student.ProtectionCommittee);
+
+            if (student.FromDate != null)
+                ViewBag.FromDate = student.FromDate.Value.ToString("yyyy-MM-dd");
+            else
+                ViewBag.FromDate = DateTime.Now.ToString("yyyy-MM-dd");
+
+            if (student.ToDate != null)
+                ViewBag.ToDate = student.ToDate.Value.ToString("yyyy-MM-dd");
+            else
+                ViewBag.ToDate = DateTime.Now.ToString("yyyy-MM-dd");
+
+            return View(student);
+        }
+
+
         public ActionResult QrPage(Guid Id)
         {
             var student = studentsServices.GetByDto(Id);
@@ -771,7 +999,7 @@ namespace StudentAffairs.Controllers
             string qrString = student.SerialNumber;
             var QrCodeUri = QRCode(qrString)[0];
             //return RedirectToAction("Index");
-            return Json(new { StudentImage = student.Image, StudentName = "الاسم : "+student.Name, LevelName ="الصف : "+student.LevelName, QrCodeUri = QrCodeUri }, JsonRequestBehavior.AllowGet);
+            return Json(new { StudentImage = student.Image, StudentName = "الاسم : " + student.Name, LevelName = "الصف : " + student.LevelName, QrCodeUri = QrCodeUri }, JsonRequestBehavior.AllowGet);
         }
         public string[] QRCode(string qRCode)
         {

@@ -73,5 +73,17 @@
 }
 
 @section scripts{
+
     @Scripts.Render("~/bundles/jqueryval")
+<script>
+    $("#SchoolId").change(function () {
+        $.get('/Classes/getLevels', { Id: $("#SchoolId").val() }, function (data) {
+                $("#LevelId").empty();
+            $("#LevelId").append("<option value=''>--اختر--</option>")
+                $.each(data, function (key, value) {
+                    $("#LevelId").append("<option value=" + value["Id"] + ">" + value["Name"] + "</option>")
+                });
+            });
+        });
+</script>
 }

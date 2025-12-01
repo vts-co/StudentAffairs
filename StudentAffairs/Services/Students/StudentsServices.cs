@@ -107,7 +107,7 @@ namespace StudentAffairs.Services.Students
         {
             using (var dbContext = new StudentAffairsEntities())
             {
-                var model = dbContext.Students.Where(x => x.IsDeleted == false && x.StudentTypeId == (int)StudentTypes.InSchool &&  x.SchoolId == SchoolId ).OrderBy(x => x.CreatedOn).Select(x => new StudentsDto
+                var model = dbContext.Students.Where(x => x.IsDeleted == false && x.StudentTypeId == (int)StudentTypes.InSchool && x.SchoolId == SchoolId).OrderBy(x => x.CreatedOn).Select(x => new StudentsDto
                 {
                     //بيانات الطالب
                     Id = x.Id,
@@ -493,7 +493,7 @@ namespace StudentAffairs.Services.Students
         {
             using (var dbContext = new StudentAffairsEntities())
             {
-                var model = dbContext.Students.Where(x => x.IsDeleted == false && x.StudentTypeId == (int)StudentTypes.InSchool && x.Id==Id).OrderBy(x => x.CreatedOn).Select(x => new StudentsDto
+                var model = dbContext.Students.Where(x => x.IsDeleted == false && x.StudentTypeId == (int)StudentTypes.InSchool && x.Id == Id).OrderBy(x => x.CreatedOn).Select(x => new StudentsDto
                 {
                     //بيانات الطالب
                     Id = x.Id,
@@ -821,6 +821,68 @@ namespace StudentAffairs.Services.Students
                     result.Message = "هذا الكود موجود لم يمكن استخدامه";
                     return result;
                 }
+                if (model.ClassId == Guid.Empty)
+                    Oldmodel.ClassId = null;
+                else
+                    Oldmodel.ClassId = model.ClassId;
+
+
+                if (model.ReligionId == Guid.Empty)
+                    Oldmodel.ReligionId = null;
+                else
+                    Oldmodel.ReligionId = model.ReligionId;
+
+                if (model.NationalityId == Guid.Empty)
+                    Oldmodel.NationalityId = null;
+                else
+                    Oldmodel.NationalityId = model.NationalityId;
+
+                if (model.ExpenseTypeId == Guid.Empty)
+                    Oldmodel.ExpenseTypeId = null;
+                else
+                    Oldmodel.ExpenseTypeId = model.ExpenseTypeId;
+
+                if (model.ExemptionReasonId == Guid.Empty)
+                    Oldmodel.ExemptionReasonId = null;
+                else
+                    Oldmodel.ExemptionReasonId = model.ExemptionReasonId;
+
+                if (model.EndYearResultId == Guid.Empty)
+                    Oldmodel.EndYearResultId = null;
+                else
+                    Oldmodel.EndYearResultId = model.EndYearResultId;
+
+                if (model.SecondRoundResultId == Guid.Empty)
+                    Oldmodel.SecondRoundResultId = null;
+                else
+                    Oldmodel.SecondRoundResultId = model.SecondRoundResultId;
+
+                if (model.CityId == Guid.Empty)
+                    Oldmodel.CityId = null;
+                else
+                    Oldmodel.CityId = model.CityId;
+
+                if (model.RegistrationStateId == Guid.Empty)
+                    Oldmodel.RegistrationStateId = null;
+                else
+                    Oldmodel.RegistrationStateId = model.RegistrationStateId;
+
+                if (model.SocialStateId == Guid.Empty)
+                    Oldmodel.SocialStateId = null;
+                else
+                    Oldmodel.SocialStateId = model.SocialStateId;
+
+                if (model.ScienceDivisionId == Guid.Empty)
+                    Oldmodel.ScienceDivisionId = null;
+                else
+                    Oldmodel.ScienceDivisionId = model.ScienceDivisionId;
+
+                if (model.SecondLanguageId == Guid.Empty)
+                    Oldmodel.SecondLanguageId = null;
+                else
+                    Oldmodel.SecondLanguageId = model.SecondLanguageId;
+
+
                 model.StudentTypeId = (int)StudentTypes.InSchool;
                 model.CreatedOn = DateTime.UtcNow;
                 model.CreatedBy = UserId;
@@ -865,14 +927,44 @@ namespace StudentAffairs.Services.Students
                 Oldmodel.Name = model.Name;
                 Oldmodel.Phone = model.Phone;
                 Oldmodel.LevelId = model.LevelId;
-                Oldmodel.ClassId = model.ClassId;
+                if (model.ClassId == Guid.Empty)
+                    Oldmodel.ClassId = null;
+                else
+                    Oldmodel.ClassId = model.ClassId;
+
                 Oldmodel.SeatNumber = model.SeatNumber;
-                Oldmodel.ReligionId = model.ReligionId;
-                Oldmodel.NationalityId = model.NationalityId;
-                Oldmodel.ExpenseTypeId = model.ExpenseTypeId;
-                Oldmodel.ExemptionReasonId = model.ExemptionReasonId;
-                Oldmodel.EndYearResultId = model.EndYearResultId;
-                Oldmodel.SecondRoundResultId = model.SecondRoundResultId;
+
+                if (model.ReligionId == Guid.Empty)
+                    Oldmodel.ReligionId = null;
+                else
+                    Oldmodel.ReligionId = model.ReligionId;
+
+                if (model.NationalityId == Guid.Empty)
+                    Oldmodel.NationalityId = null;
+                else
+                    Oldmodel.NationalityId = model.NationalityId;
+
+                if (model.ExpenseTypeId == Guid.Empty)
+                    Oldmodel.ExpenseTypeId = null;
+                else
+                    Oldmodel.ExpenseTypeId = model.ExpenseTypeId;
+
+                if (model.ExemptionReasonId == Guid.Empty)
+                    Oldmodel.ExemptionReasonId = null;
+                else
+                    Oldmodel.ExemptionReasonId = model.ExemptionReasonId;
+
+                if (model.EndYearResultId == Guid.Empty)
+                    Oldmodel.EndYearResultId = null;
+                else
+                    Oldmodel.EndYearResultId = model.EndYearResultId;
+
+                if (model.SecondRoundResultId == Guid.Empty)
+                    Oldmodel.SecondRoundResultId = null;
+                else
+                    Oldmodel.SecondRoundResultId = model.SecondRoundResultId;
+
+
                 Oldmodel.HealthCondition = model.HealthCondition;
                 Oldmodel.FirstSemesterResult = model.FirstSemesterResult;
                 Oldmodel.EducationalIntegration = model.EducationalIntegration;
@@ -885,9 +977,18 @@ namespace StudentAffairs.Services.Students
                 Oldmodel.Day = model.Day;
                 Oldmodel.Month = model.Month;
                 Oldmodel.Year = model.Year;
-                Oldmodel.CityId = model.CityId;
+                if (model.CityId == Guid.Empty)
+                    Oldmodel.CityId = null;
+                else
+                    Oldmodel.CityId = model.CityId;
+
                 Oldmodel.GenderId = (int)model.GenderId;
-                Oldmodel.RegistrationStateId = model.RegistrationStateId;
+
+                if (model.RegistrationStateId == Guid.Empty)
+                    Oldmodel.RegistrationStateId = null;
+                else
+                    Oldmodel.RegistrationStateId = model.RegistrationStateId;
+
                 Oldmodel.RegistrationNum = model.RegistrationNum;
                 Oldmodel.RegistrationDate = model.RegistrationDate;
 
@@ -899,13 +1000,24 @@ namespace StudentAffairs.Services.Students
                 Oldmodel.ParentWhatsApp = model.ParentWhatsApp;
                 Oldmodel.MotherName = model.MotherName;
                 Oldmodel.MotherPhone = model.MotherPhone;
-                Oldmodel.SocialStateId = model.SocialStateId;
+                if (model.SocialStateId == Guid.Empty)
+                    Oldmodel.SocialStateId = null;
+                else
+                    Oldmodel.SocialStateId = model.SocialStateId;
 
                 //بيانات خاصة بالثانوي
                 Oldmodel.TabletSerialNumber = model.TabletSerialNumber;
-                Oldmodel.ScienceDivisionId = model.ScienceDivisionId;
+                if (model.ScienceDivisionId == Guid.Empty)
+                    Oldmodel.ScienceDivisionId = null;
+                else
+                    Oldmodel.ScienceDivisionId = model.ScienceDivisionId;
+
                 Oldmodel.IM = model.IM;
-                Oldmodel.SecondLanguageId = model.SecondLanguageId;
+                if (model.SecondLanguageId == Guid.Empty)
+                    Oldmodel.SecondLanguageId = null;
+                else
+                    Oldmodel.SecondLanguageId = model.SecondLanguageId;
+
                 Oldmodel.DateOfReceipt = model.DateOfReceipt;
                 Oldmodel.InsurancePolicyNumber = model.InsurancePolicyNumber;
                 Oldmodel.InsurancePolicyDate = model.InsurancePolicyDate;

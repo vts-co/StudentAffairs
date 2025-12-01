@@ -196,6 +196,7 @@ namespace StudentAffairs.Services.StudentsAttendance
                 dbContext.SaveChanges();
 
                 result.IsSuccess = true;
+                result.Result = Oldmodel;
                 result.Message = "تم تعديل البيانات بنجاح";
                 return result;
             }
@@ -218,13 +219,21 @@ namespace StudentAffairs.Services.StudentsAttendance
             }
         }
 
-        public ResultDto<Models.StudentsAttendance> DeleteAll(Guid SchoolId, DateTime DateFrom, DateTime DateTo, Guid UserId)
+        public ResultDto<Models.StudentsAttendance> DeleteAll(Guid SchoolId, DateTime DateFrom, DateTime DateTo,Guid? LevelId,Guid? ClassId, Guid UserId)
         {
             using (var dbContext = new StudentAffairsEntities())
             {
                 var result = new ResultDto<Models.StudentsAttendance>();
 
                 var model = dbContext.StudentsAttendances.Where(x => x.IsDeleted == false && x.Student.SchoolId == SchoolId && x.AttendDate >= DateFrom&&x.AttendDate<= DateTo).ToList();
+                if(LevelId!=null&&LevelId!=Guid.Empty)
+                {
+                    model = model.Where(x => x.LevelId == LevelId).ToList();
+                }
+                if (ClassId != null && ClassId != Guid.Empty)
+                {
+                    model = model.Where(x => x.ClassId == ClassId).ToList();
+                }
                 foreach (var item in model)
                 {
                     item.IsDeleted = true;
