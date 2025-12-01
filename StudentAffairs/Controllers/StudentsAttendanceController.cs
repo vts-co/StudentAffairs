@@ -62,13 +62,16 @@ namespace StudentAffairs.Controllers
 
         public ActionResult Create()
         {
+            ViewBag.galsa = "0";
+
             return View("Upsert", new StudentsAttendance() { });
         }
-        public ActionResult Create2(Guid? SchoolId, DateTime? AttendDate, string AttendOrNo)
+        public ActionResult Create2(Guid? SchoolId, DateTime? AttendDate, string AttendOrNo,string galsa)
         {
             ViewBag.SchoolId = SchoolId;
             ViewBag.AttendOrNo = AttendOrNo;
             ViewBag.Date = AttendDate.Value.ToString("yyyy-MM-dd");
+            ViewBag.galsa = galsa;
             return View("Upsert", new StudentsAttendance() { });
         }
         [HttpPost, ValidateInput(false)]
@@ -153,13 +156,13 @@ namespace StudentAffairs.Controllers
         public ActionResult getStudent(Guid SchoolId, string SerialNumber, string AttendDate, string AttendOrNo)
         {
             var model = studentsServices.GetBySerialNumber(SchoolId, SerialNumber);
-            var date = DateTime.Parse(AttendDate);
-            var model1 = studentsAttendanceServices.GetBySchoolAndDate(SchoolId, date);
-            if (model1)
-            {
-                model = new Dtos.Students.StudentsDto() { Name = "جلسة قديمة" };
-                return Json(new { data = model, message = "تم اخذ غياب هذا اليوم لا يمكن فتح جلسة جديدة" }, JsonRequestBehavior.AllowGet);
-            }
+            //var date = DateTime.Parse(AttendDate);
+            //var model1 = studentsAttendanceServices.GetBySchoolAndDate(SchoolId, date);
+            //if (model1)
+            //{
+            //    model = new Dtos.Students.StudentsDto() { Name = "جلسة قديمة" };
+            //    return Json(new { data = model, message = "تم اخذ غياب هذا اليوم لا يمكن فتح جلسة جديدة" }, JsonRequestBehavior.AllowGet);
+            //}
             var mode = new ResultDto<Models.StudentsAttendance>() { Message = "" };
             if (model != null)
             {
@@ -208,13 +211,13 @@ namespace StudentAffairs.Controllers
         public ActionResult CheckGalsa2(Guid SchoolId, string AttendDate)
         {
             var date = DateTime.Parse(AttendDate);
-            var model1 = studentsAttendanceServices.GetBySchoolAndDate(SchoolId, date);
-            if (!model1)
+            var model1 = studentsAttendanceServices.CheckBySchoolAndDate(SchoolId, date);
+            if (model1==null)
             {
                 var model = new Dtos.Students.StudentsDto() { Name = "جلسة قديمة" };
                 return Json(new { data = model, message = "لا يوجد جلسة قديمة لهذا اليوم" }, JsonRequestBehavior.AllowGet);
             }
-            var model2 = new Dtos.Students.StudentsDto() { Name = "" };
+            var model2 = new Dtos.Students.StudentsDto() { Name = "",AttendOrNot= model1.AttendOrNo==true? "true":"false" };
 
             return Json(new { data = model2, message = "" }, JsonRequestBehavior.AllowGet);
         }

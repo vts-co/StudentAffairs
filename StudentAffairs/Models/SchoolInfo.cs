@@ -25,6 +25,7 @@ namespace StudentAffairs.Models
             this.ExpenseTypes = new HashSet<ExpenseType>();
             this.Jobs = new HashSet<Job>();
             this.Levels = new HashSet<Level>();
+            this.AttendancesDates = new HashSet<AttendancesDate>();
             this.ScienceDivisions = new HashSet<ScienceDivision>();
             this.SecondLanguages = new HashSet<SecondLanguage>();
             this.SocialStatus = new HashSet<SocialStatu>();
@@ -70,6 +71,8 @@ namespace StudentAffairs.Models
         public virtual ICollection<Job> Jobs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Level> Levels { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AttendancesDate> AttendancesDates { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ScienceDivision> ScienceDivisions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

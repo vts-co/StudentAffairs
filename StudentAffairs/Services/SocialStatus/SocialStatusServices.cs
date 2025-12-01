@@ -23,7 +23,7 @@ namespace StudentAffairs.Services.SocialStatus
             using (var dbContext = new StudentAffairsEntities())
             {
                 var result = new ResultDto<Models.SocialStatu>();
-                var Oldmodel = dbContext.SocialStatus.Where(x => x.Name == model.Name && x.IsDeleted == false).FirstOrDefault();
+                var Oldmodel = dbContext.SocialStatus.Where(x => x.Name == model.Name && x.SchoolId == model.SchoolId && x.IsDeleted == false).FirstOrDefault();
                 if (Oldmodel != null)
                 {
                     result.Result = Oldmodel;

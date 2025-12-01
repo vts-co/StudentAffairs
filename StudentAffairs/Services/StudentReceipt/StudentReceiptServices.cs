@@ -23,7 +23,7 @@ namespace StudentAffairs.Services.StudentReceipt
             using (var dbContext = new StudentAffairsEntities())
             {
                 var result = new ResultDto<Models.StudentReceipt>();
-                var Oldmodel = dbContext.StudentReceipts.Where(x => x.Name == model.Name&&x.ReceiptDate==model.ReceiptDate && x.IsDeleted == false).FirstOrDefault();
+                var Oldmodel = dbContext.StudentReceipts.Where(x => x.Name == model.Name&&x.ReceiptDate==model.ReceiptDate && x.SchoolId == model.SchoolId && x.IsDeleted == false).FirstOrDefault();
                 if (Oldmodel != null)
                 {
                     result.Result = Oldmodel;

@@ -23,7 +23,7 @@ namespace StudentAffairs.Services.ExitPermission
             using (var dbContext = new StudentAffairsEntities())
             {
                 var result = new ResultDto<Models.ExitPermission>();
-                var Oldmodel = dbContext.ExitPermissions.Where(x => x.Name == model.Name&&x.ExitDate==model.ExitDate && x.IsDeleted == false).FirstOrDefault();
+                var Oldmodel = dbContext.ExitPermissions.Where(x => x.Name == model.Name&&x.ExitDate==model.ExitDate && x.SchoolId == model.SchoolId && x.IsDeleted == false).FirstOrDefault();
                 if (Oldmodel != null)
                 {
                     result.Result = Oldmodel;

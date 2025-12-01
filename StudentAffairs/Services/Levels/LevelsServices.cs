@@ -23,7 +23,7 @@ namespace StudentAffairs.Services.Levels
             using (var dbContext = new StudentAffairsEntities())
             {
                 var result = new ResultDto<Level>();
-                var Oldmodel = dbContext.Levels.Where(x => x.Name == model.Name && x.IsDeleted == false).FirstOrDefault();
+                var Oldmodel = dbContext.Levels.Where(x => x.Name == model.Name&&x.SchoolId==model.SchoolId && x.IsDeleted == false).FirstOrDefault();
                 if (Oldmodel != null)
                 {
                     result.Result = Oldmodel;

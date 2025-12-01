@@ -195,7 +195,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar(max)" />
           <Property Name="Link" Type="nvarchar(max)" />
           <Property Name="Num" Type="int" />
@@ -469,6 +469,35 @@
           <Property Name="DeletedOn" Type="datetime" />
           <Property Name="DeletedBy" Type="uniqueidentifier" />
         </EntityType>
+        <EntityType Name="AttendancesDates">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="SchoolId" Type="uniqueidentifier" />
+          <Property Name="AttendDate" Type="datetime" />
+          <Property Name="AttendOrNo" Type="bit" />
+          <Property Name="Notes" Type="nvarchar(max)" />
+          <Property Name="CreatedOn" Type="datetime" />
+          <Property Name="CreatedBy" Type="uniqueidentifier" />
+          <Property Name="ModifiedOn" Type="datetime" />
+          <Property Name="ModifiedBy" Type="uniqueidentifier" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="DeletedOn" Type="datetime" />
+          <Property Name="DeletedBy" Type="uniqueidentifier" />
+        </EntityType>
+        <Association Name="FK_AttendancesDates_SchoolInfo">
+          <End Role="SchoolInfo" Type="Self.SchoolInfo" Multiplicity="0..1" />
+          <End Role="AttendancesDates" Type="Self.AttendancesDates" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SchoolInfo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AttendancesDates">
+              <PropertyRef Name="SchoolId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_CityDepartments_Cities">
           <End Role="Cities" Type="Self.Cities" Multiplicity="0..1" />
           <End Role="CityDepartments" Type="Self.CityDepartments" Multiplicity="*" />
@@ -613,7 +642,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Pages_Pages">
+        <Association Name="FK_Pages_Pages1">
           <End Role="Pages" Type="Self.Pages" Multiplicity="0..1" />
           <End Role="Pages1" Type="Self.Pages" Multiplicity="*" />
           <ReferentialConstraint>
@@ -974,6 +1003,11 @@
           <EntitySet Name="Students" EntityType="Self.Students" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StudentsAttendances" EntityType="Self.StudentsAttendances" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AttendancesDates" EntityType="Self.AttendancesDates" Schema="studentaffairsDb" store:Type="Tables" />
+          <AssociationSet Name="FK_AttendancesDates_SchoolInfo" Association="Self.FK_AttendancesDates_SchoolInfo">
+            <End Role="SchoolInfo" EntitySet="SchoolInfo" />
+            <End Role="AttendancesDates" EntitySet="AttendancesDates" />
+          </AssociationSet>
           <AssociationSet Name="FK_CityDepartments_Cities" Association="Self.FK_CityDepartments_Cities">
             <End Role="Cities" EntitySet="Cities" />
             <End Role="CityDepartments" EntitySet="CityDepartments" />
@@ -1022,7 +1056,7 @@
             <End Role="SchoolInfo" EntitySet="SchoolInfo" />
             <End Role="Levels" EntitySet="Levels" />
           </AssociationSet>
-          <AssociationSet Name="FK_Pages_Pages" Association="Self.FK_Pages_Pages">
+          <AssociationSet Name="FK_Pages_Pages1" Association="Self.FK_Pages_Pages1">
             <End Role="Pages" EntitySet="Pages" />
             <End Role="Pages1" EntitySet="Pages" />
           </AssociationSet>
@@ -1164,6 +1198,7 @@
           <EntitySet Name="Students" EntityType="StudentAffairsModel.Student" />
           <EntitySet Name="StudentsAttendances" EntityType="StudentAffairsModel.StudentsAttendance" />
           <EntitySet Name="Users" EntityType="StudentAffairsModel.User" />
+          <EntitySet Name="AttendancesDates" EntityType="StudentAffairsModel.AttendancesDate" />
           <AssociationSet Name="FK_CityDepartments_Cities" Association="StudentAffairsModel.FK_CityDepartments_Cities">
             <End Role="City" EntitySet="Cities" />
             <End Role="CityDepartment" EntitySet="CityDepartments" />
@@ -1256,7 +1291,7 @@
             <End Role="Nationality" EntitySet="Nationalities" />
             <End Role="Student" EntitySet="Students" />
           </AssociationSet>
-          <AssociationSet Name="FK_Pages_Pages" Association="StudentAffairsModel.FK_Pages_Pages">
+          <AssociationSet Name="FK_Pages_Pages1" Association="StudentAffairsModel.FK_Pages_Pages1">
             <End Role="Page" EntitySet="Pages" />
             <End Role="Page1" EntitySet="Pages" />
           </AssociationSet>
@@ -1267,6 +1302,10 @@
           <AssociationSet Name="FK_Students_Religion" Association="StudentAffairsModel.FK_Students_Religion">
             <End Role="Religion" EntitySet="Religions" />
             <End Role="Student" EntitySet="Students" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AttendancesDates_SchoolInfo" Association="StudentAffairsModel.FK_AttendancesDates_SchoolInfo">
+            <End Role="SchoolInfo" EntitySet="SchoolInfoes" />
+            <End Role="AttendancesDate" EntitySet="AttendancesDates" />
           </AssociationSet>
           <AssociationSet Name="FK_ScienceDivision_SchoolInfo" Association="StudentAffairsModel.FK_ScienceDivision_SchoolInfo">
             <End Role="SchoolInfo" EntitySet="SchoolInfoes" />
@@ -1541,7 +1580,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Link" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Num" Type="Int32" />
@@ -1554,8 +1593,8 @@
           <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
           <Property Name="DeletedOn" Type="DateTime" Precision="3" />
           <Property Name="DeletedBy" Type="Guid" />
-          <NavigationProperty Name="Pages1" Relationship="StudentAffairsModel.FK_Pages_Pages" FromRole="Page" ToRole="Page1" />
-          <NavigationProperty Name="Page1" Relationship="StudentAffairsModel.FK_Pages_Pages" FromRole="Page1" ToRole="Page" />
+          <NavigationProperty Name="Pages1" Relationship="StudentAffairsModel.FK_Pages_Pages1" FromRole="Page" ToRole="Page1" />
+          <NavigationProperty Name="Page1" Relationship="StudentAffairsModel.FK_Pages_Pages1" FromRole="Page1" ToRole="Page" />
         </EntityType>
         <EntityType Name="RegistrationStatu">
           <Key>
@@ -1622,6 +1661,7 @@
           <NavigationProperty Name="ExpenseTypes" Relationship="StudentAffairsModel.FK_ExpenseTypes_SchoolInfo" FromRole="SchoolInfo" ToRole="ExpenseType" />
           <NavigationProperty Name="Jobs" Relationship="StudentAffairsModel.FK_Jobs_SchoolInfo" FromRole="SchoolInfo" ToRole="Job" />
           <NavigationProperty Name="Levels" Relationship="StudentAffairsModel.FK_Levels_SchoolInfo" FromRole="SchoolInfo" ToRole="Level" />
+          <NavigationProperty Name="AttendancesDates" Relationship="StudentAffairsModel.FK_AttendancesDates_SchoolInfo" FromRole="SchoolInfo" ToRole="AttendancesDate" />
           <NavigationProperty Name="ScienceDivisions" Relationship="StudentAffairsModel.FK_ScienceDivision_SchoolInfo" FromRole="SchoolInfo" ToRole="ScienceDivision" />
           <NavigationProperty Name="SecondLanguages" Relationship="StudentAffairsModel.FK_SecondLanguage_SchoolInfo" FromRole="SchoolInfo" ToRole="SecondLanguage" />
           <NavigationProperty Name="SocialStatus" Relationship="StudentAffairsModel.FK_SocialStatus_SchoolInfo" FromRole="SchoolInfo" ToRole="SocialStatu" />
@@ -1868,6 +1908,24 @@
           <Property Name="DeletedOn" Type="DateTime" Precision="3" />
           <Property Name="DeletedBy" Type="Guid" />
           <NavigationProperty Name="SchoolInfo" Relationship="StudentAffairsModel.FK_Users_SchoolInfo" FromRole="User" ToRole="SchoolInfo" />
+        </EntityType>
+        <EntityType Name="AttendancesDate">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="SchoolId" Type="Guid" />
+          <Property Name="AttendDate" Type="DateTime" Precision="3" />
+          <Property Name="AttendOrNo" Type="Boolean" />
+          <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="Guid" />
+          <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="Guid" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="DeletedOn" Type="DateTime" Precision="3" />
+          <Property Name="DeletedBy" Type="Guid" />
+          <NavigationProperty Name="SchoolInfo" Relationship="StudentAffairsModel.FK_AttendancesDates_SchoolInfo" FromRole="AttendancesDate" ToRole="SchoolInfo" />
         </EntityType>
         <Association Name="FK_CityDepartments_Cities">
           <End Type="StudentAffairsModel.City" Role="City" Multiplicity="0..1" />
@@ -2145,7 +2203,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Pages_Pages">
+        <Association Name="FK_Pages_Pages1">
           <End Type="StudentAffairsModel.Page" Role="Page" Multiplicity="0..1" />
           <End Type="StudentAffairsModel.Page" Role="Page1" Multiplicity="*" />
           <ReferentialConstraint>
@@ -2178,6 +2236,18 @@
             </Principal>
             <Dependent Role="Student">
               <PropertyRef Name="ReligionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AttendancesDates_SchoolInfo">
+          <End Type="StudentAffairsModel.SchoolInfo" Role="SchoolInfo" Multiplicity="0..1" />
+          <End Type="StudentAffairsModel.AttendancesDate" Role="AttendancesDate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SchoolInfo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AttendancesDate">
+              <PropertyRef Name="SchoolId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2839,6 +2909,24 @@
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="Username" ColumnName="Username" />
                 <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AttendancesDates">
+            <EntityTypeMapping TypeName="StudentAffairsModel.AttendancesDate">
+              <MappingFragment StoreEntitySet="AttendancesDates">
+                <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+                <ScalarProperty Name="DeletedOn" ColumnName="DeletedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="AttendOrNo" ColumnName="AttendOrNo" />
+                <ScalarProperty Name="AttendDate" ColumnName="AttendDate" />
+                <ScalarProperty Name="SchoolId" ColumnName="SchoolId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

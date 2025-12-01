@@ -75,6 +75,14 @@ namespace StudentAffairs.Services.StudentsAttendance
                 return model;
             }
         }
+        public AttendancesDate CheckBySchoolAndDate(Guid SchoolId, DateTime date)
+        {
+            using (var dbContext = new StudentAffairsEntities())
+            {
+                var model = dbContext.AttendancesDates.Where(x => x.IsDeleted == false && x.SchoolId == SchoolId && x.AttendDate == date).FirstOrDefault();
+                return model;
+            }
+        }
         public int Get(DateTime Date, Guid ClassId, Guid StudyYearId, Guid StudyClassId, Guid StudentId)
         {
             using (var dbContext = new StudentAffairsEntities())
@@ -92,6 +100,23 @@ namespace StudentAffairs.Services.StudentsAttendance
                 var student = dbContext.Students.Where(x => x.IsDeleted == false && x.Id == model.StudentId).FirstOrDefault();
                 var schoolId = student.SchoolId;
                 var test = dbContext.StudentsAttendances.Where(x => x.IsDeleted == false && x.StudentId == model.StudentId && x.AttendDate == model.AttendDate).FirstOrDefault();
+               
+                var testAttendDate = dbContext.AttendancesDates.Where(x => x.IsDeleted == false && x.SchoolId == schoolId && x.AttendDate == model.AttendDate).FirstOrDefault();
+                if(testAttendDate==null)
+                {
+                    var model1 = new AttendancesDate();
+                    model1.Id = Guid.NewGuid();
+                    model1.SchoolId = schoolId;
+                    model1.AttendDate = model.AttendDate;
+                    model1.AttendOrNo = model.AttendOrNo;
+
+                    model1.CreatedOn = DateTime.UtcNow;
+                    model1.CreatedBy = UserId;
+                    model1.IsDeleted = false;
+
+                    dbContext.AttendancesDates.Add(model1);
+                    dbContext.SaveChanges();
+                }
 
                 if (test != null)
                 {

@@ -77,6 +77,7 @@ namespace StudentAffairs.Dtos.Students
 
         public Nullable<System.Guid> SchoolId { get; set; }
         public string SchoolName { get; set; }
+        public string AttendOrNot { get; set; }
         public string Notes { get; set; }
     }
 

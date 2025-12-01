@@ -49,5 +49,6 @@ namespace StudentAffairs.Models
         public virtual DbSet<Student> Students { get; set; }
         public virtual DbSet<StudentsAttendance> StudentsAttendances { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<AttendancesDate> AttendancesDates { get; set; }
     }
 }

@@ -12,15 +12,12 @@ namespace StudentAffairs.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class StudentsAttendance
+    public partial class AttendancesDate
     {
         public System.Guid Id { get; set; }
-        public Nullable<System.Guid> StudentId { get; set; }
-        public Nullable<System.Guid> LevelId { get; set; }
-        public Nullable<System.Guid> ClassId { get; set; }
+        public Nullable<System.Guid> SchoolId { get; set; }
         public Nullable<System.DateTime> AttendDate { get; set; }
         public Nullable<bool> AttendOrNo { get; set; }
-        public string galsa { get; set; }
         public string Notes { get; set; }
         public Nullable<System.DateTime> CreatedOn { get; set; }
         public Nullable<System.Guid> CreatedBy { get; set; }
@@ -30,8 +27,6 @@ namespace StudentAffairs.Models
         public Nullable<System.DateTime> DeletedOn { get; set; }
         public Nullable<System.Guid> DeletedBy { get; set; }
     
-        public virtual Class Class { get; set; }
-        public virtual Level Level { get; set; }
-        public virtual Student Student { get; set; }
+        public virtual SchoolInfo SchoolInfo { get; set; }
     }
 }

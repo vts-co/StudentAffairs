@@ -10,7 +10,7 @@ using System.Web.Mvc;
 
 namespace StudentAffairs.Controllers
 {
-    [Authorized(ScreenId = "25")]
+    [Authorized(ScreenId = "26")]
 
     public class StudentAssessmentsController : Controller
     {

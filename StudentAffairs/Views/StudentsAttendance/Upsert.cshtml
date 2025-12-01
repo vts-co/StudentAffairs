@@ -39,20 +39,20 @@
 
 
             @*<div class="form-group mb-3 col-sm-6">
-            @Html.Label("الصف ", htmlAttributes: new { @class = "control-label" })
-            <div class="col-12">
-                @Html.DropDownList("LevelId", null, "--اختر--", new { @class = "form-control", required = "required" })
-                @Html.ValidationMessage("LevelId", "", new { @class = "text-danger" })
-            </div>
-        </div>
+                    @Html.Label("الصف ", htmlAttributes: new { @class = "control-label" })
+                    <div class="col-12">
+                        @Html.DropDownList("LevelId", null, "--اختر--", new { @class = "form-control", required = "required" })
+                        @Html.ValidationMessage("LevelId", "", new { @class = "text-danger" })
+                    </div>
+                </div>
 
-        <div class="form-group mb-3 col-sm-6">
-            @Html.Label("الفصل", htmlAttributes: new { @class = "control-label" })
-            <div class="col-12">
-                @Html.DropDownListFor(model => model.ClassId, null, "--اختر--", new { @class = "form-control", required = "required" })
-                @Html.ValidationMessageFor(model => model.ClassId, "", new { @class = "text-danger" })
-            </div>
-        </div>*@
+                <div class="form-group mb-3 col-sm-6">
+                    @Html.Label("الفصل", htmlAttributes: new { @class = "control-label" })
+                    <div class="col-12">
+                        @Html.DropDownListFor(model => model.ClassId, null, "--اختر--", new { @class = "form-control", required = "required" })
+                        @Html.ValidationMessageFor(model => model.ClassId, "", new { @class = "text-danger" })
+                    </div>
+                </div>*@
 
             <div class="form-group mb-3 col-sm-4">
                 @Html.Label("التاريخ ", htmlAttributes: new { @class = "control-label" })
@@ -103,11 +103,11 @@
                     <button type='button' onclick="AttendDisabled()" id="AttendDisBtn" class='btn btn-primary  waves-effect waves-light px-3 m-1 col-12 col-md-auto'><i class='fas fa-check me-1'></i>بدأ الجلسة</button>
                 </div>
             </div>
-            @*<div class="form-group mt-4 p-1 col-sm-2">
+            <div class="form-group mt-4 p-1 col-sm-2">
                 <div class="col-12">
                     <button type='button' onclick="AttendEditDisabled()" id="AttendEditBtn" class='btn btn-primary  waves-effect waves-light px-3 m-1 col-12 col-md-auto'><i class='fas fa-edit me-1'></i>تعديل الجلسة</button>
                 </div>
-            </div>*@
+            </div>
             <div class="form-group mb-3 col-sm-4">
                 @Html.Label("الرقم التسلسلي ", htmlAttributes: new { @class = "control-label" })
                 <div class="col-12">
@@ -125,9 +125,9 @@
                     @*<video id="video" hidden autoplay playsinline style="width:100%;"></video>*@
 
                     @*<canvas id="canvas" style="display:none;"></canvas>
-                <img id="photo" style="width:300px; margin-top:10px;" />*@
+                        <img id="photo" style="width:300px; margin-top:10px;" />*@
 
-                    <button onclick="openCamera()" class='btn btn-primary  waves-effect waves-light px-3 m-1 col-12 col-md-auto'><i class='fas fa-camera me-1'></i>تحضير عن طريق Qr Code</button>
+                    <button onclick="openCamera()" class='btn btn-primary  waves-effect waves-light px-3 m-1 col-12 col-md-auto'><i class='fas fa-camera me-1'></i>تحضير عن طريق الكاميرا</button>
                 </div>
             </div>
             <div class="form-group mt-4 p-1 col-sm-3">
@@ -170,7 +170,7 @@
                                 <div class="form-group mb-3 col-sm-12" id="divMessage">
 
                                 </div>
-                                <input id="galsa" name="galsa" value="0" hidden />
+                                <input id="galsa" name="galsa" value="@ViewBag.galsa" hidden />
                             </div>
                         </div>
 
@@ -187,11 +187,11 @@
                     <button type='button' onclick="return AttendAll()" id="AttendEnd" class='btn btn-primary  waves-effect waves-light px-3 m-1 col-12 col-md-auto'><i class='fas fa-check-double me-1'></i>انهاء الجلسة</button>
                 </div>
             </div>
-            @*<div class="form-group col-sm-2 d-flex justify-content-end ">
+            <div class="form-group col-sm-2 d-flex justify-content-end ">
                 <div class="col-12">
                     <button type='button' onclick="return AttendEditAll()" id="AttendEditEnd" class='btn btn-primary  waves-effect waves-light px-3 m-1 col-12 col-md-auto'><i class='fas fa-check-double me-1'></i>انهاء تعديل الجلسة</button>
                 </div>
-            </div>*@
+            </div>
         </div>
     </div>
 
@@ -201,13 +201,50 @@
 @section scripts{
     @Scripts.Render("~/bundles/jqueryval")
     <script>
-        
+
+        $(document).ready(function () {
+            $("#AttendEnd").attr("disabled", true);
+            $("#AttendEditEnd").attr("disabled", true);
+
+            if (document.getElementById("galsa").value == "") {
+                document.getElementById("galsa").value = "0";
+            }
+            if ($("#SchoolId").val() != "" && document.getElementById("AttendDate").value != "" && $("#AttendOrNo").val() != "0") {
+                startScanner();
+
+                if (document.getElementById("galsa").value == "1") {
+                    document.getElementById("AttendDate").disabled = true;
+                    document.getElementById("AttendOrNo").disabled = true;
+                    document.getElementById("SchoolId").disabled = true;
+                    $("#AttendDisBtn").attr("disabled", true);
+                    $("#AttendEnd").attr("disabled", false);
+                    $("#AttendEditBtn").attr("disabled", true);
+                    $("#AttendEditEnd").attr("disabled", true);
+                }
+                else if (document.getElementById("galsa").value == "2") {
+                    document.getElementById("AttendDate").disabled = true;
+
+                    //const fruitSelect = document.getElementById('AttendOrNo');
+                    //fruitSelect.value = data.data.AttendOrNot;
+
+                    document.getElementById("AttendOrNo").disabled = true;
+                    document.getElementById("SchoolId").disabled = true;
+                    $("#AttendEditBtn").attr("disabled", true);
+                    $("#AttendDisBtn").attr("disabled", true);
+                    $("#AttendEnd").attr("disabled", true);
+                    $("#AttendEditEnd").attr("disabled", false);
+                }
+
+            }
+        });
+
         $("#SerialNumber").keyup(function (event) {
             if (event.keyCode == 13) {
 
                 Attend();
             }
         });
+
         function AttendDisabled() {
             if ($("#SchoolId").val() == "") {
                 invokeAlert('اختر المدرسة اولا', '', 'warning', 2000);
@@ -226,7 +263,7 @@
             }
             $.get('/StudentsAttendance/CheckGalsa', { SchoolId: $("#SchoolId").val(), AttendDate: $("#AttendDate").val() }, function (data) {
 
-              
+
                 if (data.data.Name === "جلسة قديمة") {
                     document.getElementById("LevelName").value = "";
                     document.getElementById("ClassName").value = "";
@@ -242,13 +279,15 @@
                     document.getElementById("AttendDate").disabled = true;
                     document.getElementById("AttendOrNo").disabled = true;
                     document.getElementById("SchoolId").disabled = true;
-                    //$("#AttendEditBtn").attr("disabled",true);
-                    //$("#AttendEditEnd").attr("disabled",true);
+                    $("#AttendDisBtn").attr("disabled", true);
+                    $("#AttendEnd").attr("disabled", false);
+                    $("#AttendEditBtn").attr("disabled", true);
+                    $("#AttendEditEnd").attr("disabled", true);
                     invokeAlert('تم بدا الجلسة', '', 'success', 2000);
 
                 }
             });
-           
+
         }
 
         function AttendEditDisabled() {
@@ -262,11 +301,11 @@
                 return;
 
             }
-            else if ($("#AttendOrNo").val() == "0") {
-                invokeAlert('اختر تسجيل حسب اولا', '', 'warning', 2000);
-                return;
+            //else if ($("#AttendOrNo").val() == "0") {
+            //    invokeAlert('اختر تسجيل حسب اولا', '', 'warning', 2000);
+            //    return;
 
-            }
+            //}
             $.get('/StudentsAttendance/CheckGalsa2', { SchoolId: $("#SchoolId").val(), AttendDate: $("#AttendDate").val() }, function (data) {
 
 
@@ -283,10 +322,17 @@
                 else {
                     document.getElementById("galsa").value = "2";
                     document.getElementById("AttendDate").disabled = true;
+
+                    const fruitSelect = document.getElementById('AttendOrNo');
+                    fruitSelect.value = data.data.AttendOrNot;
+
                     document.getElementById("AttendOrNo").disabled = true;
                     document.getElementById("SchoolId").disabled = true;
+                    $("#AttendEditBtn").attr("disabled", true);
                     $("#AttendDisBtn").attr("disabled", true);
                     $("#AttendEnd").attr("disabled", true);
+                    $("#AttendEditEnd").attr("disabled", false);
+
                     invokeAlert('تم بدا تعديل الجلسة', '', 'success', 2000);
 
                 }
@@ -319,7 +365,7 @@
                 invokeAlert('ادخل الرقم التسلسلي', '', 'warning', 2000);
                 return;
             }
-            
+
             $.get('/StudentsAttendance/getStudent', { SchoolId: $("#SchoolId").val(), SerialNumber: document.getElementById("SerialNumber").value, AttendDate: document.getElementById("AttendDate").value, AttendOrNo: $("#AttendOrNo").val() }, function (data) {
 
                 if (data.data.Name === "") {
@@ -332,16 +378,16 @@
                     invokeAlert('لا يوجد طالب بهذا الرقم التسلسلي', '', 'danger', 2000);
                     return;
                 }
-                if (data.data.Name === "جلسة قديمة") {
-                    document.getElementById("LevelName").value = "";
-                    document.getElementById("ClassName").value = "";
-                    document.getElementById("Name").value = "";
-                    $("#divImage").empty();
-                    $("#divImage").append("<label>لا توجد صورة للطالب</label>");
-                    $("#divMessage").empty();
-                    invokeAlert('جلسة قديمة', data.message , 'danger', 2000);
-                    return;
-                }
+                //if (data.data.Name === "جلسة قديمة") {
+                //    document.getElementById("LevelName").value = "";
+                //    document.getElementById("ClassName").value = "";
+                //    document.getElementById("Name").value = "";
+                //    $("#divImage").empty();
+                //    $("#divImage").append("<label>لا توجد صورة للطالب</label>");
+                //    $("#divMessage").empty();
+                //    invokeAlert('جلسة قديمة', data.message , 'danger', 2000);
+                //    return;
+                //}
                 document.getElementById("LevelName").value = data.data.LevelName;
                 document.getElementById("ClassName").value = data.data.ClassName;
                 document.getElementById("Name").value = data.data.Name;
@@ -383,8 +429,8 @@
                 att = "غياب";
 
             Swal.fire({
-                title: 'هل تريد انهاء الجلسة بالفعل؟  ' ,
-                html: 'يتم ' + att +'  باقي الطلاب عند انهاء الجلسة ',
+                title: 'هل تريد انهاء الجلسة بالفعل؟  ',
+                html: 'يتم ' + att + '  باقي الطلاب عند انهاء الجلسة ',
                 icon: 'question',
                 showCancelButton: true,
                 confirmButtonColor: '#d33',
@@ -407,7 +453,38 @@
                 }
             });
         }
-       
+
+
+        function AttendEditAll() {
+            invokeAlert('تعديل جلسة', 'تم تعديل الجلسة بنجاح', 'success', 2000);
+            document.getElementById("galsa").value = "0";
+            document.getElementById("AttendDate").value = "";
+            document.getElementById("AttendOrNo").value = "0";
+            document.getElementById("SerialNumber").value = "";
+
+            document.getElementById("AttendDate").disabled = false;
+
+           
+
+            const fruitSelect = document.getElementById('AttendOrNo');
+            fruitSelect.value = "0";
+
+            document.getElementById("AttendOrNo").disabled = false;
+            document.getElementById("SchoolId").disabled = false;
+
+            $("#AttendEditBtn").attr("disabled", false);
+            $("#AttendDisBtn").attr("disabled", false);
+            $("#AttendEnd").attr("disabled", true);
+            $("#AttendEditEnd").attr("disabled", true);
+
+            document.getElementById("LevelName").value = "";
+            document.getElementById("ClassName").value = "";
+            document.getElementById("Name").value = "";
+            $("#divImage").empty();
+            $("#divImage").append("<label>لا توجد صورة للطالب</label>");
+            $("#divMessage").empty();
+        }
+
         function openCamera() {
             if ($("#SchoolId").val() == "") {
                 invokeAlert('اختر المدرسة اولا', '', 'warning', 2000);
@@ -427,7 +504,7 @@
             //    invokeAlert('ابدأ الجلسة الان اولا', '', 'warning', 2000);
             //    return;
             //}
-            window.location.href = '/StudentsAttendance/Create2?SchoolId=' + $("#SchoolId").val() + '&AttendDate=' + document.getElementById("AttendDate").value + '&AttendOrNo=' + $("#AttendOrNo").val()
+            window.location.href = '/StudentsAttendance/Create2?SchoolId=' + $("#SchoolId").val() + '&AttendDate=' + document.getElementById("AttendDate").value + '&AttendOrNo=' + $("#AttendOrNo").val() + '&galsa=' + document.getElementById("galsa").value
         }
 
         $("#LevelId").change(function () {
@@ -471,15 +548,9 @@
                 }
             );
         }
-        if ($("#SchoolId").val() != "" && document.getElementById("AttendDate").value != "" && $("#AttendOrNo").val() != "0") {
-            startScanner();
-            document.getElementById("galsa").value = "1";
-            document.getElementById("AttendDate").disabled = true;
-            document.getElementById("AttendOrNo").disabled = true;
-            document.getElementById("SchoolId").disabled = true;
-        }
-            // Auto start when page loads
-            //$(document).ready(function () {
-            //});
+
+        // Auto start when page loads
+        //$(document).ready(function () {
+        //});
     </script>
 }
